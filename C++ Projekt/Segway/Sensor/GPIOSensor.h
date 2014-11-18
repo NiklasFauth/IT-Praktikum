@@ -14,10 +14,10 @@
 
 class GPIOSensor {
 private:
-	const int pin;
-	const int* PUER;
-	const int* GFER;
-	const int* PVR;
+	int pin;
+	int* PUER;
+	int* GFER;
+	int* PVR;
 public:
 	GPIOSensor();
 	~GPIOSensor();

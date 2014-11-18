@@ -20,3 +20,14 @@
 
 
 #endif /* BITMACROS_H */
+
+// adresses
+const int GPIO_ADRESS = 0xFFFF1000;
+const int PORT_OFFSET = 0x0100;
+const int PMR0_ADRESS = 0x10; // peri mux 0
+const int PMR1_ADRESS = 0x20; // peri mux 1
+const int ODER_ADRESS = 0x40; // output driver
+const int OVR_ADRESS = 0x50; // output value
+const int PVR_ADRESS = 0x60; // value
+const int PUER_ADRESS = 0x70; // pull-up
+const int GFER_ADRESS = 0xC0; // glitch filter

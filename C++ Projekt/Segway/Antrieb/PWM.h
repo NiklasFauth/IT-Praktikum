@@ -1,4 +1,6 @@
-/* verwenden Sie diese Klasse für alle Funktionen die direkt auf die HW-PWM zugreifen. */
+/* verwenden Sie diese Klasse fï¿½r alle Funktionen die direkt auf die HW-PWM zugreifen. */
+
+#include "../UART/bitmacros.h"
 
 #ifndef PWM_H_
 #define PWM_H_
