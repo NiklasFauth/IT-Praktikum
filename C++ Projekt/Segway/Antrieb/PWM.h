@@ -10,9 +10,13 @@
 
 class PWM {
 private:
-    int ENA;
-    int DIS;
     int channelID;
+    int* ENA;
+    int* DIS;
+    int* CPRD0;
+    int* CDTY0;
+    int* CUPD0;
+    static int CLK_FREQ = 12000000;
 
 public:
 	PWM();
