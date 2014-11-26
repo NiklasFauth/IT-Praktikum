@@ -29,6 +29,7 @@ private:
 	static void init_Sensor_BatteryVoltage();
 	static void init_UART();
 	static void init_StatusLEDs();
+	
 
 public:
 	struct s_PWMConfig {
