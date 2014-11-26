@@ -1,4 +1,5 @@
 #include "Timer.h"
+#include "../bitmacros.h"
 
 // Adressen
 // Frage: Woher weiﬂ ich, welche Nummer ich nehme (0 oder 1 oder 2..) Was ist dabei der Unterschied?
@@ -23,11 +24,11 @@ Timer::~Timer() {
 }
 
 // RC value will determinate
-bool prepareTimer(unsigned long frequency){
+bool Timer::prepareTimer(unsigned long frequency){
 	setIsTimerInterruptEnabled(true);
-	SET_BIT(*CMR0,15) //*CMR0 |= 1 << 15; // WAVE: Waveform mode is enabled
-	SET_BIT(*CMR0,14) //*CMR0 |= 1 << 14; // WAVSEL: RC is chosen as the maximum value (UP mode with automatic trigger on RC Compare)
-	SET_BIT(*CMR0,1) //*CMR0 |= 1 << 1; // TCCLKS: TIMER_CLOCK3 is chosen, the clock choise is define in Configuration.cpp
+	SET_BIT(*CMR0,15); //*CMR0 |= 1 << 15; // WAVE: Waveform mode is enabled
+	SET_BIT(*CMR0,14); //*CMR0 |= 1 << 14; // WAVSEL: RC is chosen as the maximum value (UP mode with automatic trigger on RC Compare)
+	SET_BIT(*CMR0,1); //*CMR0 |= 1 << 1; // TCCLKS: TIMER_CLOCK3 is chosen, the clock choise is define in Configuration.cpp
 	if (2000000/frequency <= 65535){  // > 2^16 - 1 -> There are only 16 bits availabe
 		*RC0 = 2000000/frequency; // frequency will hand over // One Interrupt per second happens when RC=2 MHz, if we want 5 Interrupts (f=5 Hz) we have to divide 2 MHz with 5
 		return true;	
@@ -36,7 +37,7 @@ bool prepareTimer(unsigned long frequency){
 		return false;
 	}
 }
-void cleanUpTimer(void){
+void Timer::cleanUpTimer(void){
 	*CCR0 = 0x0;
 	*CMR0 = 0x0;
 	*CV0 = 0x0;
@@ -85,16 +86,16 @@ void Timer::resetInterruptFlag(void) {
 
 
 //If timer is enabled, the return value is true
-bool getIsTimerEnabled(void){
+bool Timer::getIsTimerEnabled(void){
 	return (bool)(*SR0 & 0x10000); // Bit 16 CLKSTA is set when the clock is enabled -> must be 1 (2^16 = 16^4)
 }
 
 //If interrupts are enabled, the return value is true
-bool getIsInterruptEnabled(void){
+bool Timer::getIsInterruptEnabled(void){
 	return (bool)(*IMR0 & 0x10); // Bit 4 CPCS is set when an RC Compare has occured (2^4 = 16^1)
 }
 
-void cleanUp(void){
+void Timer::cleanUp(void){
 	*CCR0 = 0x0;
 	*CMR0 = 0x0;
 	*CV0 = 0x0;
