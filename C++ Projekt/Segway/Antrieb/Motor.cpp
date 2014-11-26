@@ -1,7 +1,7 @@
 #include "Motor.h"
 
 Motor::Motor() {
-
+    pwm = new PWM();
 }
 
 Motor::~Motor() {
@@ -13,13 +13,15 @@ void Motor::initEnablePin() {
 }
 
 bool Motor::init( Configuration::s_MotorConfig* thisMotorConfig_ ) {
-
-	return 0;
+    pwm->init(thisMotorConfig_->PWMConfig);
+    OVR = (int*) (GPIO_MODULE + (thisMotorConfig_->directionPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
+    directionPinForwardValue = thisMotorConfig_->directionPinForwardValue;
 }
 
 bool Motor::setSpeed( unsigned char ratioOn ) {
-
-	return 0;
+    if (ratioOn < 0 && ratioOn > PWMConfig->maxPWMRatio) return false;
+    pwm->setChannelPWMRatio(ratioOn);
+	return true;
 }
 
 unsigned char Motor::getSpeed() {
@@ -28,14 +30,14 @@ unsigned char Motor::getSpeed() {
 }
 
 void Motor::setDirection( bool forward ) {
-
+    if (forward == directionPinForwardValue) SET_BIT(*OVR, thisMotorConfig_->directionPinPin);
+    else CLEAR_BIT(*OVR, thisMotorConfig_->directionPinPin);
 }
 
 void Motor::setEnabled( bool enabled ) {
-
+    pwm->setChannelEnabled(enabled);
 }
 
 bool Motor::getIsEnabled() {
-
-	return 0;
+	return pwm->isChannelEnabled();
 }

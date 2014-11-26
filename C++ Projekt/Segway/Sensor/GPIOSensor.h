@@ -5,6 +5,7 @@
  *  Author: Florian
  */ 
 
+#include "../UART/bitmacros.h"
 
 #ifndef GPIOSENSOR_H_
 #define GPIOSENSOR_H_
@@ -13,7 +14,10 @@
 
 class GPIOSensor {
 private:
-	
+	int pin;
+	int* PUER;
+	int* GFER;
+	int* PVR;
 public:
 	GPIOSensor();
 	~GPIOSensor();

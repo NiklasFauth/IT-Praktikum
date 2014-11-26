@@ -44,7 +44,11 @@ unsigned long
 	Configuration::ADC_Internal_Clock = 0;
 
 Configuration::s_gpioMultiplexData
-	Configuration::ADC_gpioMultiplexData[ADC_NUM_CONFIGURED_CHANNELS] = {};
+	Configuration::ADC_gpioMultiplexData[ADC_NUM_CONFIGURED_CHANNELS] = {
+		
+		
+		
+		};
 		
 Configuration::s_ADCSensorConfig
 	Configuration::orientationAccelerometerConfig = {},
