@@ -18,10 +18,16 @@ private:
 public:
 	Timer();
 	~Timer();
-	static void resetInterruptFlag();
+	bool prepareTimer(unsigned long frequency);
+	void cleanUpTimer(void);
 	bool initTimer( unsigned long frequency );
 	void setIsTimerEnabled( bool enabled );
 	void setIsTimerInterruptEnabled( bool enabled );
+	static void resetInterruptFlag(void);
+	bool getIsTimerEnabled(void);
+	bool getIsInterruptEnabled(void);
+	void cleanUp(void);
+	
 };
 
 #endif /* TIMER_H_ */
