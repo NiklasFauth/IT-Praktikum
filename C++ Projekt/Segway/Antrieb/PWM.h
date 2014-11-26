@@ -1,6 +1,5 @@
 /* verwenden Sie diese Klasse f�r alle Funktionen die direkt auf die HW-PWM zugreifen. */
 
-#include "../UART/adresses.h"
 #include "../UART/bitmacros.h"
 
 #ifndef PWM_H_
@@ -16,7 +15,6 @@ private:
     int* CPRD0;
     int* CDTY0;
     int* CUPD0;
-    static int CLK_FREQ = 12000000;
 
 public:
 	PWM();
@@ -25,6 +23,7 @@ public:
 	bool enableInPinSelector( bool enabled );
 	
 	bool setChannelPWMRatio( unsigned char ratioOn, bool capRatioOn = false );
+    bool isChannelEnabled();
 	bool setChannelEnabled( bool enabled );
 	
 	void cleanUp();	

@@ -5,7 +5,6 @@
  *  Author: Florian
  */ 
 
-#include "../UART/adresses.h"
 #include "../UART/bitmacros.h"
 
 #ifndef GPIOSENSOR_H_

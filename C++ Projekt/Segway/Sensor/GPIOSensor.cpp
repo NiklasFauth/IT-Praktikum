@@ -11,9 +11,9 @@ GPIOSensor::~GPIOSensor() {
 
 void GPIOSensor::init( Configuration::s_GPIOSensorConfig* thisGPIOSensorConfig_ ) {
 	pin = thisGPIOSensorConfig_->pin;
-	PVR = (int*) (GPIO_OFFSET + (thisGPIOSensorConfig_->port ? PORT_OFFSET : 0) + PVR_OFFSET);
-	PUER = (int*) (GPIO_OFFSET + (thisGPIOSensorConfig_->port ? PORT_OFFSET : 0) + PUER_OFFSET);
-	GFER = (int*) (GPIO_OFFSET + (thisGPIOSensorConfig_->port ? PORT_OFFSET : 0) + GFER_OFFSET);
+	PVR = (int*) (GPIO_MODULE + (thisGPIOSensorConfig_->port ? PORT_OFFSET : 0) + PVR_OFFSET);
+	PUER = (int*) (GPIO_MODULE + (thisGPIOSensorConfig_->port ? PORT_OFFSET : 0) + PUER_OFFSET);
+	GFER = (int*) (GPIO_MODULE + (thisGPIOSensorConfig_->port ? PORT_OFFSET : 0) + GFER_OFFSET);
 	// set pullup bit dependent on input
 	if (thisGPIOSensorConfig_->pullupEnabled) SET_BIT(*PUER, pin);
 	else CLEAR_BIT(*PUER, pin);
