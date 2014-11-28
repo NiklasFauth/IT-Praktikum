@@ -9,7 +9,12 @@ Motor::~Motor() {
 }
 
 void Motor::initEnablePin() {
-
+	int *GPER = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + GPER_OFFSET);
+	SET_BIT(*GPER, Configuration::Motor_enabledPinPin);
+	int *ODER = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + ODER_OFFSET);
+	SET_BIT(*ODER, Configuration::Motor_enabledPinPin);
+	int *OVR = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
+	CLEAR_BIT(*OVR, Configuration::Motor_enabledPinPin);
 }
 
 bool Motor::init( Configuration::s_MotorConfig* thisMotorConfig_ ) {
@@ -19,6 +24,7 @@ bool Motor::init( Configuration::s_MotorConfig* thisMotorConfig_ ) {
     OVR = (int*) (GPIO_MODULE + (thisMotorConfig_->directionPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
     directionPinForwardValue = thisMotorConfig_->directionPinForwardValue;
     directionPinPin = thisMotorConfig_->directionPinPin;
+	return true;
 }
 
 bool Motor::setSpeed( unsigned char ratioOn ) {
@@ -38,11 +44,14 @@ void Motor::setDirection( bool forward ) {
 }
 
 void Motor::setEnabled( bool enabled ) {
-    // forward call to PWM
-    pwm->setChannelEnabled(enabled);
+    // set enable value
+    int *OVR = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
+    if (enabled) SET_BIT(*OVR, Configuration::Motor_enabledPinPin);
+	else CLEAR_BIT(*OVR, Configuration::Motor_enabledPinPin);
 }
 
 bool Motor::getIsEnabled() {
-    // forward call to PWM
-	return pwm->isChannelEnabled();
+	// read enable value
+	int *PVR = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
+	return BIT_IS_SET(*PVR, Configuration::Motor_enabledPinPin);
 }

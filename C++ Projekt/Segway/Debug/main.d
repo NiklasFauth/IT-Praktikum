@@ -1,6 +1,8 @@
 main.d main.o main.o: .././main.cpp .././interruptTools.h \
  .././Configuration/Configuration.h .././Segway/Segway.h \
- .././Segway/../Timer/Timer.h .././Segway/../Antrieb/Motor.h \
+ .././Segway/../Timer/Timer.h \
+ .././Segway/../Timer/../Configuration/Configuration.h \
+ .././Segway/../Antrieb/Motor.h \
  .././Segway/../Antrieb/../Configuration/Configuration.h \
  .././Segway/../Antrieb/PWM.h .././Segway/../Sensor/ADC.h \
  .././Segway/../Sensor/ADCSensor.h \
@@ -8,7 +10,7 @@ main.d main.o main.o: .././main.cpp .././interruptTools.h \
  .././Segway/../Sensor/ADC.h .././Segway/../Sensor/GPIOSensor.h \
  .././Segway/../UART/UART.h \
  .././Segway/../UART/../Configuration/Configuration.h .././Timer/Timer.h \
- .././bitmacros.h
+ .././Timer/../Configuration/Configuration.h
 
 .././interruptTools.h:
 
@@ -17,6 +19,8 @@ main.d main.o main.o: .././main.cpp .././interruptTools.h \
 .././Segway/Segway.h:
 
 .././Segway/../Timer/Timer.h:
+
+.././Segway/../Timer/../Configuration/Configuration.h:
 
 .././Segway/../Antrieb/Motor.h:
 
@@ -40,4 +44,4 @@ main.d main.o main.o: .././main.cpp .././interruptTools.h \
 
 .././Timer/Timer.h:
 
-.././bitmacros.h:
+.././Timer/../Configuration/Configuration.h:

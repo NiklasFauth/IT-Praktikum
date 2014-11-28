@@ -3,7 +3,7 @@
 #include "Segway/Segway.h"
 #include "Timer/Timer.h"
 
-#include "bitmacros.h"
+//#include "../UART/bitmacros.h"
 
 const char* MYAVR32_PM_ADDRESS = (char*) 0xFFFF0C00;
 const unsigned int MYAVR32_PM_OFFSET_OSCCTL0 = 0x0028;

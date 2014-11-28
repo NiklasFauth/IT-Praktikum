@@ -1,5 +1,5 @@
 #include "Timer.h"
-#include "../bitmacros.h"
+//#include "../bitmacros.h"
 
 // Adressen
 // Frage: Woher weiﬂ ich, welche Nummer ich nehme (0 oder 1 oder 2..) Was ist dabei der Unterschied?

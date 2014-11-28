@@ -6,12 +6,12 @@ PWM::PWM() {
 
 
 PWM::~PWM() {
-	cleanup();
+	cleanUp();
 }
 
 bool PWM::init( Configuration::s_PWMConfig* thisPWMConfig_ ) {
     pin = thisPWMConfig_->GPIO_pin;
-	GPER = (int*) (GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + GPER_OFFSET);
+	int *GPER = (int*) (GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + GPER_OFFSET);
     // init register
     int* PMR0 = (int*) (GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + PMR0_OFFSET);
     int* PMR1 = (int*) (GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + PMR1_OFFSET);
@@ -24,14 +24,14 @@ bool PWM::init( Configuration::s_PWMConfig* thisPWMConfig_ ) {
     else CLEAR_BIT(*PMR1, pin);
     channelID = thisPWMConfig_->channelID;
     // init register
-	ENA = (int*) (PWM_OFFSET + ENA_OFFSET);
-	DIS = (int*) (PWM_OFFSET + DIS_OFFSET);
-	SR = (int*) (PWM_OFFSET +SR_OFFSET);
-    CMR0 = (int*) (PWM_OFFSET + CMR0_OFFSET);
-    CUPD0 = (int*) (PWM_OFFSET + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CUPD0_OFFSET);
-    CPRD0 = (int*) (PWN_OFFSET + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CPRD0_OFFSET);
-    *CPRD0 = (int) Configuration.CPUCLK / thisPWMConfig_->frequency;
-    CDTY0 = (int*) (PWN_OFFSET + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CDTY0_OFFSET);
+	ENA = (int*) (PWM_MODULE + ENA_OFFSET);
+	DIS = (int*) (PWM_MODULE + DIS_OFFSET);
+	SR = (int*) (PWM_MODULE +SR_OFFSET);
+    CMR0 = (int*) (PWM_MODULE + CMR0_OFFSET);
+    CUPD0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CUPD0_OFFSET);
+    CPRD0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CPRD0_OFFSET);
+    *CPRD0 = (int) Configuration::CPUCLK / thisPWMConfig_->frequency;
+    CDTY0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CDTY0_OFFSET);
     // set maxPWMRatio
     maxPWMRatio = thisPWMConfig_->maxPWMRatio;
 }
@@ -47,7 +47,7 @@ bool PWM::setChannelPWMRatio( unsigned char ratioOn, bool capRatioOn ) {
 
 char PWM::getChannelPWMRatio() {
     // return current ratio
-    return (char) ((1 - (float) *CDTY0 / CPRD0 * 255 / maxPWMRatio) * 255);
+    return (char) ((1 - (float) *CDTY0 / *CPRD0 * 255 / maxPWMRatio) * 255);
 }
 
 bool PWM::isChannelEnabled() {

@@ -1,5 +1,5 @@
 #include "DebugMode.h"
-#include "../bitmacros.h"
+// #include "../UART/bitmacros.h"
 
 const char* DebugMode::MYAVR32_GPIO_ADDRESS = ( char* ) 0xFFFF1000;
 const unsigned int DebugMode::MYAVR32_GPIO_SIZE_PORT = 0x0100;

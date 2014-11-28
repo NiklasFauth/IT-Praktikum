@@ -1,5 +1,5 @@
 #include "UART.h"
-#include "../bitmacros.h"
+//#include "../bitmacros.h"
 
 const unsigned int UART::MYAVR32_UART_OFFSET_CR = 0x00;
 const unsigned int UART::MYAVR32_UART_OFFSET_MR = 0x04;

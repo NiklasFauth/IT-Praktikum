@@ -8,7 +8,7 @@
 	See main.cpp.example, exception.s.example
 
  */
-
+#include "../Configuration/Configuration.h";
 #ifndef TIMER_H_
 #define TIMER_H_
 

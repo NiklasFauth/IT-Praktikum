@@ -1,6 +1,6 @@
 /* verwenden Sie diese Klasse f�r alle Funktionen die direkt auf die HW-PWM zugreifen. */
 
-#include "../UART/bitmacros.h"
+// #include "../UART/bitmacros.h"
 
 #ifndef PWM_H_
 #define PWM_H_
@@ -9,10 +9,14 @@
 
 class PWM {
 private:
+    int pin;
     int channelID;
     int maxPWMRatio;
     int* ENA;
     int* DIS;
+	int* SR;
+	int* CMR0;
+	int* GPIO;
     int* CPRD0;
     int* CDTY0;
     int* CUPD0;
