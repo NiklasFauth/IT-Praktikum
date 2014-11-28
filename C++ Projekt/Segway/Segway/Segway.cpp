@@ -1,6 +1,6 @@
 #include "Segway.h"
 #include <cstring>
-#include "../bitmacros.h"
+// #include "../UART/bitmacros.h"
 
 const char* Segway::MYAVR32_GPIO_ADDRESS = ( char* ) 0xFFFF1000;
 const unsigned int Segway::MYAVR32_GPIO_SIZE_PORT = 0x0100;

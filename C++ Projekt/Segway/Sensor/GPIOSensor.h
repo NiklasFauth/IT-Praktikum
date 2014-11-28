@@ -5,7 +5,7 @@
  *  Author: Florian
  */ 
 
-#include "../UART/bitmacros.h"
+// #include "../UART/bitmacros.h"
 
 #ifndef GPIOSENSOR_H_
 #define GPIOSENSOR_H_

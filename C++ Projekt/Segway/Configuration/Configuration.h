@@ -153,24 +153,49 @@ public:
 #endif /* CONFIGURATION_H_ */
 
 // adresses
-const int PORT_OFFSET = 0x0100;
+#define PORT_OFFSET 0x0100
 
-const int GPIO_MODULE = 0xFFFF1000;
-const int PMR0_OFFSET = 0x10; // peripheral mux 0
-const int PMR1_OFFSET = 0x20; // peripheral mux 1
-const int ODER_OFFSET = 0x40; // output driver
-const int OVR_OFFSET = 0x50; // output value
-const int PVR_OFFSET = 0x60; // value
-const int PUER_OFFSET = 0x70; // pull-up
-const int GFER_OFFSET = 0xC0; // glitch filter
+#define GPIO_MODULE 0xFFFF1000
+#define GPER_OFFSET 0x00 // enable
+#define PMR0_OFFSET 0x10 // peripheral mux 0
+#define PMR1_OFFSET 0x20 // peripheral mux 1
+#define ODER_OFFSET 0x40 // output driver
+#define OVR_OFFSET 0x50 // output value
+#define PVR_OFFSET 0x60 // value
+#define PUER_OFFSET 0x70 // pull-up
+#define GFER_OFFSET 0xC0 // glitch filter
 
-const int PWM_MODULE = 0xFFFF3000;
-const int ENA_OFFSET = 0x004; // enable
-const int DIS_OFFSET = 0x008; // disable
-const int SR_OFFSET = 0x00C; // status
-const int CMR0_OFFSET = 0x200; // channel 0
-const int CHANNEL_OFFSET = 0x020; // channel
-const int CDTY0_OFFSET = 0x004; // duty cycle
-const int CPRD0_OFFSET = 0x008; // period
-const int CCNT0_OFFSET = 0x00C; // counter
-const int CUPD0_OFFSET = 0x010; // update
+#define PWM_MODULE 0xFFFF3000
+#define ENA_OFFSET 0x004 // enable
+#define DIS_OFFSET 0x008 // disable
+#define SR_OFFSET 0x00C // status
+#define CMR0_OFFSET 0x200 // channel 0
+#define CHANNEL_OFFSET 0x020 // channel
+#define CDTY0_OFFSET 0x004 // duty cycle
+#define CPRD0_OFFSET 0x008 // period
+#define CCNT0_OFFSET 0x00C // counter
+#define CUPD0_OFFSET 0x010 // update
+
+//bitmacros
+#ifndef BITMACROS_H
+#define BITMACROS_H
+
+
+/* set bit */
+#define SET_BIT(var, bit) ((var) |= (1u << (bit)))
+
+/* set bits */
+#define SET_BITS(var, bits) ((var) |= (bits))
+
+/* clear bit */
+#define CLEAR_BIT(var, bit) ((var) &= (unsigned)~(1u << (bit)))
+
+/* clear bits */
+#define CLEAR_BITS(var, bits) ((var) &= (unsigned)~(bits))
+
+/* bit is set/clear */
+#define BIT_IS_SET(var, bit) ((var) & (1u << (bit)))
+#define BIT_IS_CLEAR(var, bit) !BIT_IS_SET(var, bit)
+
+
+#endif /* BITMACROS_H */

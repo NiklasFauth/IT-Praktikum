@@ -1,5 +1,6 @@
 Segway/Segway.d Segway/Segway.o Segway/Segway.o: ../Segway/Segway.cpp \
  ../Segway/Segway.h ../Segway/../Timer/Timer.h \
+ ../Segway/../Timer/../Configuration/Configuration.h \
  ../Segway/../Antrieb/Motor.h \
  ../Segway/../Antrieb/../Configuration/Configuration.h \
  ../Segway/../Antrieb/PWM.h ../Segway/../Sensor/ADC.h \
@@ -25,12 +26,13 @@ Segway/Segway.d Segway/Segway.o Segway/Segway.o: ../Segway/Segway.cpp \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.1067\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/_types.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.1067\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/machine/_default_types.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.1067\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/lock.h \
- c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.1067\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/string.h \
- ../Segway/../bitmacros.h
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.1067\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/string.h
 
 ../Segway/Segway.h:
 
 ../Segway/../Timer/Timer.h:
+
+../Segway/../Timer/../Configuration/Configuration.h:
 
 ../Segway/../Antrieb/Motor.h:
 
@@ -87,5 +89,3 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.1067\avr32
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.1067\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/lock.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.1067\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/string.h:
-
-../Segway/../bitmacros.h:
