@@ -24,6 +24,7 @@ private:
     PWM *pwm;
     int *OVR;
     bool directionPinForwardValue;
+    long directionPinPin;
 //put your privat variables and functions here if you need them
 
 public:

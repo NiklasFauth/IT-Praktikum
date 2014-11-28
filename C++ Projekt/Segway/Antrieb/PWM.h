@@ -10,6 +10,7 @@
 class PWM {
 private:
     int channelID;
+    int maxPWMRatio;
     int* ENA;
     int* DIS;
     int* CPRD0;
@@ -20,9 +21,9 @@ public:
 	PWM();
 	~PWM();
 	bool init( Configuration::s_PWMConfig* thisPWMConfig_ );
-	bool enableInPinSelector( bool enabled );
 	
 	bool setChannelPWMRatio( unsigned char ratioOn, bool capRatioOn = false );
+	char getChannelPWMRatio();
     bool isChannelEnabled();
 	bool setChannelEnabled( bool enabled );
 	

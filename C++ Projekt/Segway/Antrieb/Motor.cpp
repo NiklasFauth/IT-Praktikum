@@ -13,31 +13,36 @@ void Motor::initEnablePin() {
 }
 
 bool Motor::init( Configuration::s_MotorConfig* thisMotorConfig_ ) {
+    // init PWM
     pwm->init(thisMotorConfig_->PWMConfig);
+    // init register
     OVR = (int*) (GPIO_MODULE + (thisMotorConfig_->directionPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
     directionPinForwardValue = thisMotorConfig_->directionPinForwardValue;
+    directionPinPin = thisMotorConfig_->directionPinPin;
 }
 
 bool Motor::setSpeed( unsigned char ratioOn ) {
-    if (ratioOn < 0 && ratioOn > PWMConfig->maxPWMRatio) return false;
-    pwm->setChannelPWMRatio(ratioOn);
-	return true;
+    // forward call to PWM
+    return pwm->setChannelPWMRatio(ratioOn);
 }
 
 unsigned char Motor::getSpeed() {
-
-	return 0;
+    // forward call to PWM
+	return pwm->getChannelPWMRatio();
 }
 
 void Motor::setDirection( bool forward ) {
-    if (forward == directionPinForwardValue) SET_BIT(*OVR, thisMotorConfig_->directionPinPin);
-    else CLEAR_BIT(*OVR, thisMotorConfig_->directionPinPin);
+    // set direction pin value
+    if (forward == directionPinForwardValue) SET_BIT(*OVR, directionPinPin);
+    else CLEAR_BIT(*OVR, directionPinPin);
 }
 
 void Motor::setEnabled( bool enabled ) {
+    // forward call to PWM
     pwm->setChannelEnabled(enabled);
 }
 
 bool Motor::getIsEnabled() {
+    // forward call to PWM
 	return pwm->isChannelEnabled();
 }
