@@ -12,14 +12,14 @@ private:
     int pin;
     int channelID;
     int maxPWMRatio;
-    int* ENA;
-    int* DIS;
-	int* SR;
-	int* CMR0;
-	int* GPIO;
-    int* CPRD0;
-    int* CDTY0;
-    int* CUPD0;
+    volatile int* ENA;
+    volatile int* DIS;
+	volatile int* SR;
+	volatile int* CMR0;
+	volatile int* GPIO;
+    volatile int* CPRD0;
+    volatile int* CDTY0;
+    volatile int* CUPD0;
 
 public:
 	PWM();
