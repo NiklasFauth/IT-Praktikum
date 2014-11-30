@@ -100,19 +100,17 @@ int main( void ) {
 	// Initialize configuration
 	Configuration::init();
 	
-	while( true ) {
-#ifdef SIMULATION_TEST
-		// Enter Simulation mode
-		Simulation mySimulation;
-		mySimulation.main();
-#else
-		// Enter Segway mode
-		mySegway = new Segway;
-		mySegway->main();
-		delete mySegway;
-		mySegway = 0;
-#endif
-	}
-	
+    PWM pwm = new PWM();
+    pwm->init({
+        5,
+        255,
+        1,
+        1,
+        5,
+        2
+    });
+    pwm->setChannelEnabled(true);
+    pwm->setChannelPWMRatio(255 / 2);
+    
 	return 0;
 }
