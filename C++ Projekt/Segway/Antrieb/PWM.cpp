@@ -11,10 +11,10 @@ PWM::~PWM() {
 
 bool PWM::init( Configuration::s_PWMConfig* thisPWMConfig_ ) {
     pin = thisPWMConfig_->GPIO_pin;
-	volatile int *GPER = (int*) (GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + GPER_OFFSET);
     // init register
-    volatile int* PMR0 = (int*) (GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + PMR0_OFFSET);
-    volatile int* PMR1 = (int*) (GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + PMR1_OFFSET);
+    VINTP GPER = (int*) (GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + GPER_OFFSET);
+    VINTP PMR0 = (int*) (GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + PMR0_OFFSET);
+    VINTP PMR1 = (int*) (GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + PMR1_OFFSET);
     // disable GPIO
     CLEAR_BIT(*GPER, pin);
     // set peripheral function
@@ -30,23 +30,34 @@ bool PWM::init( Configuration::s_PWMConfig* thisPWMConfig_ ) {
     CMR0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID);
     CUPD0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CUPD0_OFFSET);
     CPRD0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CPRD0_OFFSET);
-    *CPRD0 = (int) Configuration::PWMCLK / thisPWMConfig_->frequency;
+    //*CPRD0 = (int) (Configuration::PWMCLK / thisPWMConfig_->frequency);
+    *CPRD0 = 1000000;
     CDTY0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CDTY0_OFFSET);
+	*CDTY0 = 0;
     // set maxPWMRatio
     maxPWMRatio = thisPWMConfig_->maxPWMRatio;
+	
+	//SET_BIT(*CMR0, 9);
 	return true;
 }
 
 bool PWM::setChannelPWMRatio( unsigned char ratioOn, bool capRatioOn ) {
-    if (0 < ratioOn || ratioOn > maxPWMRatio) return false;
+	if (capRatioOn) {
+		// truncate ratioOn value
+		if (ratioOn < 0) ratioOn = 0;
+		else if (ratioOn > maxPWMRatio) ratioOn = maxPWMRatio;
+	} else
+		// return false otherwise
+		if (0 < ratioOn || ratioOn > maxPWMRatio) return false;
     // reset mode register pin 10 to initiate duty cycle update
-    CLEAR_BIT(*CMR0, 10);
+    //CLEAR_BIT(*CMR0, 10);
     // set new duty cycle value
-    *CUPD0 = (int) ((1 - (float) ratioOn / 255) * *CPRD0);
+    //*CUPD0 = (int) ((1 - (float) ratioOn / 255) * *CPRD0);
+    *CUPD0 = *CPRD0 / 2;
     return true;
 }
 
-char PWM::getChannelPWMRatio() {
+unsigned char PWM::getChannelPWMRatio() {
     // return current ratio
     return (char) ((1 - (float) *CDTY0 / *CPRD0) * 255);
 }

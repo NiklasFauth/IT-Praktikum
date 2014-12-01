@@ -111,7 +111,9 @@ int main( void ) {
 	
     pwm->init(&config);
     pwm->setChannelEnabled(true);
-    pwm->setChannelPWMRatio(20);
+    //pwm->setChannelPWMRatio(0, true);
+	
+	//while (true) asm("nop");
     
 	return 0;
 }

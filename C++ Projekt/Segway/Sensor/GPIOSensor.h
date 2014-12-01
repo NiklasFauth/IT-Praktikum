@@ -15,9 +15,9 @@
 class GPIOSensor {
 private:
 	int pin;
-	int* PUER;
-	int* GFER;
-	int* PVR;
+	VINTP PUER;
+	VINTP GFER;
+	VINTP PVR;
 public:
 	GPIOSensor();
 	~GPIOSensor();
