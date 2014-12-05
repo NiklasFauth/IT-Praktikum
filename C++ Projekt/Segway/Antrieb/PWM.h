@@ -12,14 +12,14 @@ private:
     int pin;
     int channelID;
     int maxPWMRatio;
-    int* ENA;
-    int* DIS;
-	int* SR;
-	int* CMR0;
-	int* GPIO;
-    int* CPRD0;
-    int* CDTY0;
-    int* CUPD0;
+    VINTP ENA;
+    VINTP DIS;
+	VINTP SR;
+	VINTP CMR0;
+	VINTP GPIO;
+    VINTP CPRD0;
+    VINTP CDTY0;
+    VINTP CUPD0;
 
 public:
 	PWM();
@@ -27,7 +27,7 @@ public:
 	bool init( Configuration::s_PWMConfig* thisPWMConfig_ );
 	
 	bool setChannelPWMRatio( unsigned char ratioOn, bool capRatioOn = false );
-	char getChannelPWMRatio();
+	unsigned char getChannelPWMRatio();
     bool isChannelEnabled();
 	bool setChannelEnabled( bool enabled );
 	

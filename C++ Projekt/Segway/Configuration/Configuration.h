@@ -152,6 +152,8 @@ public:
 
 #endif /* CONFIGURATION_H_ */
 
+#define VINTP volatile int*
+
 // adresses
 #define PORT_OFFSET 0x0100
 

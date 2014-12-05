@@ -9,11 +9,11 @@ Motor::~Motor() {
 }
 
 void Motor::initEnablePin() {
-	int *GPER = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + GPER_OFFSET);
+	VINTP GPER = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + GPER_OFFSET);
 	SET_BIT(*GPER, Configuration::Motor_enabledPinPin);
-	int *ODER = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + ODER_OFFSET);
+	VINTP ODER = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + ODER_OFFSET);
 	SET_BIT(*ODER, Configuration::Motor_enabledPinPin);
-	int *OVR = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
+	VINTP OVR = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
 	CLEAR_BIT(*OVR, Configuration::Motor_enabledPinPin);
 }
 
@@ -45,13 +45,13 @@ void Motor::setDirection( bool forward ) {
 
 void Motor::setEnabled( bool enabled ) {
     // set enable value
-    int *OVR = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
+    VINTP OVR = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
     if (enabled) SET_BIT(*OVR, Configuration::Motor_enabledPinPin);
 	else CLEAR_BIT(*OVR, Configuration::Motor_enabledPinPin);
 }
 
 bool Motor::getIsEnabled() {
 	// read enable value
-	int *PVR = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
+	VINTP PVR = (int*) (GPIO_MODULE + (Configuration::Motor_enabledPinPort ? PORT_OFFSET : 0) + OVR_OFFSET);
 	return BIT_IS_SET(*PVR, Configuration::Motor_enabledPinPin);
 }

@@ -100,17 +100,20 @@ int main( void ) {
 	// Initialize configuration
 	Configuration::init();
 	
-    PWM pwm = new PWM();
-    pwm->init({
-        5,
-        255,
-        1,
-        1,
-        5,
-        2
-    });
+    PWM *pwm = new PWM();
+	Configuration::s_PWMConfig config;
+	config.channelID = 5;
+	config.maxPWMRatio = 255;
+	config.frequency = 1000;
+	config.GPIO_pin = 5;
+	config.GPIO_port = 1;
+	config.GPIO_multiplexRegisterValue = 2;
+	
+    pwm->init(&config);
     pwm->setChannelEnabled(true);
-    pwm->setChannelPWMRatio(255 / 2);
+    //pwm->setChannelPWMRatio(0, true);
+	
+	//while (true) asm("nop");
     
 	return 0;
 }
