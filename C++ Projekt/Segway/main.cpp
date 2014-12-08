@@ -100,19 +100,20 @@ int main( void ) {
 	// Initialize configuration
 	Configuration::init();
 	
-	while( true ) {
-#ifdef SIMULATION_TEST
-		// Enter Simulation mode
-		Simulation mySimulation;
-		mySimulation.main();
-#else
-		// Enter Segway mode
-		mySegway = new Segway;
-		mySegway->main();
-		delete mySegway;
-		mySegway = 0;
-#endif
-	}
+    PWM *pwm = new PWM();
+	Configuration::s_PWMConfig config;
+	config.channelID = 5;
+	config.maxPWMRatio = 10;
+	config.frequency = 1000;
+	config.GPIO_pin = 5;
+	config.GPIO_port = 1;
+	config.GPIO_multiplexRegisterValue = 2;
 	
+    pwm->init(&config);
+    pwm->setChannelEnabled(true);
+    pwm->setChannelPWMRatio(60, true);
+	
+	//while (true) asm("nop");
+    
 	return 0;
 }
