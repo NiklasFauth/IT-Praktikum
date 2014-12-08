@@ -33,7 +33,7 @@ bool PWM::init( Configuration::s_PWMConfig* thisPWMConfig_ ) {
     // set period value depending on frequency
     *CPRD0 = (int) (Configuration::PWMCLK / thisPWMConfig_->frequency);
 	// toggle polarity
-	SET_BIT(*CMR0, 9);
+	//SET_BIT(*CMR0, 9);
     CDTY0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CDTY0_OFFSET);
 	*CDTY0 = 0;
     // set maxPWMRatio

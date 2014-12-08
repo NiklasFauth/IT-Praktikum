@@ -103,7 +103,7 @@ int main( void ) {
     PWM *pwm = new PWM();
 	Configuration::s_PWMConfig config;
 	config.channelID = 5;
-	config.maxPWMRatio = 255;
+	config.maxPWMRatio = 10;
 	config.frequency = 1000;
 	config.GPIO_pin = 5;
 	config.GPIO_port = 1;
@@ -111,7 +111,7 @@ int main( void ) {
 	
     pwm->init(&config);
     pwm->setChannelEnabled(true);
-    //pwm->setChannelPWMRatio(0, true);
+    pwm->setChannelPWMRatio(60, true);
 	
 	//while (true) asm("nop");
     
