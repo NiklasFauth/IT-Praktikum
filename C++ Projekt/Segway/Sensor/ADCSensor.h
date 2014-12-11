@@ -12,7 +12,7 @@
 class ADCSensor {
 private:
 	Configuration::s_ADCSensorConfig* adcSensor;
-	ADC controller;
+	ADC* controller;
 	Configuration::s_gpioMultiplexData* multiplexData;
 	signed long integerValue;
 	float floatValue;
