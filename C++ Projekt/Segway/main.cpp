@@ -3,7 +3,7 @@
 #include "Segway/Segway.h"
 #include "Timer/Timer.h"
 
-//#include "../UART/bitmacros.h"
+#include "bitmacros.h"
 
 const char* MYAVR32_PM_ADDRESS = (char*) 0xFFFF0C00;
 const unsigned int MYAVR32_PM_OFFSET_OSCCTL0 = 0x0028;
@@ -100,20 +100,19 @@ int main( void ) {
 	// Initialize configuration
 	Configuration::init();
 	
-    PWM *pwm = new PWM();
-	Configuration::s_PWMConfig config;
-	config.channelID = 5;
-	config.maxPWMRatio = 10;
-	config.frequency = 1000;
-	config.GPIO_pin = 5;
-	config.GPIO_port = 1;
-	config.GPIO_multiplexRegisterValue = 2;
+	while( true ) {
+#ifdef SIMULATION_TEST
+		// Enter Simulation mode
+		Simulation mySimulation;
+		mySimulation.main();
+#else
+		// Enter Segway mode
+		mySegway = new Segway;
+		mySegway->main();
+		delete mySegway;
+		mySegway = 0;
+#endif
+	}
 	
-    pwm->init(&config);
-    pwm->setChannelEnabled(true);
-    pwm->setChannelPWMRatio(60, true);
-	
-	//while (true) asm("nop");
-    
 	return 0;
 }
