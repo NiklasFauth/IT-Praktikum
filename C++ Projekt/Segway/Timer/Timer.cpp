@@ -3,7 +3,18 @@
 
 // Adressen
 // Frage: Woher weiﬂ ich, welche Nummer ich nehme (0 oder 1 oder 2..) Was ist dabei der Unterschied?
-volatile unsigned int* TC = (volatile unsigned int*) 0xFFF3800;
+#define TC 0xFFFF3800 //Timer
+#define CCR0_Offset 0x00 //Control Register
+#define CMR0_Offset 0x04 //Mode Register
+#define CV0_Offset 0x10 //Counter Value
+#define RA0_Offset 0x14 //Register A
+#define RB0_Offset 0x18 //Register B
+#define RC0_Offset 0x1C //Register C
+#define SR0_Offset 0x20 //Status Register
+#define IER0_Offset 0x24 //Interrupt Enable Register
+#define IDR0_Offset 0x28 //Interrupt Disable Register
+#define IMR0_Offset 0x2C //Interrupt Mask Register
+/*volatile unsigned int* TC = (volatile unsigned int*) 0xFFFF3800;
 volatile unsigned int* CCR0= (volatile unsigned int*) 0xFFF3800; //Channel Control Register
 volatile unsigned int* CMR0= (volatile unsigned int*) 0xFFF3804;
 volatile unsigned int* CV0= (volatile unsigned int*) 0xFFF3810;
@@ -13,7 +24,7 @@ volatile unsigned int* RC0= (volatile unsigned int*) 0xFFF381C;
 volatile unsigned int* SR0= (volatile unsigned int*) 0xFFF3820; //Channel Status Register
 volatile unsigned int* IER0= (volatile unsigned int*) 0xFFF3824; //Channel Interrupt Enable Register
 volatile unsigned int* IDR0= (volatile unsigned int*) 0xFFF3828;
-volatile unsigned int* IMR0= (volatile unsigned int*) 0xFFF382C;
+volatile unsigned int* IMR0= (volatile unsigned int*) 0xFFF382C;*/
 
 Timer::Timer() {
 
@@ -25,6 +36,8 @@ Timer::~Timer() {
 
 // RC value will determinate
 bool Timer::prepareTimer(unsigned long frequency){
+	VINTP CMR0 = (int*) (TC+CMR0_Offset);
+	VINTP RC0 = (int*) (TC+RC0_Offset);
 	setIsTimerInterruptEnabled(true);
 	SET_BIT(*CMR0,15); //*CMR0 |= 1 << 15; // WAVE: Waveform mode is enabled
 	SET_BIT(*CMR0,14); //*CMR0 |= 1 << 14; // WAVSEL: RC is chosen as the maximum value (UP mode with automatic trigger on RC Compare)
@@ -38,6 +51,7 @@ bool Timer::prepareTimer(unsigned long frequency){
 	}
 }
 void Timer::cleanUpTimer(void){
+	/* Diese Methode wird nicht aufgerufen
 	*CCR0 = 0x0;
 	*CMR0 = 0x0;
 	*CV0 = 0x0;
@@ -47,55 +61,62 @@ void Timer::cleanUpTimer(void){
 	*SR0 = 0x0;
 	*IER0 = 0x0;
 	*IDR0 = 0x0;
-	*IMR0 =0x0;
+	*IMR0 =0x0;*/
 }
 
 bool Timer::initTimer( unsigned long frequency ) {
 	if (prepareTimer(frequency) == true){
-		setIsTimerEnabled(true);
 		setIsTimerInterruptEnabled(true);
 		return true;
 	}
-	else if (prepareTimer(frequency) == false){
+	else {
 		return false;	
 	}
 }
 
 void Timer::setIsTimerEnabled( bool enabled ) {
-if (enabled == true){
-	SET_BIT(*CCR0, 0); //Entpricht: *CCR0 |= 1; CLKEN: This bit will enable the clock 
-	SET_BIT(*CCR0, 2); //Entspricht: *CCR0 |= 1 << 2; SWTRG: The clock is started
-}
-else{
-	SET_BIT(*CCR0, 1); //Entspricht: *CCR0 |= 1 << 1; CLKDIS: This bit will disable the clock
-}
-}
+	VINTP CCR0 = (int*) (TC+CCR0_Offset);
+	if (enabled == true){
+		SET_BIT(*CCR0, 0); //Entpricht: *CCR0 |= 1; CLKEN: This bit will enable the clock 
+		SET_BIT(*CCR0, 2); //Entspricht: *CCR0 |= 1 << 2; SWTRG: The clock is started
+	}
+	else{
+		SET_BIT(*CCR0, 1); //Entspricht: *CCR0 |= 1 << 1; CLKDIS: This bit will disable the clock
+	}
+	}
 
 void Timer::setIsTimerInterruptEnabled( bool enabled ) {
-if (enabled == true){
-	SET_BIT(*IER0, 4); //Entspricht *IER0 |= 1 << 4; // CPCS:This bit is set when an RC Compare has occured 
-}
-else{
-	SET_BIT(*IDR0, 4); //Entspricht: *IDR0 |= 1 << 4; //CPCS: This bit ill clear the sorresponding bit in IMR (Interrupt Mask Register, read-only)
-}
-}
+	VINTP IER0 = (int*) (TC+IER0_Offset);
+	VINTP IDR0 = (int*) (TC+IDR0_Offset);
+	if (enabled == true){
+		SET_BIT(*IER0, 4); //Entspricht *IER0 |= 1 << 4; // CPCS:This bit is set when an RC Compare has occured 
+	}
+	else{
+		SET_BIT(*IDR0, 4); //Entspricht: *IDR0 |= 1 << 4; //CPCS: This bit ill clear the sorresponding bit in IMR (Interrupt Mask Register, read-only)
+	}
+	}
 
 void Timer::resetInterruptFlag(void) {
-	*SR0; //Reading the Status Register will also clear the interrupt bit for the corresponding interrupts.
+	VINTP SR0 = (int*) (TC+SR0_Offset);
+	volatile int temp=*SR0; //Reading the Status Register will also clear the interrupt bit for the corresponding interrupts.
+	temp=0;
 }
 
 
 //If timer is enabled, the return value is true
 bool Timer::getIsTimerEnabled(void){
+	VINTP SR0 = (int*) (TC+SR0_Offset);
 	return (bool)(*SR0 & 0x10000); // Bit 16 CLKSTA is set when the clock is enabled -> must be 1 (2^16 = 16^4)
 }
 
 //If interrupts are enabled, the return value is true
 bool Timer::getIsInterruptEnabled(void){
+	VINTP IMR0 = (int*) (TC+IMR0_Offset);
 	return (bool)(*IMR0 & 0x10); // Bit 4 CPCS is set when an RC Compare has occured (2^4 = 16^1)
 }
 
 void Timer::cleanUp(void){
+	/* Diese Methode wird nicht aufgerufen
 	*CCR0 = 0x0;
 	*CMR0 = 0x0;
 	*CV0 = 0x0;
@@ -106,4 +127,5 @@ void Timer::cleanUp(void){
 	*IER0 = 0x0;
 	*IDR0 = 0x0;
 	*IMR0 =0x0;
+	*/
 }
