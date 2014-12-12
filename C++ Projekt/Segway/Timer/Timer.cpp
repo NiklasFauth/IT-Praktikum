@@ -1,8 +1,7 @@
 #include "Timer.h"
-//#include "../bitmacros.h"
+ #include "../UART/bitmacros.h"
 
 // Adressen
-// Frage: Woher weiﬂ ich, welche Nummer ich nehme (0 oder 1 oder 2..) Was ist dabei der Unterschied?
 #define TC 0xFFFF3800 //Timer
 #define CCR0_Offset 0x00 //Control Register
 #define CMR0_Offset 0x04 //Mode Register
@@ -14,17 +13,6 @@
 #define IER0_Offset 0x24 //Interrupt Enable Register
 #define IDR0_Offset 0x28 //Interrupt Disable Register
 #define IMR0_Offset 0x2C //Interrupt Mask Register
-/*volatile unsigned int* TC = (volatile unsigned int*) 0xFFFF3800;
-volatile unsigned int* CCR0= (volatile unsigned int*) 0xFFF3800; //Channel Control Register
-volatile unsigned int* CMR0= (volatile unsigned int*) 0xFFF3804;
-volatile unsigned int* CV0= (volatile unsigned int*) 0xFFF3810;
-volatile unsigned int* RA0= (volatile unsigned int*) 0xFFF3814;
-volatile unsigned int* RB0= (volatile unsigned int*) 0xFFF3818;
-volatile unsigned int* RC0= (volatile unsigned int*) 0xFFF381C;
-volatile unsigned int* SR0= (volatile unsigned int*) 0xFFF3820; //Channel Status Register
-volatile unsigned int* IER0= (volatile unsigned int*) 0xFFF3824; //Channel Interrupt Enable Register
-volatile unsigned int* IDR0= (volatile unsigned int*) 0xFFF3828;
-volatile unsigned int* IMR0= (volatile unsigned int*) 0xFFF382C;*/
 
 Timer::Timer() {
 
