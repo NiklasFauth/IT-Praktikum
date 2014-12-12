@@ -96,22 +96,22 @@ bool ADC::enableInPinSelector( unsigned long channelID, bool enabled ) {
 		//PMR1 prüfen, wenn 1, schreibe eine 1 rein, wenn nicht, schreibe eine 0 rein
 		if ( BIT_IS_SET ( Configuration::ADC_gpioMultiplexData[channelID].multiplexRegisterValue, 1 ) ){
 			
-			SET_BIT ( *( volatile unsigned int* ) (GPIO_BASE + PMR1_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * 0x0100 ) , Configuration::ADC_gpioMultiplexData[channelID].pin );
+			SET_BIT ( *( volatile unsigned int* ) ( GPIO_BASE + PMR1_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE ) , Configuration::ADC_gpioMultiplexData[channelID].pin );
 			
 		} else {
 			
 			
-			CLEAR_BIT ( *( volatile unsigned int* ) ( GPIO_BASE + PMR1_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * 0x0100 ), Configuration::ADC_gpioMultiplexData[channelID].pin );
+			CLEAR_BIT ( *( volatile unsigned int* ) ( GPIO_BASE + PMR1_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE ), Configuration::ADC_gpioMultiplexData[channelID].pin );
 		}
 		
 		//PMR0 prüfen, analog zu PMR1
-		if ( BIT_IS_SET ( Configuration::ADC_gpioMultiplexData[channelID].multiplexRegisterValue, 0 ) ){
+		if ( BIT_IS_SET ( Configuration::ADC_gpioMultiplexData[channelID].multiplexRegisterValue, 0 ) ) {
 			
-			SET_BIT ( *( volatile unsigned int* ) ( GPIO_BASE + PMR0_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * 0x0100 ), Configuration::ADC_gpioMultiplexData[channelID].pin );
+			SET_BIT ( *( volatile unsigned int* ) ( GPIO_BASE + PMR0_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE ), Configuration::ADC_gpioMultiplexData[channelID].pin );
 			
 		} else {
 			
-			CLEAR_BIT ( *(volatile unsigned int* ) ( GPIO_BASE +PMR0_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * 0x0100 ), Configuration::ADC_gpioMultiplexData[channelID].pin );
+			CLEAR_BIT ( *(volatile unsigned int* ) ( GPIO_BASE +PMR0_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE ), Configuration::ADC_gpioMultiplexData[channelID].pin );
 			
 		}
 	
