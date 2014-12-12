@@ -43,7 +43,7 @@ public:
 	struct s_MotorConfig {
 		unsigned char directionPinPort;
 		unsigned long directionPinPin;
-		bool directionPinForwardValue;			// 1: high on forward, 0: low on forward
+		bool directionPinForwardValue;			// 1: high on forward, 0: low on backward
 		s_PWMConfig* PWMConfig;
 	};
 	struct s_GPIOSensorConfig {
@@ -151,3 +151,53 @@ public:
 
 
 #endif /* CONFIGURATION_H_ */
+
+#define VINTP volatile int*
+
+// adresses
+#define PORT_OFFSET 0x0100
+
+#define GPIO_MODULE 0xFFFF1000
+#define GPER_OFFSET 0x00 // enable
+#define PMR0_OFFSET 0x10 // peripheral mux 0
+#define PMR1_OFFSET 0x20 // peripheral mux 1
+#define ODER_OFFSET 0x40 // output driver
+#define OVR_OFFSET 0x50 // output value
+#define PVR_OFFSET 0x60 // value
+#define PUER_OFFSET 0x70 // pull-up
+#define GFER_OFFSET 0xC0 // glitch filter
+
+#define PWM_MODULE 0xFFFF3000
+#define ENA_OFFSET 0x004 // enable
+#define DIS_OFFSET 0x008 // disable
+#define SR_OFFSET 0x00C // status
+#define CMR0_OFFSET 0x200 // channel 0
+#define CHANNEL_OFFSET 0x020 // channel
+#define CDTY0_OFFSET 0x004 // duty cycle
+#define CPRD0_OFFSET 0x008 // period
+#define CCNT0_OFFSET 0x00C // counter
+#define CUPD0_OFFSET 0x010 // update
+
+//bitmacros
+#ifndef BITMACROS_H
+#define BITMACROS_H
+
+
+/* set bit */
+#define SET_BIT(var, bit) ((var) |= (1u << (bit)))
+
+/* set bits */
+#define SET_BITS(var, bits) ((var) |= (bits))
+
+/* clear bit */
+#define CLEAR_BIT(var, bit) ((var) &= (unsigned)~(1u << (bit)))
+
+/* clear bits */
+#define CLEAR_BITS(var, bits) ((var) &= (unsigned)~(bits))
+
+/* bit is set/clear */
+#define BIT_IS_SET(var, bit) ((var) & (1u << (bit)))
+#define BIT_IS_CLEAR(var, bit) !BIT_IS_SET(var, bit)
+
+
+#endif /* BITMACROS_H */

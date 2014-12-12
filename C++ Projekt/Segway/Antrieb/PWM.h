@@ -1,4 +1,6 @@
-/* verwenden Sie diese Klasse für alle Funktionen die direkt auf die HW-PWM zugreifen. */
+/* verwenden Sie diese Klasse fï¿½r alle Funktionen die direkt auf die HW-PWM zugreifen. */
+
+// #include "../UART/bitmacros.h"
 
 #ifndef PWM_H_
 #define PWM_H_
@@ -7,15 +9,26 @@
 
 class PWM {
 private:
-
+    int pin;
+    int channelID;
+    int maxPWMRatio;
+    VINTP ENA;
+    VINTP DIS;
+	VINTP SR;
+	VINTP CMR0;
+	VINTP GPIO;
+    VINTP CPRD0;
+    VINTP CDTY0;
+    VINTP CUPD0;
 
 public:
 	PWM();
 	~PWM();
 	bool init( Configuration::s_PWMConfig* thisPWMConfig_ );
-	bool enableInPinSelector( bool enabled );
 	
 	bool setChannelPWMRatio( unsigned char ratioOn, bool capRatioOn = false );
+	unsigned char getChannelPWMRatio();
+    bool isChannelEnabled();
 	bool setChannelEnabled( bool enabled );
 	
 	void cleanUp();	

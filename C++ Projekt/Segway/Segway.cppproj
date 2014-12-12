@@ -62,8 +62,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
-      <Avr32GccCpp xmlns="">
-        <avr32gcc.common.outputfiles.hex>False</avr32gcc.common.outputfiles.hex>
+      <Avr32GccCpp>
+        <avr32gcc.common.outputfiles.hex>True</avr32gcc.common.outputfiles.hex>
         <avr32gcc.common.outputfiles.lss>False</avr32gcc.common.outputfiles.lss>
         <avr32gcc.common.outputfiles.eep>False</avr32gcc.common.outputfiles.eep>
         <avr32gcc.common.outputfiles.srec>False</avr32gcc.common.outputfiles.srec>
@@ -94,31 +94,32 @@
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <ToolchainSettings>
       <Avr32GccCpp>
-        <avr32gcc.common.outputfiles.hex>True</avr32gcc.common.outputfiles.hex>
-        <avr32gcc.common.outputfiles.lss>True</avr32gcc.common.outputfiles.lss>
-        <avr32gcc.common.outputfiles.eep>True</avr32gcc.common.outputfiles.eep>
-        <avr32gcc.common.outputfiles.srec>True</avr32gcc.common.outputfiles.srec>
-        <avr32gcc.compiler.optimization.level>Optimize (-O1)</avr32gcc.compiler.optimization.level>
-        <avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
-        <avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>
-        <avr32gcc.compiler.optimization.DebugLevel>Maximum (-g3)</avr32gcc.compiler.optimization.DebugLevel>
-        <avr32gcc.compiler.warnings.AllWarnings>True</avr32gcc.compiler.warnings.AllWarnings>
-        <avr32gcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
-        <avr32gcccpp.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcccpp.compiler.optimization.UseAssemblerForPseudoInstructions>
-        <avr32gcccpp.compiler.optimization.DebugLevel>Maximum (-g3)</avr32gcccpp.compiler.optimization.DebugLevel>
-        <avr32gcccpp.compiler.warnings.AllWarnings>True</avr32gcccpp.compiler.warnings.AllWarnings>
-        <avr32gcccpp.linker.general.DoNotUseStandardStartFiles>True</avr32gcccpp.linker.general.DoNotUseStandardStartFiles>
-        <avr32gcccpp.linker.libraries.Libraries>
-          <ListValues>
-            <Value>libm</Value>
-          </ListValues>
-        </avr32gcccpp.linker.libraries.Libraries>
-        <avr32gcccpp.linker.optimization.GarbageCollectUnusedSections>True</avr32gcccpp.linker.optimization.GarbageCollectUnusedSections>
-        <avr32gcccpp.linker.optimization.PutReadOnlyDataInWritableDataSection>True</avr32gcccpp.linker.optimization.PutReadOnlyDataInWritableDataSection>
-        <avr32gcccpp.linker.optimization.AllowDirectReferencesToDataSection>True</avr32gcccpp.linker.optimization.AllowDirectReferencesToDataSection>
-        <avr32gcccpp.assembler.debugging.DebugLevel>Default (-g)</avr32gcccpp.assembler.debugging.DebugLevel>
-        <avr32gcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</avr32gcccpp.preprocessingassembler.debugging.DebugLevel>
-      </Avr32GccCpp>
+  <avr32gcc.common.outputfiles.hex>True</avr32gcc.common.outputfiles.hex>
+  <avr32gcc.common.outputfiles.lss>True</avr32gcc.common.outputfiles.lss>
+  <avr32gcc.common.outputfiles.eep>True</avr32gcc.common.outputfiles.eep>
+  <avr32gcc.common.outputfiles.srec>True</avr32gcc.common.outputfiles.srec>
+  <avr32gcc.compiler.optimization.level>Optimize (-O1)</avr32gcc.compiler.optimization.level>
+  <avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcc.compiler.optimization.UseAssemblerForPseudoInstructions>
+  <avr32gcc.compiler.optimization.DebugLevel>Maximum (-g3)</avr32gcc.compiler.optimization.DebugLevel>
+  <avr32gcc.compiler.warnings.AllWarnings>True</avr32gcc.compiler.warnings.AllWarnings>
+  <avr32gcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</avr32gcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <avr32gcccpp.compiler.optimization.UseAssemblerForPseudoInstructions>True</avr32gcccpp.compiler.optimization.UseAssemblerForPseudoInstructions>
+  <avr32gcccpp.compiler.optimization.DebugLevel>Maximum (-g3)</avr32gcccpp.compiler.optimization.DebugLevel>
+  <avr32gcccpp.compiler.warnings.AllWarnings>True</avr32gcccpp.compiler.warnings.AllWarnings>
+  <avr32gcccpp.linker.general.DoNotUseStandardStartFiles>True</avr32gcccpp.linker.general.DoNotUseStandardStartFiles>
+  <avr32gcccpp.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </avr32gcccpp.linker.libraries.Libraries>
+  <avr32gcccpp.linker.optimization.GarbageCollectUnusedSections>True</avr32gcccpp.linker.optimization.GarbageCollectUnusedSections>
+  <avr32gcccpp.linker.optimization.PutReadOnlyDataInWritableDataSection>True</avr32gcccpp.linker.optimization.PutReadOnlyDataInWritableDataSection>
+  <avr32gcccpp.linker.optimization.AllowDirectReferencesToDataSection>True</avr32gcccpp.linker.optimization.AllowDirectReferencesToDataSection>
+  <avr32gcccpp.linker.miscellaneous.LinkerFlags>-Wl,-e,_trampoline</avr32gcccpp.linker.miscellaneous.LinkerFlags>
+  <avr32gcccpp.assembler.debugging.DebugLevel>Default (-g)</avr32gcccpp.assembler.debugging.DebugLevel>
+  <avr32gcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</avr32gcccpp.preprocessingassembler.debugging.DebugLevel>
+</Avr32GccCpp>
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
@@ -147,9 +148,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="assembler\exception.s">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="bitmacros.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Configuration\Configuration.cpp">
@@ -195,6 +193,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="Timer\Timer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="UART\bitmacros.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="UART\UART.cpp">

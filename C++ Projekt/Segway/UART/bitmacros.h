@@ -1,7 +1,8 @@
 #ifndef BITMACROS_H
 #define BITMACROS_H
 
-
+//not used
+//
 /* set bit */
 #define SET_BIT(var, bit) ((var) |= (1u << (bit)))
 
