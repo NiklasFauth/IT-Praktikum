@@ -30,14 +30,14 @@ bool PWM::init( Configuration::s_PWMConfig* thisPWMConfig_ ) {
     CMR0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID);
     CUPD0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CUPD0_OFFSET);
     CPRD0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CPRD0_OFFSET);
-    //*CPRD0 = (int) (Configuration::PWMCLK / thisPWMConfig_->frequency);
-    *CPRD0 = 1000000;
+    // set period value depending on frequency
+    *CPRD0 = (int) (Configuration::PWMCLK / thisPWMConfig_->frequency);
+	// toggle polarity
+	//SET_BIT(*CMR0, 9);
     CDTY0 = (int*) (PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CDTY0_OFFSET);
 	*CDTY0 = 0;
     // set maxPWMRatio
     maxPWMRatio = thisPWMConfig_->maxPWMRatio;
-	
-	//SET_BIT(*CMR0, 9);
 	return true;
 }
 
@@ -52,14 +52,13 @@ bool PWM::setChannelPWMRatio( unsigned char ratioOn, bool capRatioOn ) {
     // reset mode register pin 10 to initiate duty cycle update
     //CLEAR_BIT(*CMR0, 10);
     // set new duty cycle value
-    //*CUPD0 = (int) ((1 - (float) ratioOn / 255) * *CPRD0);
-    *CUPD0 = *CPRD0 / 2;
+    *CUPD0 = (int) (ratioOn * *CPRD0 / 255);
     return true;
 }
 
 unsigned char PWM::getChannelPWMRatio() {
     // return current ratio
-    return (char) ((1 - (float) *CDTY0 / *CPRD0) * 255);
+    return (char) (*CDTY0 *255 / *CPRD0);
 }
 
 bool PWM::isChannelEnabled() {

@@ -1,4 +1,5 @@
 #include "ADCSensor.h"
+#include "../bitmacros.h"
 
 ADCSensor::ADCSensor() {
 
@@ -9,6 +10,9 @@ ADCSensor::~ADCSensor() {
 	cleanUp();
 }
 
+/************************************************************************/
+/* Übergibt die Werte aus thisADCSensorConfig_ an ADCController_                                                                    */
+/************************************************************************/
 bool ADCSensor::init( Configuration::s_ADCSensorConfig* thisADCSensorConfig_, ADC* ADCController_ ) {
 	
 	ADCController_->ID = thisADCSensorConfig_->ADCChannelID;
@@ -17,69 +21,27 @@ bool ADCSensor::init( Configuration::s_ADCSensorConfig* thisADCSensorConfig_, AD
 	ADCController_->useADCSlopeFactor = thisADCSensorConfig_->useSlopeFactor;
 	ADCController_->useADCZeroOffset = thisADCSensorConfig_->useZeroOffset;
 	
+	adcSensor = thisADCSensorConfig_;
+	controller = ADCController_;
+	
 	return 1;
 }
-
+/************************************************************************/
+/*  Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
+	auszulesen.                                                                     */
+/************************************************************************/
 signed long ADCSensor::getIntegerValue( bool average, unsigned long numberOfValuesForAverage ) {
 	
-	channelID = adcSensor->ADCChannelID;
+	//Verwendet die ADC Methode
+	integerValue = controller->getChannelValue( adcSensor->ADCChannelID, average, numberOfValuesForAverage );
 	
-	//Wert des ADC ausgeben; Messen im ADC durch polling -> andauernd messen; 
-	
-	//controller.init();:ADC enable, 10 bit konvertierung einstellen (Mode Register), konvertierung starten (control Register), siehe ADC.cpp
-	//controller ist vom Typ ADC
-
-	if ( average == true ) {
+	//Falls ein offset verwendet wird, wird er vor der Ausgabe vom Wert des ADC abgezogen
+	if ( adcSensor->useZeroOffset == true ) {
 		
-		signed long *values [ numberOfValuesForAverage ];
-		
-		//In jedem Schleifendurchgang wird der ADC initialisiert (d.h. eine Konvertierung gestartet),
-		//der letzte Wert wird ausgelesen und in dem array values gespeichert. Danach wird der ADC wird zurückgesetzt.
-		//Falls ein Offset verwendet wird, wird dieser vom ausgelesenen wert abgezogen.
-		
-		for ( unsigned int i = 0; i < numberOfValuesForAverage; i++ ){
-			
-			controller.init();
-			
-			values [ i ] = (signed long*) ADC_BASE + LAST_CONVERTED_DATA_REGISTER_OFFSET * channelID;
-			
-			controller.cleanUpChannel( channelID );
-			
-			if ( adcSensor->zeroOffset == 0 ) {
-			
-				integerValue += *values [ i ];
-			
-			} else {
-				
-				integerValue += *values [ i ] - adcSensor->zeroOffset;
-			}
-		}
-		
-		integerValue = integerValue / numberOfValuesForAverage;
-		
-		return integerValue;
-		
-	} else {
-		
-		controller.init();
-		
-		//letzten Wert auslesen
-		int* getValue = (int*) ADC_BASE + LAST_CONVERTED_DATA_REGISTER_OFFSET * channelID;
-		
-		if ( adcSensor->zeroOffset == 0 ){
-			
-			integerValue = *getValue;
-			
-		} else {
-		
-		integerValue = *getValue - adcSensor->zeroOffset;
-		
-		}
-		
-		return integerValue;
-		
+		integerValue = integerValue - adcSensor->zeroOffset;
 	}
-
+	
+	return integerValue;
 }
 
 
@@ -100,41 +62,13 @@ signed long ADCSensor::getZeroOffset() {
 	return adcSensor->zeroOffset;
 }
 
+/************************************************************************/
+/*	Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
+	auszulesen. Gibt das Ergebnis allerdings als float aus.                                                                     */
+/************************************************************************/
 float ADCSensor::getFloatValue( bool average, unsigned long numberOfValuesForAverage ) {
 	
-	channelID = adcSensor->ADCChannelID;
-	
-	if ( average == true ) {
-		
-		float *floatValues [ numberOfValuesForAverage ];
-		
-/*! \getFloatValue falls average = true
-
-		\brief		In jedem schleifedurchlauf wird der ADC initialisiert beinhaltet den Start einer Konvertierung),
-					der letzte konvertierte Wert  ausgelesen und im floatValues array abgespeichert.
-					Danach wird der Mittelwert über alle Werte gebildet*/
-
-		for ( unsigned int i = 0; i < numberOfValuesForAverage; i++ ) {
-			
-			controller.init();
-			
-			floatValues [ i ] = (float *) ADC_BASE + LAST_CONVERTED_DATA_REGISTER_OFFSET * channelID;
-			
-			controller.cleanUpChannel( channelID );
-			
-			floatValue += *floatValues [ i ];		
-		}
-		
-		floatValue = floatValue / numberOfValuesForAverage;
-		
-	} else {
-		
-		controller.init();
-		
-		float* valueGet = (float*) ADC_BASE + LAST_CONVERTED_DATA_REGISTER_OFFSET * channelID;
-		
-		floatValue = *valueGet;		
-	}	
+	floatValue = ( float ) controller->getChannelValue( adcSensor->ADCChannelID, average, numberOfValuesForAverage );
 	
 	return floatValue;
 }
@@ -161,22 +95,9 @@ float ADCSensor::getSlopeFactor( void ) {
 
 void ADCSensor::cleanUp( void ) {
 	
-	//deaktiviert den Ausgangspin
-	*disable = ADC_BASE + CHANNEL_DISABLE_REGISTER_OFFSET * adcSensor->ADCChannelID;;
-	*disable = *disable | adcSensor->ADCChannelID;
+	///siehe ADC::CleanUpChannel
+	controller->cleanUpChannel( adcSensor->ADCChannelID );
 	
-	//löscht die Variablen
-	delete adcSensor;
-}
-
-void ADCSensor::setChannelID( unsigned long newChannelID ) {
-	
-	adcSensor->ADCChannelID = newChannelID;
-	
-}
-
-unsigned long ADCSensor::getChannelID( void ) {
-	
-	return adcSensor->ADCChannelID;
-	
+	///zurücksetzen des Mode Registers, indem eine 0 hinein geschrieben wird
+	*( volatile unsigned int* ) ( ADC_BASE + MODE_REGISTER_OFFSET ) = 0;
 }
