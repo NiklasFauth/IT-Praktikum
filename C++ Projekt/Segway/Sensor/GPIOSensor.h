@@ -3,7 +3,7 @@
  *
  * Created: 18.04.2013 15:21:45
  *  Author: Florian
- */ 
+ */
 
 #include "../bitmacros.h"
 
@@ -16,17 +16,17 @@
 #include "../Configuration/Configuration.h"
 
 class GPIOSensor {
-private:
-	int pin;
-	VINTP PUER;
-	VINTP GFER;
-	VINTP PVR;
-public:
-	GPIOSensor();
-	~GPIOSensor();
-	void init( Configuration::s_GPIOSensorConfig* thisGPIOSensorConfig_ );
-	bool getValue();
-	void cleanUp();
+  private:
+    int pin;
+    VINTP PUER;
+    VINTP GFER;
+    VINTP PVR;
+  public:
+    GPIOSensor();
+    ~GPIOSensor();
+    void init(Configuration::s_GPIOSensorConfig* thisGPIOSensorConfig_);
+    bool getValue();
+    void cleanUp();
 };
 
 
