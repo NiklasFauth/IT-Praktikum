@@ -44,15 +44,14 @@ bool PWM::init( Configuration::s_PWMConfig* thisPWMConfig_ ) {
 bool PWM::setChannelPWMRatio( unsigned char ratioOn, bool capRatioOn ) {
 	if (capRatioOn) {
 		// truncate ratioOn value
-		if (ratioOn < 0) ratioOn = 0;
-		else if (ratioOn > maxPWMRatio) ratioOn = maxPWMRatio;
+		if (ratioOn > maxPWMRatio) ratioOn = maxPWMRatio;
 	} else
 		// return false otherwise
 		if (0 < ratioOn || ratioOn > maxPWMRatio) return false;
     // reset mode register pin 10 to initiate duty cycle update
     //CLEAR_BIT(*CMR0, 10);
     // set new duty cycle value
-    *CUPD0 = (int) (ratioOn * *CPRD0 / 255);
+    *CUPD0 = (int) ((float)ratioOn * *CPRD0 / 255);
     return true;
 }
 

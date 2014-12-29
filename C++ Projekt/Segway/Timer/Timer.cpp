@@ -1,5 +1,4 @@
 #include "Timer.h"
- #include "../UART/bitmacros.h"
 
 // Adressen
 #define TC 0xFFFF3800 //Timer
@@ -86,8 +85,7 @@ void Timer::setIsTimerInterruptEnabled( bool enabled ) {
 
 void Timer::resetInterruptFlag(void) {
 	VINTP SR0 = (int*) (TC+SR0_Offset);
-	volatile int temp=*SR0; //Reading the Status Register will also clear the interrupt bit for the corresponding interrupts.
-	temp=0;
+    BIT_IS_SET(*SR0, 4); //Reading the Status Register will also clear the interrupt bit for the corresponding interrupts.
 }
 
 

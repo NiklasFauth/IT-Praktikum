@@ -18,11 +18,10 @@
 #define GPIO_BASE 0xFFFF1000
 #define PMR0_OFFSET 0x10
 #define PMR1_OFFSET 0x20
-#define GPIO_ENABLE_OFFSET 0x04
-#define GPIO_PULL_UP_OFFSET 0x74
-#define GPIO_PIN_VALUE_OFFSET 0x60
-#define OUTPUT_DRIVER_ENABLE_OFFSET 0x40
+#define GPIO_ENABLE_OFFSET 0x00
 #define GPIO_PORT_SIZE 0x0100
+
+#define VINTP volatile int*
 
 class ADC {
 private:
@@ -50,3 +49,6 @@ public:
 };
 
 #endif /* ADC_H_ */
+
+#define VINTP volatile int*
+
