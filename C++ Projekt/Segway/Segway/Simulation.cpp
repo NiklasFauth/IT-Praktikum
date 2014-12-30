@@ -79,18 +79,18 @@ void Simulation::initHelpers() {
     unsigned char multiplexer_pins[] = {2, 3, 4};
     for (unsigned char i = 0; i < 3; i++) {
         //SET_BIT( AVR32_GPIO.port[multiplexer_ports[i]].gper, multiplexer_pins[i] ); // Pin is controlled by GPIO
-        SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), multiplexer_pins[i]);
+        SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), multiplexer_pins[i]);
         //SET_BIT( AVR32_GPIO.port[multiplexer_ports[i]].oder, multiplexer_pins[i] ); // Pin is driven
-        SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), multiplexer_pins[i]);
+        SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), multiplexer_pins[i]);
         //CLEAR_BIT( AVR32_GPIO.port[multiplexer_ports[i]].ovr, multiplexer_pins[i] ); // set pin to zero
-        CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), multiplexer_pins[i]);
+        CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), multiplexer_pins[i]);
     }
     //CLEAR_BIT( AVR32_GPIO.port[1].ovr, 2 );
-    CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 2);
+    CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 2);
     //SET_BIT( AVR32_GPIO.port[1].ovr, 3 );
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 3);
+    SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 3);
     //CLEAR_BIT( AVR32_GPIO.port[1].ovr, 4 );
-    CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 4);
+    CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 4);
     Motor::initEnablePin();
     if (!leftMotor.init(&Configuration::leftMotorConfig))
         displayError(ERROR_CODE_INIT_LEFTMOTOR);
@@ -155,9 +155,9 @@ void Simulation::displayError(unsigned char errorCode) {
 */
 void Simulation::initStatusLED(Configuration::s_StatusLED* statusLEDConfig) {
     //SET_BIT( AVR32_GPIO.port[statusLEDConfig->port].gpers, statusLEDConfig->pin );
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), statusLEDConfig->pin);
+    SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), statusLEDConfig->pin);
     //SET_BIT( AVR32_GPIO.port[statusLEDConfig->port].oders, statusLEDConfig->pin );
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), statusLEDConfig->pin);
+    SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), statusLEDConfig->pin);
 }
 
 
@@ -168,9 +168,9 @@ void Simulation::initStatusLED(Configuration::s_StatusLED* statusLEDConfig) {
 void Simulation::setStatusLED(Configuration::s_StatusLED* statusLEDConfig, bool on) {
     if (on) {
         //CLEAR_BIT( AVR32_GPIO.port[statusLEDConfig->port].ovr, statusLEDConfig->pin );
-        CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), statusLEDConfig->pin);
+        CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), statusLEDConfig->pin);
     } else {
         //SET_BIT( AVR32_GPIO.port[statusLEDConfig->port].ovr, statusLEDConfig->pin );
-        SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), statusLEDConfig->pin);
+        SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), statusLEDConfig->pin);
     }
 }

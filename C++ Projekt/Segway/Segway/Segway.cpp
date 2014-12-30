@@ -29,9 +29,9 @@ void Segway::timerFunction() {
     long orientationAccelerometerValue = orientationAccelerometer.getIntegerValue();
     long steeringPotentiometerValue = 0 - steeringPotentiometer.getIntegerValue();
     // calculate the angle rate in °/s from the sensor value (+- 1000mV = +- 100°/s)
-    float realAngleRate = 0.0 - float(orientationGyrometerValue) * 100.0 / 310.0;
+    float realAngleRate = 0.0 - float (orientationGyrometerValue) * 100.0 / 310.0;
     // calculate the acceleration g from the sensor value (+- 800mV = +- 1g)
-    float acceleration = float(orientationAccelerometerValue) / 248.0;
+    float acceleration = float (orientationAccelerometerValue) / 248.0;
     // calculate the (tilt) angle of the segway.
     // sin(a) = acceleration / 1g
     // a in rad = acceleration / 1g
@@ -141,8 +141,8 @@ void Segway::timerFunction() {
     // Set the motor's speed.
     // 1.741 is a correction factor resulting from fixing a rounding error in the PWM class as the
     // other parameters of the control algorithm were adjusted to the erroneous PWM class.
-    setMotorSpeed(&leftMotor, (float(leftSpeed) / 1.741));
-    setMotorSpeed(&rightMotor, (float(rightSpeed) / 1.741));
+    setMotorSpeed(&leftMotor, (float (leftSpeed) / 1.741));
+    setMotorSpeed(&rightMotor, (float (rightSpeed) / 1.741));
     // Every 20 cycles, store debug data.
     debugDataCounter++;
     if (debugDataCounter >= 20) {
@@ -209,7 +209,7 @@ long Segway::expMovingAverage(long oldVal, long newVal, unsigned char weightOfNe
     \return Exponential moving average
 */
 float Segway::expMovingAverage(float oldVal, float newVal, unsigned char weightOfNewVal_permille) {
-    return (float(1000 - weightOfNewVal_permille) * oldVal + weightOfNewVal_permille * newVal) / 1000.0;
+    return (float (1000 - weightOfNewVal_permille) * oldVal + weightOfNewVal_permille * newVal) / 1000.0;
 }
 
 /*! \brief  Calculates the PWM values for steering.
@@ -246,15 +246,15 @@ long Segway::limitSteeringPWM(long steeringPotentiometerValue, long driveSum) {
     } else if (absDriveSum > ALGCFG_DYNAMIC_STEERING_MAX_PWM * PWM_TO_DRIVESUM_FACTOR) {
         // If drive speed PWM is lower than ALGCFG_BLOCK_STEERING_PWM but over ALGCFG_DYNAMIC_STEERING_MAX_PWM,
         // allow minimal steering.
-        MAMaxSteeringPWM = expMovingAverage(MAMaxSteeringPWM, float(ALGCFG_DYNAMIC_STEERING_AT_MAX_PWM), 20);
+        MAMaxSteeringPWM = expMovingAverage(MAMaxSteeringPWM, float (ALGCFG_DYNAMIC_STEERING_AT_MAX_PWM), 20);
     } else {
         // steeringSpeed decreases from ALGCFG_DYNAMIC_STEERING_AT_NO_SPEED to ALGCFG_DYNAMIC_STEERING_AT_MAX_PWM with increasing PWM from 0 to ALGCFG_DYNAMIC_STEERING_MAX_PWM
-        MAMaxSteeringPWM = expMovingAverage(MAMaxSteeringPWM, float(ALGCFG_DYNAMIC_STEERING_AT_MAX_PWM + (ALGCFG_DYNAMIC_STEERING_AT_NO_SPEED - ALGCFG_DYNAMIC_STEERING_AT_MAX_PWM) * (1 - absDriveSum / (ALGCFG_DYNAMIC_STEERING_MAX_PWM * PWM_TO_DRIVESUM_FACTOR))), 20);
+        MAMaxSteeringPWM = expMovingAverage(MAMaxSteeringPWM, float (ALGCFG_DYNAMIC_STEERING_AT_MAX_PWM + (ALGCFG_DYNAMIC_STEERING_AT_NO_SPEED - ALGCFG_DYNAMIC_STEERING_AT_MAX_PWM) * (1 - absDriveSum / (ALGCFG_DYNAMIC_STEERING_MAX_PWM * PWM_TO_DRIVESUM_FACTOR))), 20);
     }
     // If the maximum Steering PWM exceeds ALGCFG_DYNAMIC_STEERING_AT_NO_SPEED (should not happen ), limit it to that.
     if (MAMaxSteeringPWM > ALGCFG_DYNAMIC_STEERING_AT_NO_SPEED)
         MAMaxSteeringPWM = ALGCFG_DYNAMIC_STEERING_AT_NO_SPEED;
-    return (MAMaxSteeringPWM * steeringPotentiometerValue) / float(ALGCFG_STEERING_MAX_STEERINGPOTI_VALUE);
+    return (MAMaxSteeringPWM * steeringPotentiometerValue) / float (ALGCFG_STEERING_MAX_STEERINGPOTI_VALUE);
 }
 
 /*! \brief  Calculates the speed limit angle
@@ -444,18 +444,18 @@ void Segway::initHelpers() {
     unsigned char multiplexer_pins[] = {2, 3, 4};
     for (unsigned char i = 0; i < 3; i++) {
         //SET_BIT( AVR32_GPIO.port[multiplexer_ports[i]].gper, multiplexer_pins[i] ); // Pin is controlled by GPIO
-        SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), multiplexer_pins[i]);
+        SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), multiplexer_pins[i]);
         //SET_BIT( AVR32_GPIO.port[multiplexer_ports[i]].oder, multiplexer_pins[i] ); // Pin is driven
-        SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), multiplexer_pins[i]);
+        SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), multiplexer_pins[i]);
         //CLEAR_BIT( AVR32_GPIO.port[multiplexer_ports[i]].ovr, multiplexer_pins[i] ); // set pin to zero
-        CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), multiplexer_pins[i]);
+        CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + multiplexer_ports[i] * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), multiplexer_pins[i]);
     }
     //CLEAR_BIT( AVR32_GPIO.port[1].ovr, 2 );
-    CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 2);
+    CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 2);
     //SET_BIT( AVR32_GPIO.port[1].ovr, 3 );
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 3);
+    SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 3);
     //CLEAR_BIT( AVR32_GPIO.port[1].ovr, 4 );
-    CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 4);
+    CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 1 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 4);
     Motor::initEnablePin();
     if (!leftMotor.init(&Configuration::leftMotorConfig))
         displayError(ERROR_CODE_INIT_LEFTMOTOR);
@@ -563,9 +563,9 @@ void Segway::displayError(unsigned char errorCode) {
 */
 void Segway::initStatusLED(Configuration::s_StatusLED* statusLEDConfig) {
     //SET_BIT( AVR32_GPIO.port[statusLEDConfig->port].gpers, statusLEDConfig->pin );
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), statusLEDConfig->pin);
+    SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), statusLEDConfig->pin);
     //SET_BIT( AVR32_GPIO.port[statusLEDConfig->port].oders, statusLEDConfig->pin );
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), statusLEDConfig->pin);
+    SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), statusLEDConfig->pin);
 }
 
 
@@ -576,10 +576,10 @@ void Segway::initStatusLED(Configuration::s_StatusLED* statusLEDConfig) {
 void Segway::setStatusLED(Configuration::s_StatusLED* statusLEDConfig, bool on) {
     if (on) {
         //CLEAR_BIT( AVR32_GPIO.port[statusLEDConfig->port].ovr, statusLEDConfig->pin );
-        CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), statusLEDConfig->pin);
+        CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), statusLEDConfig->pin);
     } else {
         //SET_BIT( AVR32_GPIO.port[statusLEDConfig->port].ovr, statusLEDConfig->pin );
-        SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), statusLEDConfig->pin);
+        SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + statusLEDConfig->port * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), statusLEDConfig->pin);
     }
 }
 

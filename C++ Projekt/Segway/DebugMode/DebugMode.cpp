@@ -11,17 +11,17 @@ const unsigned int DebugMode::MYAVR32_GPIO_OFFSET_OVR = 0x50;
 DebugMode::DebugMode() {
     if (!rs232UART.init(&Configuration::rs232UARTConfig)) {
         //AVR32_GPIO.port[0].ovrc = ( 1 << 24 );
-        CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 24);
+        CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 24);
         //AVR32_GPIO.port[0].ovrc = ( 1 << 25 );
-        CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 25);
+        CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 25);
         while (true);
     }
     rs232UART.enableInPinSelector(true);
     if (!bluetoothUART.init(&Configuration::bluetoothUARTConfig)) {
         //AVR32_GPIO.port[0].ovrc = ( 1 << 24 );
-        CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 24);
+        CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 24);
         //AVR32_GPIO.port[0].ovrc = ( 1 << 25 );
-        CLEAR_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 25);
+        CLEAR_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_OVR), 25);
         while (true);
     }
     bluetoothUART.enableInPinSelector(true);
@@ -48,10 +48,10 @@ void DebugMode::main() {
     // Debug
     //AVR32_GPIO.port[0].gpers = ( 1 << 24 ) | ( 1 << 25 );
     //AVR32_GPIO.port[0].oders = ( 1 << 24 ) | ( 1 << 25 );
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), 24);
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), 24);
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), 25);
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), 25);
+    SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), 24);
+    SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), 24);
+    SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_GPER), 25);
+    SET_BIT(* (volatile unsigned int*)(MYAVR32_GPIO_ADDRESS + 0 * MYAVR32_GPIO_SIZE_PORT + MYAVR32_GPIO_OFFSET_ODER), 25);
     bool
     leftDirection = true,
     rightDirection = true;

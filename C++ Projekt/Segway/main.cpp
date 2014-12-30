@@ -43,38 +43,38 @@ extern "C" void* _get_interrupt_handler(unsigned long int_level) {
 void init_system_clock() {
     // Set oscillator gain class "G3" (as f_OSC >= 8 MHz)
     //AVR32_PM.OSCCTRL0.mode = AVR32_PM_OSCCTRL0_MODE_CRYSTAL_G3;
-    SET_BITS(*(volatile unsigned int*)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_OSCCTL0), (0x007 << 0));
+    SET_BITS(* (VINTP)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_OSCCTL0), (0x007 << 0));
     // Startup time: 4096 cycles
     //AVR32_PM.OSCCTRL0.startup = AVR32_PM_OSCCTRL0_STARTUP_0_RCOSC;
-    CLEAR_BITS(*(volatile unsigned int*)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_OSCCTL0), (0x007 << 8));
+    CLEAR_BITS(* (VINTP)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_OSCCTL0), (0x007 << 8));
     // Enable Oscillator 0
     //AVR32_PM.MCCTRL.osc0en = 1;
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_MCCTRL), 2);
+    SET_BIT(* (VINTP)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_MCCTRL), 2);
     // Wait for oscillator 0 to be ready
     //while(!AVR32_PM.POSCSR.osc0rdy);
-    while (!BIT_IS_SET(*(volatile unsigned int*)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_POSCSR), 7));
+    while (!BIT_IS_SET(* (VINTP)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_POSCSR), 7));
     // Select oscillator 0 as source for the main clock
     //AVR32_PM.MCCTRL.mcsel = 1;
-    CLEAR_BITS(*(volatile unsigned int*)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_MCCTRL), (0x003 << 0));
-    SET_BIT(*(volatile unsigned int*)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_MCCTRL), 0);
+    CLEAR_BITS(* (VINTP)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_MCCTRL), (0x003 << 0));
+    SET_BIT(* (VINTP)(MYAVR32_PM_ADDRESS + MYAVR32_PM_OFFSET_MCCTRL), 0);
 }
 
 /*! \brief  Initializes the interrupt system to redirect timer interrupts to _int0(), which is implemented in assembler.
 */
 void init_interrupt_system() {
     // Set exception handler (defined in exception.s)
-    __builtin_mtsr(0x0004, (unsigned long)&_evba);
+    __builtin_mtsr(0x0004, (unsigned long) &_evba);
     // The timer's interrupt group is 14 for all timers.
     // Set the interrupt level of the timer's interrupt group to 0.
     //AVR32_INTC.IPR[14].intlevel = AVR32_INTC_INT0;
-    CLEAR_BITS(*(volatile unsigned int*)(MYAVR32_INTC_ADDRESS + MYAVR32_INTC_OFFSET_IPR0 + 14 * MYAVR32_INTC_SIZE_IPR), (0x003 << 30));
+    CLEAR_BITS(* (VINTP)(MYAVR32_INTC_ADDRESS + MYAVR32_INTC_OFFSET_IPR0 + 14 * MYAVR32_INTC_SIZE_IPR), (0x003 << 30));
     // Set the interrupt handler offset of timer's interrupt group. => Timer interrupts will be called having int_level = 0.
     //AVR32_INTC.IPR[14].autovector = ( int )&_int0 - ( int )&_evba;
-    CLEAR_BITS(*(volatile unsigned int*)(MYAVR32_INTC_ADDRESS + MYAVR32_INTC_OFFSET_IPR0 + 14 * MYAVR32_INTC_SIZE_IPR), (0x3FFF << 0));
-    SET_BITS(*(volatile unsigned int*)(MYAVR32_INTC_ADDRESS + MYAVR32_INTC_OFFSET_IPR0 + 14 * MYAVR32_INTC_SIZE_IPR), (((int)&_int0 - (int)&_evba) << 0));
+    CLEAR_BITS(* (VINTP)(MYAVR32_INTC_ADDRESS + MYAVR32_INTC_OFFSET_IPR0 + 14 * MYAVR32_INTC_SIZE_IPR), (0x3FFF << 0));
+    SET_BITS(* (VINTP)(MYAVR32_INTC_ADDRESS + MYAVR32_INTC_OFFSET_IPR0 + 14 * MYAVR32_INTC_SIZE_IPR), (((int) &_int0 - (int) &_evba) << 0));
     // Low Priority for interrupts caused by the PWM controller
     //AVR32_INTC.IPR[12].intlevel = AVR32_INTC_INT3;
-    SET_BITS(*(volatile unsigned int*)(MYAVR32_INTC_ADDRESS + MYAVR32_INTC_OFFSET_IPR0 + 12 * MYAVR32_INTC_SIZE_IPR), (0x003 << 30));
+    SET_BITS(* (VINTP)(MYAVR32_INTC_ADDRESS + MYAVR32_INTC_OFFSET_IPR0 + 12 * MYAVR32_INTC_SIZE_IPR), (0x003 << 30));
     // Globally enable interrupts
     cpu_irq_enable();
 }

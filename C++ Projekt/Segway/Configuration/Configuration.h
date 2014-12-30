@@ -15,7 +15,7 @@
 #define ADC_NUM_CONFIGURED_CHANNELS 8
 
 class Configuration {
-private:
+  private:
     static void init_Timer();
     static void init_PWM();
     static void init_Motor();
@@ -29,11 +29,10 @@ private:
     static void init_UART();
     static void init_StatusLEDs();
 
-
-public:
+  public:
     struct s_PWMConfig {
         unsigned char channelID;
-        unsigned char maxPWMRatio;              //Value between 0 and 255. 255 equals always-on
+        unsigned char maxPWMRatio; //Value between 0 and 255. 255 equals always-on
         unsigned long frequency;
         unsigned char GPIO_port;
         unsigned char GPIO_pin;
@@ -42,7 +41,7 @@ public:
     struct s_MotorConfig {
         unsigned char directionPinPort;
         unsigned long directionPinPin;
-        bool directionPinForwardValue;          // 1: high on forward, 0: low on backward
+        bool directionPinForwardValue; // 1: high on forward, 0: low on backward
         s_PWMConfig* PWMConfig;
     };
     struct s_GPIOSensorConfig {
@@ -75,7 +74,6 @@ public:
         paritytype,
         channelmode,
         stopbits;
-
         unsigned char
         RX_GPIO_port,
         RX_GPIO_pin,
@@ -88,8 +86,6 @@ public:
         unsigned char port;
         unsigned long pin;
     };
-
-
     // MISC
     static unsigned long
     Oscillator_Freq,
@@ -102,49 +98,38 @@ public:
     static unsigned char
     Timer_Channel,
     Timer_Clock_Connection;
-
-
     // PWM
     static s_PWMConfig
     leftPWMConfig,
     rightPWMConfig;
-
     // MOTOR
     static s_MotorConfig
     leftMotorConfig,
     rightMotorConfig;
-
     static unsigned char Motor_enabledPinPort;
     static unsigned long Motor_enabledPinPin;
     static bool Motor_enabledPinEnabledValue;   // 1: high on enabled, 0: low on enabled
-
-
     // GPIOSENSOR
     static s_GPIOSensorConfig
     footSwitchConfig;
-
     // ADC(SENSOR)
     static unsigned long ADC_Internal_Clock;    //ADC internal clock (Clock used for the AD conversion, max 5 MHz at 10 bit)
     static s_gpioMultiplexData
     ADC_gpioMultiplexData[ADC_NUM_CONFIGURED_CHANNELS];
-
     static s_ADCSensorConfig
     orientationAccelerometerConfig,
     orientationGyrometerConfig,
     orientationGyrometerReferenceConfig,
     steeringPotentiometerConfig,
     batteryVoltageSensorConfig;
-
     // UART
     static s_UARTConfig
     rs232UARTConfig,
     bluetoothUARTConfig;
-
     // Status LEDs
     static s_StatusLED
     redStatusLEDConfig,
     greenStatusLEDConfig;
-
     static void init();
 };
 

@@ -1,0 +1,5 @@
+PROJECT_NAME = Segway
+PROJECT_NUMBER = 1
+INPUT = "../C++ Projekt/Segway/"
+RECURSIVE = YES
+FILE_PATTERNS = Antrieb/*.cpp Antrieb/*.h Sensor/*.cpp Sensor/*.h Timer/*.cpp Timer/*.h

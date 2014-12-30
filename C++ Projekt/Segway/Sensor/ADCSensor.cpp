@@ -2,16 +2,17 @@
 
 ADCSensor::ADCSensor() {}
 
-ADCSensor::~ADCSensor()
-{
-    cleanUp();
+ADCSensor::~ADCSensor() {
+    ///siehe ADC::CleanUpChannel
+    controller->cleanUpChannel(adcSensor->ADCChannelID);
+    ///zur�cksetzen des Mode Registers, indem eine 0 hinein geschrieben wird
+    *(VINTP)(ADC_MODULE + ADC_MR_OFFSET) = 0;
 }
 
 /************************************************************************/
 /* �bergibt die Werte aus thisADCSensorConfig_ an ADCController_                                                                    */
 /************************************************************************/
-bool ADCSensor::init(Configuration::s_ADCSensorConfig* thisADCSensorConfig_, ADC* ADCController_)
-{
+bool ADCSensor::init(Configuration::s_ADCSensorConfig* thisADCSensorConfig_, ADC* ADCController_) {
     ADCController_->ID = thisADCSensorConfig_->ADCChannelID;
     ADCController_->offsetValue = thisADCSensorConfig_->zeroOffset;
     ADCController_->ADCSlopeFactor = thisADCSensorConfig_->slopeFactor;
@@ -25,8 +26,7 @@ bool ADCSensor::init(Configuration::s_ADCSensorConfig* thisADCSensorConfig_, ADC
 /*  Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
     auszulesen.                                                                     */
 /************************************************************************/
-signed long ADCSensor::getIntegerValue(bool average, unsigned long numberOfValuesForAverage)
-{
+signed long ADCSensor::getIntegerValue(bool average, unsigned long numberOfValuesForAverage) {
     //Verwendet die ADC Methode
     integerValue = controller->getChannelValue(adcSensor->ADCChannelID, average, numberOfValuesForAverage);
     //Falls ein offset verwendet wird, wird er vor der Ausgabe vom Wert des ADC abgezogen
@@ -36,19 +36,16 @@ signed long ADCSensor::getIntegerValue(bool average, unsigned long numberOfValue
 }
 
 
-void ADCSensor::setZeroOffset(bool active, signed long offset)
-{
+void ADCSensor::setZeroOffset(bool active, signed long offset) {
     adcSensor->zeroOffset = offset;
     adcSensor->useZeroOffset = active;
 }
 
-bool ADCSensor::getZeroOffsetIsActive()
-{
+bool ADCSensor::getZeroOffsetIsActive() {
     return adcSensor->useZeroOffset;
 }
 
-signed long ADCSensor::getZeroOffset()
-{
+signed long ADCSensor::getZeroOffset() {
     return adcSensor->zeroOffset;
 }
 
@@ -56,33 +53,20 @@ signed long ADCSensor::getZeroOffset()
 /*  Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
     auszulesen. Gibt das Ergebnis allerdings als float aus.                                                                     */
 /************************************************************************/
-float ADCSensor::getFloatValue(bool average, unsigned long numberOfValuesForAverage)
-{
+float ADCSensor::getFloatValue(bool average, unsigned long numberOfValuesForAverage) {
     floatValue = (float) controller->getChannelValue(adcSensor->ADCChannelID, average, numberOfValuesForAverage);
     return floatValue;
 }
 
-void ADCSensor::setSlopeFactor(bool active, float factor)
-{
+void ADCSensor::setSlopeFactor(bool active, float factor) {
     adcSensor->useSlopeFactor = active;
     adcSensor->slopeFactor = factor;
 }
 
-bool ADCSensor::getSlopeFactorIsActive(void)
-{
+bool ADCSensor::getSlopeFactorIsActive(void) {
     return adcSensor->useSlopeFactor;
 }
 
-float ADCSensor::getSlopeFactor(void)
-{
+float ADCSensor::getSlopeFactor(void) {
     return adcSensor->slopeFactor;
-}
-
-
-void ADCSensor::cleanUp(void)
-{
-    ///siehe ADC::CleanUpChannel
-    controller->cleanUpChannel(adcSensor->ADCChannelID);
-    ///zur�cksetzen des Mode Registers, indem eine 0 hinein geschrieben wird
-    *(volatile unsigned int*)(ADC_MODULE + ADC_MR_OFFSET) = 0;
 }

@@ -28,7 +28,6 @@ class PWM {
     unsigned char getChannelPWMRatio();
     bool isChannelEnabled();
     bool setChannelEnabled(bool enabled);
-    void cleanUp();
 };
 
 #endif /* PWM_H_ */

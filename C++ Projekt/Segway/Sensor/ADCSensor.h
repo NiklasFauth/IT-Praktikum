@@ -15,7 +15,7 @@ class ADCSensor {
     signed long integerValue;
     float floatValue;
     unsigned long channelID;
-    int* disable;
+    VINTP disable;
 
   public:
     ADCSensor();
@@ -29,10 +29,8 @@ class ADCSensor {
     void setSlopeFactor(bool active, float factor);
     bool getSlopeFactorIsActive(void);
     float getSlopeFactor(void);
-    void cleanUp(void);
     void setChannelID(unsigned long newChannelID);
     unsigned long getChannelID(void);
-
 };
 
 #endif /* ADCSENSOR_H_ */
