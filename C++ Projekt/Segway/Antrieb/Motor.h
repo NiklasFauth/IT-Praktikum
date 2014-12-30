@@ -16,7 +16,6 @@
 #ifndef MOTOR_H_
 #define MOTOR_H_
 
-#include "../Configuration/Configuration.h"
 #include "PWM.h"
 
 class Motor {
@@ -31,7 +30,6 @@ class Motor {
     static void initEnablePin();
     static void setEnabled(bool enabled);
     static bool getIsEnabled();
-
     Motor();
     ~Motor();
     bool init(Configuration::s_MotorConfig* thisMotorConfig_);

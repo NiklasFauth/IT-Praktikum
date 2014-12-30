@@ -1,12 +1,7 @@
 #include "ADC.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include "../Configuration/Configuration.h"
-#include "../bitmacros.h"
 
+ADC::ADC() {}
 
-ADC::ADC() {
-}
 ADC::~ADC() {
     cleanUpChannel(ID);
 }
@@ -18,33 +13,33 @@ Am Ende wird noch eine einzelne Konvertierung gestartet.                        
 /************************************************************************/
 bool ADC::init() {
     //ADC reset
-    SET_BIT(*(VINTP)(ADC_BASE + CONTROL_REGISTER_OFFSET), 0);
+    SET_BIT(*(VINTP)(ADC_MODULE + CR_OFFSET), 0);
     //ADC Clock einstellen
     prescalerRate = Configuration::ADCCLK / (Configuration::ADC_Internal_Clock * 2);
     //prescalerRate darf nicht zu gro� werden
     if (prescalerRate > 255)
         return false;
     //Prescale Inhalt l�schen
-    CLEAR_BITS(*(VINTP)(ADC_BASE + MODE_REGISTER_OFFSET), 0xFF << 8);
+    CLEAR_BITS(*(VINTP)(ADC_MODULE + MR_OFFSET), 0xFF << 8);
     //prescalerRate in das Mode Register reinschreiben
-    SET_BITS(*(VINTP)(ADC_BASE + MODE_REGISTER_OFFSET), (prescalerRate & 0xFF) << 8);
+    SET_BITS(*(VINTP)(ADC_MODULE + MR_OFFSET), (prescalerRate & 0xFF) << 8);
     //Startup time einstellen
     startupTime = Configuration::ADCCLK / ((prescalerRate + 1) * 800000);
     if (startupTime > 127)
         return false;
     //startup time Inhalt l�schen
-    CLEAR_BITS(*(VINTP)(ADC_BASE + MODE_REGISTER_OFFSET), 0x7F << 16);
+    CLEAR_BITS(*(VINTP)(ADC_MODULE + MR_OFFSET), 0x7F << 16);
     //neuen Inhalt reinschreiben
-    SET_BITS(*(VINTP)(ADC_BASE + MODE_REGISTER_OFFSET), (startupTime & 0x7F) << 16);
-    SET_BITS(*(VINTP)(ADC_BASE + MODE_REGISTER_OFFSET), 0xF << 24);
+    SET_BITS(*(VINTP)(ADC_MODULE + MR_OFFSET), (startupTime & 0x7F) << 16);
+    SET_BITS(*(VINTP)(ADC_MODULE + MR_OFFSET), 0xF << 24);
     //Hardware Trigger deaktivieren,
-    CLEAR_BIT(*(VINTP)(ADC_BASE + MODE_REGISTER_OFFSET), 0);
+    CLEAR_BIT(*(VINTP)(ADC_MODULE + MR_OFFSET), 0);
     //10-bit Konvertierung einstellen
-    CLEAR_BIT(*(VINTP)(ADC_BASE + MODE_REGISTER_OFFSET), 4);
+    CLEAR_BIT(*(VINTP)(ADC_MODULE + MR_OFFSET), 4);
     //normalen Modus w�hlen, kein Sleep Mode
-    CLEAR_BIT(*(VINTP)(ADC_BASE + MODE_REGISTER_OFFSET), 5);
+    CLEAR_BIT(*(VINTP)(ADC_MODULE + MR_OFFSET), 5);
     //eine Konvertierung starten
-    //SET_BIT ( *( VINTP ) ( ADC_BASE + CONTROL_REGISTER_OFFSET ), 1 );
+    //SET_BIT ( *( VINTP ) ( ADC_MODULE + CR_OFFSET ), 1 );
     return 1;
 }
 /************************************************************************/
@@ -60,14 +55,14 @@ bool ADC::enableInPinSelector(unsigned long channelID, bool enabled) {
         return 0;
     if (enabled) {
         //Peripheral Function einstellen
-        CLEAR_BIT(*(VINTP)(GPIO_BASE + GPIO_ENABLE_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE), Configuration::ADC_gpioMultiplexData[channelID].pin);
+        CLEAR_BIT(*(VINTP)(GPIO_MODULE + GPER_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * PORT_OFFSET), Configuration::ADC_gpioMultiplexData[channelID].pin);
         //disable pull-up resistor
-        //CLEAR_BIT ( *( VINTP ) ( GPIO_BASE + GPIO_PULL_UP_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE ), Configuration::ADC_gpioMultiplexData[channelID].pin );
+        //CLEAR_BIT ( *( VINTP ) ( GPIO_MODULE + GPIO_PULL_UP_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * PORT_OFFSET ), Configuration::ADC_gpioMultiplexData[channelID].pin );
         //Output driver deaktivieren
-        //CLEAR_BIT ( *( VINTP ) ( GPIO_BASE + OUTPUT_DRIVER_ENABLE_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE ), Configuration::ADC_gpioMultiplexData[channelID].pin );
+        //CLEAR_BIT ( *( VINTP ) ( GPIO_MODULE + OUTPUT_DRIVER_ENABLE_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * PORT_OFFSET ), Configuration::ADC_gpioMultiplexData[channelID].pin );
         //PMR1 pr�fen, wenn 1, schreibe eine 1 rein, wenn nicht, schreibe eine 0 rein
-        VINTP PMR0 = (VINTP)(GPIO_BASE + PMR0_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE);
-        VINTP PMR1 = (VINTP)(GPIO_BASE + PMR1_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE);
+        VINTP PMR0 = (VINTP)(GPIO_MODULE + PMR0_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * PORT_OFFSET);
+        VINTP PMR1 = (VINTP)(GPIO_MODULE + PMR1_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * PORT_OFFSET);
         if (BIT_IS_SET(Configuration::ADC_gpioMultiplexData[channelID].multiplexRegisterValue, 0))
             SET_BIT(*PMR0 , Configuration::ADC_gpioMultiplexData[channelID].pin);
         else
@@ -80,9 +75,9 @@ bool ADC::enableInPinSelector(unsigned long channelID, bool enabled) {
         return 1;
     } else {
         //GPIO controll einstellen
-        SET_BIT(*(VINTP)(GPIO_BASE + GPIO_ENABLE_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE), Configuration::ADC_gpioMultiplexData[channelID].pin);
+        SET_BIT(*(VINTP)(GPIO_MODULE + GPER_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * PORT_OFFSET), Configuration::ADC_gpioMultiplexData[channelID].pin);
         //Deaktivieren des Output Drivers
-        //CLEAR_BIT ( *( VINTP ) ( GPIO_BASE + OUTPUT_DRIVER_ENABLE_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE ), Configuration::ADC_gpioMultiplexData[channelID].pin );
+        //CLEAR_BIT ( *( VINTP ) ( GPIO_MODULE + OUTPUT_DRIVER_ENABLE_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * PORT_OFFSET ), Configuration::ADC_gpioMultiplexData[channelID].pin );
         return 1;
     }
 }
@@ -99,37 +94,37 @@ unsigned long ADC::getChannelValue(unsigned long channelID, bool getAverage, uns
         return 0;
     channelValue = 0;
     //Aktivieren des mit channelID �bergebenen ADC Kanals
-    SET_BIT(*(VINTP)(ADC_BASE + CHANNEL_ENABLE_REGISTER_OFFSET), channelID);
+    SET_BIT(*(VINTP)(ADC_MODULE + CHER_OFFSET), channelID);
     if (getAverage == true) {
         //In jedem Schleifendurchlauf wird eine Konvertierung gestartet. Daraufhin wird gewartet, bis die Konvertierung abgeschlossen ist
         //und im DRD bit des Status Registers eine 1 steht. Dies bedeutet, dass eine Konvertierung abgeschlossen wurde und im Last converted Data Register
         //Daten ausgelesen werden kann. Die ausgelesenen Werte werden in der Variablen channelValue aufsummiert.
         for (unsigned long i = 0; i < numberOfConversionsForAverage; i++) {
             //Hier wird die Konvertierung gestartet
-            SET_BIT(*(VINTP)(ADC_BASE + CONTROL_REGISTER_OFFSET), 1);
+            SET_BIT(*(VINTP)(ADC_MODULE + CR_OFFSET), 1);
             //Hier wird gewartet, bis im Data ready bit eine 1 steht
-            while (!BIT_IS_SET(*(VINTP)(ADC_BASE + STATUS_REGISTER_OFFSET), 16));
-            channelValue += *(VINTP)(ADC_BASE + LAST_CONVERTED_DATA_REGISTER_OFFSET);
+            while (!BIT_IS_SET(*(VINTP)(ADC_MODULE + SR_OFFSET), 16));
+            channelValue += *(VINTP)(ADC_MODULE + LCDR_OFFSET);
         }
         channelValue = channelValue / numberOfConversionsForAverage;
     } else {
-        SET_BIT(*(VINTP)(ADC_BASE + CONTROL_REGISTER_OFFSET), 1);
-        while (!BIT_IS_SET(*(VINTP)(ADC_BASE + STATUS_REGISTER_OFFSET), 16));
-        channelValue = *(VINTP)(ADC_BASE + LAST_CONVERTED_DATA_REGISTER_OFFSET);
+        SET_BIT(*(VINTP)(ADC_MODULE + CR_OFFSET), 1);
+        while (!BIT_IS_SET(*(VINTP)(ADC_MODULE + SR_OFFSET), 16));
+        channelValue = *(VINTP)(ADC_MODULE + LCDR_OFFSET);
     }
     //Deaktivieren des verwendeten Kanals und Reset des ADC
-    SET_BIT(*(VINTP)(ADC_BASE + CHANNEL_DISABLE_REGISTER_OFFSET), channelID);
-    //SET_BIT ( *( VINTP ) ( ADC_BASE + CONTROL_REGISTER_OFFSET ), 0 );
+    SET_BIT(*(VINTP)(ADC_MODULE + CHDR_OFFSET), channelID);
+    //SET_BIT ( *( VINTP ) ( ADC_MODULE + CR_OFFSET ), 0 );
     return channelValue;
 }
 
 void ADC::cleanUpChannel(unsigned char channelID) {
     ///Channel disable
-    SET_BIT(*(VINTP)(ADC_BASE + CHANNEL_DISABLE_REGISTER_OFFSET), channelID);
+    SET_BIT(*(VINTP)(ADC_MODULE + CHDR_OFFSET), channelID);
     ///Output driver deaktivieren
-    //CLEAR_BIT ( *( VINTP ) ( GPIO_BASE + OUTPUT_DRIVER_ENABLE_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE ), Configuration::ADC_gpioMultiplexData[channelID].pin );
+    //CLEAR_BIT ( *( VINTP ) ( GPIO_MODULE + OUTPUT_DRIVER_ENABLE_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * PORT_OFFSET ), Configuration::ADC_gpioMultiplexData[channelID].pin );
     ///disable pull-up resistor
-    //CLEAR_BIT ( *( VINTP ) ( GPIO_BASE + GPIO_PULL_UP_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_SIZE ), Configuration::ADC_gpioMultiplexData[channelID].pin );
+    //CLEAR_BIT ( *( VINTP ) ( GPIO_MODULE + GPIO_PULL_UP_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * PORT_OFFSET ), Configuration::ADC_gpioMultiplexData[channelID].pin );
     ///ADC reset
-    SET_BIT(*(VINTP)(ADC_BASE + CONTROL_REGISTER_OFFSET), 0);
+    SET_BIT(*(VINTP)(ADC_MODULE + CR_OFFSET), 0);
 }

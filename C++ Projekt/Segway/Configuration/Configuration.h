@@ -9,11 +9,8 @@
         This behavior allows calculations to be made within init().
 */
 
-
 #ifndef CONFIGURATION_H_
 #define CONFIGURATION_H_
-
-#define ADC_NUM_CONFIGURED_CHANNELS 8
 
 class Configuration {
   private:
@@ -152,28 +149,54 @@ class Configuration {
 
 #endif /* CONFIGURATION_H_ */
 
+// shortcut
 #define VINTP volatile int*
 
 // adresses
-#define PORT_OFFSET 0x0100
-
 #define GPIO_MODULE 0xFFFF1000
-#define GPER_OFFSET 0x00 // enable
-#define PMR0_OFFSET 0x10 // peripheral mux 0
-#define PMR1_OFFSET 0x20 // peripheral mux 1
-#define ODER_OFFSET 0x40 // output driver
-#define OVR_OFFSET 0x50 // output value
-#define PVR_OFFSET 0x60 // value
-#define PUER_OFFSET 0x70 // pull-up
-#define GFER_OFFSET 0xC0 // glitch filter
+#define GPER_OFFSET 0x00 // Enable
+#define PMR0_OFFSET 0x10 // Peripheral mux 0
+#define PMR1_OFFSET 0x20 // Peripheral mux 1
+#define ODER_OFFSET 0x40 // Output driver
+#define OVR_OFFSET 0x50 // Output value
+#define PVR_OFFSET 0x60 // Value
+#define PUER_OFFSET 0x70 // Pull-up
+#define GFER_OFFSET 0xC0 // Glitch filter
+#define PORT_OFFSET 0x0100 // Port size
 
 #define PWM_MODULE 0xFFFF3000
-#define ENA_OFFSET 0x004 // enable
-#define DIS_OFFSET 0x008 // disable
-#define SR_OFFSET 0x00C // status
-#define CMR0_OFFSET 0x200 // channel 0
-#define CHANNEL_OFFSET 0x020 // channel
-#define CDTY0_OFFSET 0x004 // duty cycle
-#define CPRD0_OFFSET 0x008 // period
-#define CCNT0_OFFSET 0x00C // counter
-#define CUPD0_OFFSET 0x010 // update
+#define ENA_OFFSET 0x004 // Enable
+#define DIS_OFFSET 0x008 // Disable
+#define SR_OFFSET 0x00C // Status
+#define CMR0_OFFSET 0x200 // Channel 0
+#define CHANNEL_OFFSET 0x020 // Channel size
+#define CDTY0_OFFSET 0x004 // Duty cycle
+#define CPRD0_OFFSET 0x008 // Period
+#define CCNT0_OFFSET 0x00C // Counter
+#define CUPD0_OFFSET 0x010 // Update
+
+#define TIMER_MODULE 0xFFFF3800
+#define CCR0_OFFSET 0x00 // Control
+#define CMR0_OFFSET 0x04 // Mode
+#define CV0_OFFSET 0x10 // Counter Value
+#define RA0_OFFSET 0x14 // Register A
+#define RB0_OFFSET 0x18 // Register B
+#define RC0_OFFSET 0x1C // Register C
+#define SR0_OFFSET 0x20 // Status
+#define IER0_OFFSET 0x24 // Interrupt Enable
+#define IDR0_OFFSET 0x28 // Interrupt Disable
+#define IMR0_OFFSET 0x2C // Interrupt Mask
+
+#define ADC_MODULE 0xFFFF3C00
+#define ADC_NUM_CHANNELS 8 // channels
+#define CR_OFFSET 0x00 // Control
+#define MR_OFFSET 0x04 // Mode
+#define CHER_OFFSET 0x10 // Channel enable
+#define CHDR_OFFSET 0x14 // Channel disable
+#define CHSR_OFFSET 0x18 // Channel Status
+#define LCDR_OFFSET 0x20 // Last converted data
+#define SR_OFFSET 0x1C // Status
+
+// debugging
+#include <stdio.h>
+#include <stdlib.h>

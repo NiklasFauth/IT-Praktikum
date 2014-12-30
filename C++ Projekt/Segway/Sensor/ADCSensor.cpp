@@ -1,15 +1,13 @@
 #include "ADCSensor.h"
-#include "../bitmacros.h"
 
-ADCSensor::ADCSensor() {
-}
+ADCSensor::ADCSensor() {}
 
 ADCSensor::~ADCSensor() {
     cleanUp();
 }
 
 /************************************************************************/
-/* Übergibt die Werte aus thisADCSensorConfig_ an ADCController_                                                                    */
+/* ï¿½bergibt die Werte aus thisADCSensorConfig_ an ADCController_                                                                    */
 /************************************************************************/
 bool ADCSensor::init(Configuration::s_ADCSensorConfig* thisADCSensorConfig_, ADC* ADCController_) {
     ADCController_->ID = thisADCSensorConfig_->ADCChannelID;
@@ -74,6 +72,6 @@ float ADCSensor::getSlopeFactor(void) {
 void ADCSensor::cleanUp(void) {
     ///siehe ADC::CleanUpChannel
     controller->cleanUpChannel(adcSensor->ADCChannelID);
-    ///zurücksetzen des Mode Registers, indem eine 0 hinein geschrieben wird
-    *(volatile unsigned int*)(ADC_BASE + MODE_REGISTER_OFFSET) = 0;
+    ///zurï¿½cksetzen des Mode Registers, indem eine 0 hinein geschrieben wird
+    *(volatile unsigned int*)(ADC_MODULE + MR_OFFSET) = 0;
 }

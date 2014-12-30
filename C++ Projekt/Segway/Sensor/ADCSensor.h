@@ -1,13 +1,11 @@
-#include "../Configuration/Configuration.h"
-#include "ADC.h"
-
 /*
     Requires the ADC to be initialized.
 */
 
-
 #ifndef ADCSENSOR_H_
 #define ADCSENSOR_H_
+
+#include "ADC.h"
 
 class ADCSensor {
   private:
@@ -23,9 +21,9 @@ class ADCSensor {
     ADCSensor();
     ~ADCSensor();
     bool init(Configuration::s_ADCSensorConfig* thisADCSensorConfig_, ADC* ADCController_);
-    long getIntegerValue(bool average = false, unsigned long numberOfValuesForAverage = 0);    //fertig
-    void setZeroOffset(bool active, signed long offset);   //fertig
-    bool getZeroOffsetIsActive(); //fertig
+    long getIntegerValue(bool average = false, unsigned long numberOfValuesForAverage = 0);
+    void setZeroOffset(bool active, signed long offset);
+    bool getZeroOffsetIsActive();
     signed long getZeroOffset();
     float getFloatValue(bool average, unsigned long numberOfValuesForAverage);
     void setSlopeFactor(bool active, float factor);
@@ -36,7 +34,5 @@ class ADCSensor {
     unsigned long getChannelID(void);
 
 };
-
-
 
 #endif /* ADCSENSOR_H_ */

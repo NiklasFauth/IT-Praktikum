@@ -2,7 +2,6 @@
 
 PWM::PWM() {}
 
-
 PWM::~PWM() {
     cleanUp();
 }

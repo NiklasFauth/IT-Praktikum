@@ -1,8 +1,6 @@
 #include "GPIOSensor.h"
 
-
-GPIOSensor::GPIOSensor() {
-}
+GPIOSensor::GPIOSensor() {}
 
 GPIOSensor::~GPIOSensor() {
     cleanUp();
