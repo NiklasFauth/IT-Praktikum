@@ -2,16 +2,18 @@
 
 PWM::PWM() {}
 
-PWM::~PWM() {
+PWM::~PWM()
+{
     cleanUp();
 }
 
-bool PWM::init(Configuration::s_PWMConfig* thisPWMConfig_) {
+bool PWM::init(Configuration::s_PWMConfig* thisPWMConfig_)
+{
     pin = thisPWMConfig_->GPIO_pin;
     // init register
-    VINTP GPER = (int*)(GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + GPER_OFFSET);
-    VINTP PMR0 = (int*)(GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + PMR0_OFFSET);
-    VINTP PMR1 = (int*)(GPIO_MODULE + (thisPWMConfig_->GPIO_port ? PORT_OFFSET : 0) + PMR1_OFFSET);
+    VINTP GPER = (int*)(GPIO_MODULE + (thisPWMConfig_->GPIO_port ? GPIO_PORT_OFFSET : 0) + GPIO_GPER_OFFSET);
+    VINTP PMR0 = (int*)(GPIO_MODULE + (thisPWMConfig_->GPIO_port ? GPIO_PORT_OFFSET : 0) + GPIO_PMR0_OFFSET);
+    VINTP PMR1 = (int*)(GPIO_MODULE + (thisPWMConfig_->GPIO_port ? GPIO_PORT_OFFSET : 0) + GPIO_PMR1_OFFSET);
     // disable GPIO
     CLEAR_BIT(*GPER, pin);
     // set peripheral function
@@ -21,24 +23,25 @@ bool PWM::init(Configuration::s_PWMConfig* thisPWMConfig_) {
     else CLEAR_BIT(*PMR1, pin);
     channelID = thisPWMConfig_->channelID;
     // init register
-    ENA = (int*)(PWM_MODULE + ENA_OFFSET);
-    DIS = (int*)(PWM_MODULE + DIS_OFFSET);
-    SR = (int*)(PWM_MODULE + SR_OFFSET);
-    CMR0 = (int*)(PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID);
-    CUPD0 = (int*)(PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CUPD0_OFFSET);
-    CPRD0 = (int*)(PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CPRD0_OFFSET);
+    ENA = (int*)(PWM_MODULE + PWM_ENA_OFFSET);
+    DIS = (int*)(PWM_MODULE + PWM_DIS_OFFSET);
+    SR = (int*)(PWM_MODULE + PWM_SR_OFFSET);
+    CMR0 = (int*)(PWM_MODULE + PWM_CMR0_OFFSET + PWM_CHANNEL_OFFSET * channelID);
+    CUPD0 = (int*)(PWM_MODULE + PWM_CMR0_OFFSET + PWM_CHANNEL_OFFSET * channelID + PWM_CUPD0_OFFSET);
+    CPRD0 = (int*)(PWM_MODULE + PWM_CMR0_OFFSET + PWM_CHANNEL_OFFSET * channelID + PWM_CPRD0_OFFSET);
     // set period value depending on frequency
     *CPRD0 = (int)(Configuration::PWMCLK / thisPWMConfig_->frequency);
     // toggle polarity
     //SET_BIT(*CMR0, 9);
-    CDTY0 = (int*)(PWM_MODULE + CMR0_OFFSET + CHANNEL_OFFSET * channelID + CDTY0_OFFSET);
+    CDTY0 = (int*)(PWM_MODULE + PWM_CMR0_OFFSET + PWM_CHANNEL_OFFSET * channelID + PWM_CDTY0_OFFSET);
     *CDTY0 = 0;
     // set maxPWMRatio
     maxPWMRatio = thisPWMConfig_->maxPWMRatio;
     return true;
 }
 
-bool PWM::setChannelPWMRatio(unsigned char ratioOn, bool capRatioOn) {
+bool PWM::setChannelPWMRatio(unsigned char ratioOn, bool capRatioOn)
+{
     if (capRatioOn) {
         // truncate ratioOn value
         if (ratioOn > maxPWMRatio) ratioOn = maxPWMRatio;
@@ -48,28 +51,32 @@ bool PWM::setChannelPWMRatio(unsigned char ratioOn, bool capRatioOn) {
     // reset mode register pin 10 to initiate duty cycle update
     //CLEAR_BIT(*CMR0, 10);
     // set new duty cycle value
-    *CUPD0 = (int)((float)ratioOn * *CPRD0 / 255);
+    *CUPD0 = (int)((float)ratioOn **CPRD0 / 255);
     return true;
 }
 
-unsigned char PWM::getChannelPWMRatio() {
+unsigned char PWM::getChannelPWMRatio()
+{
     // return current ratio
     return (char)(*CDTY0 * 255 / *CPRD0);
 }
 
-bool PWM::isChannelEnabled() {
+bool PWM::isChannelEnabled()
+{
     // check if bit is set
     return BIT_IS_SET(*SR, channelID);
 }
 
-bool PWM::setChannelEnabled(bool enabled) {
+bool PWM::setChannelEnabled(bool enabled)
+{
     // set ena/dis bit
     if (enabled) SET_BIT(*ENA, channelID);
     else SET_BIT(*DIS, channelID);
     return true;
 }
 
-void PWM::cleanUp() {
+void PWM::cleanUp()
+{
     *DIS = 1;
     *CPRD0 = 0;
     *CDTY0 = 0;

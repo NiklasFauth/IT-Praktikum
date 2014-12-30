@@ -5,9 +5,10 @@ Timer::Timer() {}
 Timer::~Timer() {}
 
 // RC value will determinate
-bool Timer::prepareTimer(unsigned long frequency) {
-    VINTP CMR0 = (int*)(TIMER_MODULE + CMR0_OFFSET);
-    VINTP RC0 = (int*)(TIMER_MODULE + RC0_OFFSET);
+bool Timer::prepareTimer(unsigned long frequency)
+{
+    VINTP CMR0 = (int*)(TIMER_MODULE + TIMER_CMR0_OFFSET);
+    VINTP RC0 = (int*)(TIMER_MODULE + TIMER_RC0_OFFSET);
     setIsTimerInterruptEnabled(true);
     SET_BIT(*CMR0, 15); //*CMR0 |= 1 << 15; // WAVE: Waveform mode is enabled
     SET_BIT(*CMR0, 14); //*CMR0 |= 1 << 14; // WAVSEL: RC is chosen as the maximum value (UP mode with automatic trigger on RC Compare)
@@ -19,7 +20,8 @@ bool Timer::prepareTimer(unsigned long frequency) {
         return false;
 }
 
-void Timer::cleanUpTimer(void) {
+void Timer::cleanUpTimer(void)
+{
     /*
      * Diese Methode wird nicht aufgerufen
     *CCR0 = 0x0;
@@ -34,7 +36,8 @@ void Timer::cleanUpTimer(void) {
     *IMR0 =0x0;*/
 }
 
-bool Timer::initTimer(unsigned long frequency) {
+bool Timer::initTimer(unsigned long frequency)
+{
     if (prepareTimer(frequency) == true) {
         setIsTimerInterruptEnabled(true);
         return true;
@@ -42,8 +45,9 @@ bool Timer::initTimer(unsigned long frequency) {
         return false;
 }
 
-void Timer::setIsTimerEnabled(bool enabled) {
-    VINTP CCR0 = (int*)(TIMER_MODULE + CCR0_OFFSET);
+void Timer::setIsTimerEnabled(bool enabled)
+{
+    VINTP CCR0 = (int*)(TIMER_MODULE + TIMER_CCR0_OFFSET);
     if (enabled == true) {
         SET_BIT(*CCR0, 0); //Entpricht: *CCR0 |= 1; CLKEN: This bit will enable the clock
         SET_BIT(*CCR0, 2); //Entspricht: *CCR0 |= 1 << 2; SWTRG: The clock is started
@@ -52,9 +56,10 @@ void Timer::setIsTimerEnabled(bool enabled) {
     }
 }
 
-void Timer::setIsTimerInterruptEnabled(bool enabled) {
-    VINTP IER0 = (int*)(TIMER_MODULE + IER0_OFFSET);
-    VINTP IDR0 = (int*)(TIMER_MODULE + IDR0_OFFSET);
+void Timer::setIsTimerInterruptEnabled(bool enabled)
+{
+    VINTP IER0 = (int*)(TIMER_MODULE + TIMER_IER0_OFFSET);
+    VINTP IDR0 = (int*)(TIMER_MODULE + TIMER_IDR0_OFFSET);
     if (enabled == true) {
         SET_BIT(*IER0, 4); //Entspricht *IER0 |= 1 << 4; // CPCS:This bit is set when an RC Compare has occured
     } else {
@@ -62,24 +67,28 @@ void Timer::setIsTimerInterruptEnabled(bool enabled) {
     }
 }
 
-void Timer::resetInterruptFlag(void) {
-    VINTP SR0 = (int*)(TIMER_MODULE + SR0_OFFSET);
+void Timer::resetInterruptFlag(void)
+{
+    VINTP SR0 = (int*)(TIMER_MODULE + TIMER_SR0_OFFSET);
     BIT_IS_SET(*SR0, 4); //Reading the Status Register will also clear the interrupt bit for the corresponding interrupts.
 }
 
 //If timer is enabled, the return value is true
-bool Timer::getIsTimerEnabled(void) {
-    VINTP SR0 = (int*)(TIMER_MODULE + SR0_OFFSET);
+bool Timer::getIsTimerEnabled(void)
+{
+    VINTP SR0 = (int*)(TIMER_MODULE + TIMER_SR0_OFFSET);
     return (bool)(*SR0 & 0x10000); // Bit 16 CLKSTA is set when the clock is enabled -> must be 1 (2^16 = 16^4)
 }
 
 //If interrupts are enabled, the return value is true
-bool Timer::getIsInterruptEnabled(void) {
-    VINTP IMR0 = (int*)(TIMER_MODULE + IMR0_OFFSET);
+bool Timer::getIsInterruptEnabled(void)
+{
+    VINTP IMR0 = (int*)(TIMER_MODULE + TIMER_IMR0_OFFSET);
     return (bool)(*IMR0 & 0x10); // Bit 4 CPCS is set when an RC Compare has occured (2^4 = 16^1)
 }
 
-void Timer::cleanUp(void) {
+void Timer::cleanUp(void)
+{
     /* Diese Methode wird nicht aufgerufen
     *CCR0 = 0x0;
     *CMR0 = 0x0;

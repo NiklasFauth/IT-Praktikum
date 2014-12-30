@@ -2,9 +2,10 @@
 #define UART_H_
 
 #include "../Configuration/Configuration.h"
+#include "../bitmacros.h"
 
 class UART {
-  private:
+private:
     Configuration::s_UARTConfig* thisUARTConfig;
 
     bool isSendBufferReady();
@@ -30,7 +31,7 @@ class UART {
     static const unsigned int MYAVR32_GPIO_OFFSET_PMR0;
     static const unsigned int MYAVR32_GPIO_OFFSET_PMR1;
 
-  public:
+public:
     UART();
     ~UART();
     bool init(Configuration::s_UARTConfig* thisUARTConfig_);

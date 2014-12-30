@@ -1,5 +1,4 @@
 #include "UART.h"
-//#include "../bitmacros.h"
 
 const unsigned int UART::MYAVR32_UART_OFFSET_CR = 0x00;
 const unsigned int UART::MYAVR32_UART_OFFSET_MR = 0x04;
@@ -21,19 +20,22 @@ const unsigned int UART::MYAVR32_GPIO_OFFSET_PMR0 = 0x10;
 const unsigned int UART::MYAVR32_GPIO_OFFSET_PMR1 = 0x20;
 
 
-UART::UART() {
+UART::UART()
+{
     thisUARTConfig = 0;
 }
 
 
-UART::~UART() {
+UART::~UART()
+{
     cleanUp();
 }
 
 
 // Initializes the USART registers.
 // Returns zero if specified baud rate cannot be achieved.
-bool UART::init(Configuration::s_UARTConfig* thisUARTConfig_) {
+bool UART::init(Configuration::s_UARTConfig* thisUARTConfig_)
+{
     thisUARTConfig = thisUARTConfig_;
     // Reset previous configuration
     cleanUp();
@@ -96,7 +98,8 @@ bool UART::init(Configuration::s_UARTConfig* thisUARTConfig_) {
 }
 
 
-bool UART::enableInPinSelector(bool enabled) {
+bool UART::enableInPinSelector(bool enabled)
+{
     if (thisUARTConfig == 0)
         return false;
     if (enabled) {
@@ -168,28 +171,32 @@ bool UART::enableInPinSelector(bool enabled) {
 
 
 // Returns true if new data was received. Fetch data using getData().
-bool UART::isDataAvailable() {
+bool UART::isDataAvailable()
+{
     //return thisUARTConfig->usart->CSR.rxrdy;
     return BIT_IS_SET(*(volatile unsigned int*)(thisUARTConfig->usart_address + MYAVR32_UART_OFFSET_CSR), 0);
 }
 
 
 // Returns the data
-unsigned long UART::getData() {
+unsigned long UART::getData()
+{
     //return thisUARTConfig->usart->RHR.rxchr;
     return *(volatile unsigned int*)(thisUARTConfig->usart_address + MYAVR32_UART_OFFSET_RHR) & 0x1FF;
 }
 
 
 // Returns true if sendChar can be used.
-bool UART::isSendBufferReady() {
+bool UART::isSendBufferReady()
+{
     //return thisUARTConfig->usart->CSR.txrdy;
     return BIT_IS_SET(*(volatile unsigned int*)(thisUARTConfig->usart_address + MYAVR32_UART_OFFSET_CSR), 1);
 }
 
 
 // Sends data. Blocks until data can be sent.
-void UART::sendChar(unsigned long data) {
+void UART::sendChar(unsigned long data)
+{
     while (!isSendBufferReady());
     //thisUARTConfig->usart->THR.txchr = data;
     CLEAR_BITS(*(volatile unsigned int*)(thisUARTConfig->usart_address + MYAVR32_UART_OFFSET_THR), 0x1FF);
@@ -198,7 +205,8 @@ void UART::sendChar(unsigned long data) {
 
 
 // Sends text. Blocks until data can be sent.
-void UART::sendString(const char* text) {
+void UART::sendString(const char* text)
+{
     while (*text != 0) {
         sendChar(*text);
         text++;
@@ -207,7 +215,8 @@ void UART::sendString(const char* text) {
 
 
 // Converts number to ascii text and sends it. Blocks until data can be sent.
-void UART::sendNumber(long number) {
+void UART::sendNumber(long number)
+{
     if (number < 0) {
         sendChar('-');
         sendNumber((unsigned long)((-1) * number));
@@ -217,7 +226,8 @@ void UART::sendNumber(long number) {
 
 
 // Converts number to ascii text and sends it. Blocks until data can be sent.
-void UART::sendNumber(unsigned long number) {
+void UART::sendNumber(unsigned long number)
+{
     if (number == 0) {
         sendChar('0');
         return;
@@ -239,7 +249,8 @@ void UART::sendNumber(unsigned long number) {
 
 
 // Cleans up the USART registers.
-void UART::cleanUp() {
+void UART::cleanUp()
+{
     if (thisUARTConfig == 0)
         return;
     //thisUARTConfig->usart->cr = AVR32_USART_CR_RSTRX_MASK   |
