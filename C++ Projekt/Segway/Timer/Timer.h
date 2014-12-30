@@ -22,14 +22,12 @@ class Timer {
     Timer();
     ~Timer();
     bool prepareTimer(unsigned long frequency);
-    void cleanUpTimer(void);
     bool initTimer(unsigned long frequency);
     void setIsTimerEnabled(bool enabled);
     void setIsTimerInterruptEnabled(bool enabled);
     static void resetInterruptFlag(void);
     bool getIsTimerEnabled(void);
     bool getIsInterruptEnabled(void);
-    void cleanUp(void);
 
 };
 
