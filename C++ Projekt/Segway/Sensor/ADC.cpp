@@ -2,9 +2,7 @@
 
 ADC::ADC() {}
 
-ADC::~ADC() {
-    cleanUpChannel(ID);
-}
+ADC::~ADC() {}
 /************************************************************************/
 /* init resettet den ADC zun�chst und setzt anschlie�end die ADC clock
 und die Startup time. Danach wird die 10 bit Konvertierung eingestellt
@@ -51,8 +49,8 @@ bool ADC::init() {
     Driver wird deaktiviert               */
 /************************************************************************/
 bool ADC::enableInPinSelector(unsigned long channelID, bool enabled) {
-    if (channelID >= ADC_NUM_CONFIGURED_CHANNELS  || !Configuration::ADC_gpioMultiplexData[channelID].configured)
-        return 0;
+    //printf("en: " + enabled);
+    if (channelID >= ADC_NUM_CONFIGURED_CHANNELS  || !Configuration::ADC_gpioMultiplexData[channelID].configured) return 0;
     if (enabled) {
         //Peripheral Function einstellen
         CLEAR_BIT(* (VINTP)(GPIO_MODULE + GPIO_GPER_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_OFFSET), Configuration::ADC_gpioMultiplexData[channelID].pin);
@@ -118,6 +116,7 @@ unsigned long ADC::getChannelValue(unsigned long channelID, bool getAverage, uns
     return channelValue;
 }
 
+/*
 void ADC::cleanUpChannel(unsigned char channelID) {
     ///Channel disable
     SET_BIT(* (VINTP)(ADC_MODULE + ADC_CHDR_OFFSET), channelID);
@@ -128,3 +127,4 @@ void ADC::cleanUpChannel(unsigned char channelID) {
     ///ADC reset
     SET_BIT(*(VINTP)(ADC_MODULE + ADC_CR_OFFSET), 0);
 }
+*/

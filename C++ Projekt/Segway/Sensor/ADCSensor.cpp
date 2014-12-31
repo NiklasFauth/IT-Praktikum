@@ -4,9 +4,9 @@ ADCSensor::ADCSensor() {}
 
 ADCSensor::~ADCSensor() {
     ///siehe ADC::CleanUpChannel
-    controller->cleanUpChannel(adcSensor->ADCChannelID);
+    //controller->cleanUpChannel(adcSensor->ADCChannelID);
     ///zur�cksetzen des Mode Registers, indem eine 0 hinein geschrieben wird
-    *(VINTP)(ADC_MODULE + ADC_MR_OFFSET) = 0;
+    //*(VINTP)(ADC_MODULE + ADC_MR_OFFSET) = 0;
 }
 
 /************************************************************************/
@@ -20,6 +20,7 @@ bool ADCSensor::init(Configuration::s_ADCSensorConfig* thisADCSensorConfig_, ADC
     ADCController_->useADCZeroOffset = thisADCSensorConfig_->useZeroOffset;
     adcSensor = thisADCSensorConfig_;
     controller = ADCController_;
+    controller->enableInPinSelector(thisADCSensorConfig_->ADCChannelID, true);
     return 1;
 }
 /************************************************************************/

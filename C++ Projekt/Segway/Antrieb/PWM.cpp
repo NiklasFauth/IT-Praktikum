@@ -24,7 +24,7 @@ bool PWM::init(Configuration::s_PWMConfig* thisPWMConfig_) {
     else CLEAR_BIT(*PMR1, pin);
     channelID = thisPWMConfig_->channelID;
     // init register
-    ENA = (VINsTP)(PWM_MODULE + PWM_ENA_OFFSET);
+    ENA = (VINTP)(PWM_MODULE + PWM_ENA_OFFSET);
     DIS = (VINTP)(PWM_MODULE + PWM_DIS_OFFSET);
     SR = (VINTP)(PWM_MODULE + PWM_SR_OFFSET);
     CMR0 = (VINTP)(PWM_MODULE + PWM_CMR0_OFFSET + PWM_CHANNEL_OFFSET * channelID);

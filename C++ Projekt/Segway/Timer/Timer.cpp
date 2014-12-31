@@ -3,6 +3,7 @@
 Timer::Timer() {}
 
 Timer::~Timer() {
+    /*
     *CCR0 = 0x0;
     *CMR0 = 0x0;
     *CV0 = 0x0;
@@ -13,6 +14,7 @@ Timer::~Timer() {
     *IER0 = 0x0;
     *IDR0 = 0x0;
     *IMR0 = 0x0;
+    */
 }
 
 // RC value will determinate
