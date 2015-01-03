@@ -48,7 +48,7 @@ bool PWM::setChannelPWMRatio(unsigned char ratioOn, bool capRatioOn) {
     } else
         // return false otherwise
         if (0 < ratioOn || ratioOn > maxPWMRatio) return false;
-    printf("set ration: 5d\n", (unsigned int) ratioOn);
+    printf("set ration: %d\n", (unsigned int) ratioOn);
     // set new duty cycle value
     *CUPD0 = (int)((float) ratioOn * (*CPRD0) / 255);
     // reset mode register pin 10 to initiate duty cycle update
