@@ -27,7 +27,7 @@ bool Motor::init(Configuration::s_MotorConfig* thisMotorConfig_) {
 
 bool Motor::setSpeed(unsigned char ratioOn) {
     // forward call to PWM
-    return pwm->setChannelPWMRatio(ratioOn);
+    return pwm->setChannelPWMRatio(ratioOn, true);
 }
 
 unsigned char Motor::getSpeed() {
