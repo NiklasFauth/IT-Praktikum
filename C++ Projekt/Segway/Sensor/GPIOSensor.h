@@ -55,10 +55,6 @@
 #define ADC_LCDR_OFFSET 0x20 // Last converted data
 #define ADC_SR_OFFSET 0x1C // Status
 
-// debugging
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "../bitmacros.h"
 #include "../Configuration/Configuration.h"
 

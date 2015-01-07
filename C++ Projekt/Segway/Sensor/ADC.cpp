@@ -49,7 +49,6 @@ bool ADC::init() {
     Driver wird deaktiviert               */
 /************************************************************************/
 bool ADC::enableInPinSelector(unsigned long channelID, bool enabled) {
-    //printf("en: " + enabled);
     if (channelID >= ADC_NUM_CONFIGURED_CHANNELS  || !Configuration::ADC_gpioMultiplexData[channelID].configured) return 0;
     if (enabled) {
         //Peripheral Function einstellen
