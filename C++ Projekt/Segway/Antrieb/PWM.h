@@ -53,6 +53,12 @@
 #include "../bitmacros.h"
 #include "../Configuration/Configuration.h"
 
+/*!
+ * Pulse Width Modulation
+ *
+ * This class is used for controlling the motors.
+ * Part of the HAL.
+ * */
 class PWM {
   private:
     int pin;

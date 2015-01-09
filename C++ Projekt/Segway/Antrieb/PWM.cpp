@@ -9,6 +9,9 @@ PWM::~PWM() {
     SET_BIT(*GPIO, pin);
 }
 
+/*!
+ * \brief
+ * */
 bool PWM::init(Configuration::s_PWMConfig* thisPWMConfig_) {
     pin = thisPWMConfig_->GPIO_pin;
     // init register
