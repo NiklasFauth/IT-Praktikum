@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Segway/Segway.d Segway/Segway.o Segway/Segway.o: ../Segway/Segway.cpp \
  ../Segway/Segway.h ../Segway/../Timer/Timer.h \
  ../Segway/../Timer/../Configuration/Configuration.h \
@@ -90,5 +89,3 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.1067\avr32
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.1067\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/lock.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr32\ gcc\native\3.4.1067\avr32-gnu-toolchain\bin\../lib/gcc/avr32/4.4.7/../../../../avr32/include/sys/string.h:
-=======
->>>>>>> 7bb94c83c6ba89cd085b6c259b2c58fa131369d5
