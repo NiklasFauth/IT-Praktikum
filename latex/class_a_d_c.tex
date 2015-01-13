@@ -1,0 +1,50 @@
+\hypertarget{class_a_d_c}{}\section{A\+D\+C Class Reference}
+\label{class_a_d_c}\index{A\+D\+C@{A\+D\+C}}
+
+
+{\ttfamily \#include $<$A\+D\+C.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_a_d_c_a7873fde0b99f5ec62ec644ad360a5fe3}{}bool \hyperlink{class_a_d_c_a7873fde0b99f5ec62ec644ad360a5fe3}{init} ()\label{class_a_d_c_a7873fde0b99f5ec62ec644ad360a5fe3}
+
+\begin{DoxyCompactList}\small\item\em init resettet den \hyperlink{class_a_d_c}{A\+D\+C} zunaechst und setzt anschliessend die \hyperlink{class_a_d_c}{A\+D\+C} clock und die Startup time. Danach werden die 10 bit Konvertierung und der sleep Modus eingestellt. Zusaetzlich wird der Hardware Trigger deaktiviert. \end{DoxyCompactList}\item 
+\hypertarget{class_a_d_c_a05dc44823439ae8da18dec84f7781504}{}bool \hyperlink{class_a_d_c_a05dc44823439ae8da18dec84f7781504}{enable\+In\+Pin\+Selector} (unsigned long channel\+I\+D, bool enabled)\label{class_a_d_c_a05dc44823439ae8da18dec84f7781504}
+
+\begin{DoxyCompactList}\small\item\em Falls enabled = true, wird hier festgelegt, dass eine Peripheral Function den Pin kontrolliert. Darueber hinaus werden die Peripheral Mux Register ueberprueft und gegebenenfalls gesetzt, oder geloescht. Falls enabled = false, kontrolliert der Gpio den Pin. \end{DoxyCompactList}\item 
+\hypertarget{class_a_d_c_a43424251947be64d25ea228efa4e012e}{}unsigned long \hyperlink{class_a_d_c_a43424251947be64d25ea228efa4e012e}{get\+Channel\+Value} (unsigned long channel\+I\+D, bool get\+Average=false, unsigned long number\+Of\+Conversions\+For\+Average=0)\label{class_a_d_c_a43424251947be64d25ea228efa4e012e}
+
+\begin{DoxyCompactList}\small\item\em Hier wird der aktuelle Wert des \hyperlink{class_a_d_c}{A\+D\+C} im Last Converted Data Register ausgelesen. Falls get\+Average true ist, wird eine Schleife aufgerufen, die in jedem Durchlauf zunaechst eine Konvertierung startet, anschliessend wartet, bis die Konvertierung abgechlossen ist und dann die Konvertierten Werte aufsummiert. Am ende wird noch der Mittelwert gebildet. \end{DoxyCompactList}\item 
+\hypertarget{class_a_d_c_a6d175ebd102264c2043ac249fc995a38}{}void {\bfseries clean\+Up\+Channel} (unsigned char channel\+I\+D)\label{class_a_d_c_a6d175ebd102264c2043ac249fc995a38}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_a_d_c_a9b93aca8c177e0a1e7e1e69aff2a3480}{}unsigned long {\bfseries I\+D}\label{class_a_d_c_a9b93aca8c177e0a1e7e1e69aff2a3480}
+
+\item 
+\hypertarget{class_a_d_c_ad047f7b18a0dfb921d22c561e853295d}{}signed long {\bfseries offset\+Value}\label{class_a_d_c_ad047f7b18a0dfb921d22c561e853295d}
+
+\item 
+\hypertarget{class_a_d_c_af7b03605fc3c150f04f2052fc0d86ee3}{}float {\bfseries A\+D\+C\+Slope\+Factor}\label{class_a_d_c_af7b03605fc3c150f04f2052fc0d86ee3}
+
+\item 
+\hypertarget{class_a_d_c_a543f8e1c77ab4ac4247d54d81e25398d}{}bool {\bfseries use\+A\+D\+C\+Zero\+Offset}\label{class_a_d_c_a543f8e1c77ab4ac4247d54d81e25398d}
+
+\item 
+\hypertarget{class_a_d_c_ab96ede2a6272396d5a5e0c7a7e78717d}{}bool {\bfseries use\+A\+D\+C\+Slope\+Factor}\label{class_a_d_c_ab96ede2a6272396d5a5e0c7a7e78717d}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Die \hyperlink{class_a_d_c}{A\+D\+C} Klasse ist hauptsaechlich dazu da, den \hyperlink{class_a_d_c}{A\+D\+C} des u-\/controllers zu initialiesieren, die Ausgangspins zu aktivieren und konkret Signale zu konvertieren und konvertierte Werte aus den Registern auszulesen (Methode\+: get\+Channel\+Value).
+
+Zudem kann hier eingestellt werden, ob ein ausgewaehlter Pin durch eine Peripheral Function, oder durch den G\+P\+I\+O kontrolliert wird (Methode\+: enable\+In\+Pin\+Selector). 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+C++ Projekt/\+Segway/\+Sensor/A\+D\+C.\+h\item 
+C++ Projekt/\+Segway/\+Sensor/A\+D\+C.\+cpp\end{DoxyCompactItemize}
