@@ -1,12 +1,14 @@
-/* verwenden Sie diese Klasse f�r alle Funktionen die direkt auf die HW-PWM zugreifen. */
-
 #ifndef PWM_H_
 #define PWM_H_
 
-// shortcut
+/**
+ * Global defines
+ * */
+
+// Shortcut
 #define VINTP volatile int*
 
-// adresses
+// Adresses
 #define GPIO_MODULE 0xFFFF1000
 #define GPIO_GPER_OFFSET 0x00 // Enable
 #define GPIO_PMR0_OFFSET 0x10 // Peripheral mux 0
@@ -53,10 +55,10 @@
 #include "../bitmacros.h"
 #include "../Configuration/Configuration.h"
 
-/*!
- * Pulse Width Modulation
+/*! \class PWM
+ * \brief Pulse Width Modulation
  *
- * This class is used for controlling the motors.
+ * This class provides functionallities for controlling the motors on hardware level.
  * Part of the HAL.
  * */
 class PWM {

@@ -1,3 +1,8 @@
+#ifndef MOTOR_H_
+#define MOTOR_H_
+
+#include "PWM.h"
+
 /*! \class  Motor
 
     \brief  Motor class for AVR32UC3B offers
@@ -12,19 +17,12 @@
         Attention: all motors share the same enable pin.
         Attention: when class is destroyed or cleanUp() is called, the enable pin will be uninititalized.
 */
-
-#ifndef MOTOR_H_
-#define MOTOR_H_
-
-#include "PWM.h"
-
 class Motor {
   private:
     PWM* pwm;
     VINTP OVR;
     bool directionPinForwardValue;
     long directionPinPin;
-//put your privat variables and functions here if you need them
 
   public:
     static void initEnablePin();
