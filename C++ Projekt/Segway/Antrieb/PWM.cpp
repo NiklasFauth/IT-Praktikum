@@ -1,7 +1,15 @@
 #include "PWM.h"
 
+/*! \fn PWM::PWM
+ * \brief
+ *      Constructor is unused
+ */
 PWM::PWM() {}
 
+/*! \fn PWM::~PWM
+ * \brief
+ *      Destructor is unused
+ */
 PWM::~PWM() {
     *DIS = 1;
     *CPRD0 = 0;
@@ -10,8 +18,13 @@ PWM::~PWM() {
 }
 
 /*!
+ * \fn PWM::init
+ * \param thisPWMConfig_ initial settings
  * \brief
- * */
+ *      Sets the multiplex value to PWM.
+ *      Sets the duty cycle period according to the actual frequency.
+ *      Applies settings given via the thisPWMConfig_ argument.
+ */
 bool PWM::init(Configuration::s_PWMConfig* thisPWMConfig_) {
     pin = thisPWMConfig_->GPIO_pin;
     // init register
@@ -44,6 +57,12 @@ bool PWM::init(Configuration::s_PWMConfig* thisPWMConfig_) {
     return true;
 }
 
+/*! \fn PWM::setChannelPWMRatio
+ * \param ratioOn the value to be setChannelPWMRatio
+ * \param capRatioOn if true the value will be truncated to a maximum of maxPWMRatio
+ * \brief
+ *      Sets the PWM ration value for a certain duty cycle (respectively a motor speed) by writing the channel update register.
+ */
 bool PWM::setChannelPWMRatio(unsigned char ratioOn, bool capRatioOn) {
     if (capRatioOn) {
         // truncate ratioOn value
@@ -59,16 +78,27 @@ bool PWM::setChannelPWMRatio(unsigned char ratioOn, bool capRatioOn) {
     return true;
 }
 
+/*! \fn PWM::getChannelPWMRatio
+ * \return the current duty cycle ratio in a range of [0,255].
+ */
 unsigned char PWM::getChannelPWMRatio() {
     // return current ratio
     return (char)(*CDTY0 * 255 / *CPRD0);
 }
 
+/*! \fn PWM::isChannelEnabled
+ * \return whether or not the channel is enabled
+ */
 bool PWM::isChannelEnabled() {
     // check if bit is set
     return BIT_IS_SET(*SR, channelID);
 }
 
+/*! \fn PWM::setChannelEnabled
+ * \param enabled
+ * \brief
+ *      Enables/disables the channel.
+ */
 bool PWM::setChannelEnabled(bool enabled) {
     // set ena/dis bit
     if (enabled) SET_BIT(*ENA, channelID);

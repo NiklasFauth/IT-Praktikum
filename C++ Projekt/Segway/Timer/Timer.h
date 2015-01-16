@@ -68,12 +68,41 @@ class Timer {
   public:
     Timer();
     ~Timer();
+    
+	
+	/** In dieser Methode wird die Kurve 2 (WAVSEL 2) gewaehlt, um das Hochzaehlen des Timers zu realisieren. Diese Kurve ist im Daten Blatt auf Seite 484 dargestellt.
+	Die Kurve ist eine Saegezahnkurve mit einem variablen RC-Wert als Maximalwert. Ausserdem wird die Frequenz uebergeben, mit welcher dann der Maximale RC-Wert berechnet wird und somit auch die Haeufigkeit der Interrupts pro Sekunde.                                                                     
+	*/
     bool prepareTimer(unsigned long frequency);
-    bool initTimer(unsigned long frequency);
-    void setIsTimerEnabled(bool enabled);
-    void setIsTimerInterruptEnabled(bool enabled);
+	
+	/**
+	Wenn die Methode prepareTimer richtig ausgefuehrt wurde wird ein Interrupt aktiviert.                                                                    
+	*/
+	bool initTimer(unsigned long frequency);
+	
+	/**
+	Diese Methode aktiviert,deaktiviert und startet den Timer.                                                                    
+	*/
+	void setIsTimerEnabled(bool enabled);
+	
+    /**
+	Diese Methode aktiviert oder deaktiviert einen Interrupt.                                                                     
+	*/
+	
+	void setIsTimerInterruptEnabled(bool enabled);
+	 
+	/**
+	Liest das Interrupt-Statusregister um den Interrupt zurueckzusetzen.                                                                 
+    */
     static void resetInterruptFlag(void);
-    bool getIsTimerEnabled(void);
+   
+	/**
+	Der Rueckgabewert liefert, ob der Timer aktiviert wurde.                                                                  
+	*/
+	bool getIsTimerEnabled(void);
+	
+	/** Der Rueckgabewert liefert, ob ein Interrupt aktiviert wurde.                                                               
+	*/
     bool getIsInterruptEnabled(void);
 
 };

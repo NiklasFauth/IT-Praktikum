@@ -1,5 +1,9 @@
-/*
-    use this class for ADC implementation
+/**
+* @class ADC
+		Die ADC Klasse ist hauptsaechlich dazu da, den ADC des u-controllers zu initialiesieren, die Ausgangspins zu aktivieren und konkret Signale zu konvertieren und konvertierte Werte aus den Registern auszulesen (Methode: getChannelValue). 
+		
+		Zudem kann hier eingestellt werden, ob ein ausgewaehlter Pin durch eine Peripheral Function, oder durch den GPIO kontrolliert 
+		wird (Methode: enableInPinSelector).
 */
 
 #ifndef ADC_H_
@@ -51,6 +55,10 @@
 #define ADC_CHSR_OFFSET 0x18 // Channel Status
 #define ADC_LCDR_OFFSET 0x20 // Last converted data
 #define ADC_SR_OFFSET 0x1C // Status
+
+// debugging
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "../bitmacros.h"
 #include "../Configuration/Configuration.h"

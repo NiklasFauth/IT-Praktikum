@@ -2,16 +2,11 @@
 
 ADCSensor::ADCSensor() {}
 
-ADCSensor::~ADCSensor() {
-    ///siehe ADC::CleanUpChannel
-    //controller->cleanUpChannel(adcSensor->ADCChannelID);
-    ///zur�cksetzen des Mode Registers, indem eine 0 hinein geschrieben wird
-    //*(VINTP)(ADC_MODULE + ADC_MR_OFFSET) = 0;
-}
+ADCSensor::~ADCSensor() {}
 
-/************************************************************************/
-/* �bergibt die Werte aus thisADCSensorConfig_ an ADCController_                                                                    */
-/************************************************************************/
+/*! \brief
+	Uebergibt die Werte aus thisADCSensorConfig_ an ADCController_ 
+*/
 bool ADCSensor::init(Configuration::s_ADCSensorConfig* thisADCSensorConfig_, ADC* ADCController_) {
     ADCController_->ID = thisADCSensorConfig_->ADCChannelID;
     ADCController_->offsetValue = thisADCSensorConfig_->zeroOffset;
@@ -23,10 +18,11 @@ bool ADCSensor::init(Configuration::s_ADCSensorConfig* thisADCSensorConfig_, ADC
     controller->enableInPinSelector(thisADCSensorConfig_->ADCChannelID, true);
     return 1;
 }
-/************************************************************************/
-/*  Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
-    auszulesen.                                                                     */
-/************************************************************************/
+
+/*! \brief
+	Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
+    auszulesen.                                                                    
+*/
 signed long ADCSensor::getIntegerValue(bool average, unsigned long numberOfValuesForAverage) {
     //Verwendet die ADC Methode
     integerValue = controller->getChannelValue(adcSensor->ADCChannelID, average, numberOfValuesForAverage);
@@ -50,10 +46,11 @@ signed long ADCSensor::getZeroOffset() {
     return adcSensor->zeroOffset;
 }
 
-/************************************************************************/
-/*  Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
-    auszulesen. Gibt das Ergebnis allerdings als float aus.                                                                     */
-/************************************************************************/
+
+/*! \brief
+	Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
+    auszulesen. Gibt das Ergebnis allerdings als float aus.
+*/
 float ADCSensor::getFloatValue(bool average, unsigned long numberOfValuesForAverage) {
     floatValue = (float) controller->getChannelValue(adcSensor->ADCChannelID, average, numberOfValuesForAverage);
     return floatValue;

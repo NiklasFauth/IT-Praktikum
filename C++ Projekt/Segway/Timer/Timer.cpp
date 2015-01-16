@@ -17,7 +17,6 @@ Timer::~Timer() {
     */
 }
 
-// RC value will determinate
 bool Timer::prepareTimer(unsigned long frequency) {
     VINTP CMR0 = (VINTP)(TIMER_MODULE + TIMER_CMR0_OFFSET);
     VINTP RC0 = (VINTP)(TIMER_MODULE + TIMER_RC0_OFFSET);
@@ -48,6 +47,7 @@ void Timer::setIsTimerEnabled(bool enabled) {
     } else SET_BIT(*CCR0, 1);    //Entspricht: *CCR0 |= 1 << 1; CLKDIS: This bit will disable the clock
 }
 
+
 void Timer::setIsTimerInterruptEnabled(bool enabled) {
     VINTP IER0 = (VINTP)(TIMER_MODULE + TIMER_IER0_OFFSET);
     VINTP IDR0 = (VINTP)(TIMER_MODULE + TIMER_IDR0_OFFSET);
@@ -60,12 +60,10 @@ void Timer::resetInterruptFlag(void) {
     BIT_IS_SET(*(VINTP)(TIMER_MODULE + TIMER_SR0_OFFSET), 4);    //Reading the Status Register will also clear the interrupt bit for the corresponding interrupts.
 }
 
-//If timer is enabled, the return value is true
 bool Timer::getIsTimerEnabled(void) {
     return (bool)(*(VINTP)(TIMER_MODULE + TIMER_SR0_OFFSET) & 0x10000);      // Bit 16 CLKSTA is set when the clock is enabled -> must be 1 (2^16 = 16^4)
 }
 
-//If interrupts are enabled, the return value is true
 bool Timer::getIsInterruptEnabled(void) {
     return (bool)(*(VINTP)(TIMER_MODULE + TIMER_IMR0_OFFSET) & 0x10);      // Bit 4 CPCS is set when an RC Compare has occured (2^4 = 16^1)
 }

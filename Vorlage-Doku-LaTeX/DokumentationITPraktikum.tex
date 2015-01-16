@@ -1,0 +1,241 @@
+\documentclass[a4paper,10pt,twoside]{report}
+\usepackage[a4paper]{geometry}
+\usepackage{listings}
+\usepackage[utf8]{inputenc} % ISO 8859-1
+\usepackage[ngerman]{babel}
+\usepackage{color}
+\usepackage[pdftex]{graphicx}
+\usepackage{fancyhdr}
+\usepackage{amsmath,amssymb,amsfonts,textcomp}
+\usepackage{hyperref}
+\usepackage[compact]{titlesec} % Kapitelüberschriften
+\usepackage[T1]{fontenc}
+\usepackage{xspace}
+
+
+
+% Dateipfade
+\graphicspath{{pictures/}}
+
+% Eigene Farben
+\definecolor{lightgray}{rgb}{0.95,0.95,0.95}
+\definecolor{codegray}{rgb}{0.8,0.8,0.8}
+\definecolor{darkgray}{rgb}{0.18,0.18,0.18}
+\definecolor{mygreen}{rgb}{0.133,0.545,0.133}
+\definecolor{mypurple}{rgb}{0.627,0.126,0.941}
+
+% PDF Informationen
+\title{Beispieldokumentation zum Projektpraktikum}
+\author{Hier bitte Autor eintragen}
+
+% Seitengestaltung
+\setlength\textheight{25.0cm}
+\setlength\topmargin{-1.3cm}
+\setlength\textwidth{1.1\textwidth}
+% ohne Heftkante
+\setlength\oddsidemargin{0pt}
+\setlength\evensidemargin{0pt}
+% mit Heftkante
+%\setlength\oddsidemargin{+10pt}
+%\setlength\evensidemargin{-10pt}
+\setlength{\headheight}{13pt}
+
+% Kopf- und Fußzeilen
+\pagestyle{fancy}
+\fancypagestyle{plain}{\thispagestyle{fancy}}
+
+\fancyhead{}
+%\fancyheadoffset[LE,RO]{0pt}
+\fancyhead[LO,RE]{\leftmark} % aktuelle Section
+\fancyhead[RO,LE]{\includegraphics[viewport=0 7.5 168 24,scale=0.5]{header}} % Logo here
+
+\fancyfoot{}
+%\fancyfootoffset[LE,RO]{0pt}
+\fancyfoot[LO,RE]{} % aktuelle Chapter
+\fancyfoot[LE]{\thepage\hspace{3em}Dokumentation zum IT-Projektpraktikum} %Seitenzahl links
+\fancyfoot[RO]{Dokumentation zum IT-Projektpraktikum\hspace{3em}\thepage} %Seitenzahl recht
+
+% Titel Linie
+\newcommand{\bigrule}{\titlerule[0.5mm]}
+
+% Titel Format
+\titleformat{\chapter}[display]
+{\bfseries\Huge}
+{%
+ \vskip-2em
+ \titlerule
+ \filright
+ \Large\chaptertitlename\
+ \Large\thechapter
+}
+{0mm}
+{\filright}
+[\bigrule]
+
+% Definitionen für Listing
+\lstset{ %
+language=C++,                % choose the language of the code
+numbers=left,                   % where to put the line-numbers
+%numberstyle=\footnotesize,      % the size of the fonts that are used for the line-numbers
+stepnumber=1,                   % the step between two line-numbers. If it's 1 each line will be numbered
+numbersep=5pt,                  % how far the line-numbers are from the code
+backgroundcolor=\color{white},  % choose the background color. You must add \usepackage{color}
+showspaces=false,               % show spaces adding particular underscores
+showstringspaces=false,         % underline spaces within strings
+%showtabs=false,                 % show tabs within strings adding particular underscores
+frame=single,                   % adds a frame around the code
+tabsize=2,                      % sets default tabsize to 2 spaces
+captionpos=t,                   % sets the caption-position to bottom
+breaklines=true,                % sets automatic line breaking
+xleftmargin=3.5pt,
+xrightmargin=3.5pt,
+breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
+extendedchars=true,captionpos=t , prebreak=\mbox{$\hookleftarrow$}, belowcaptionskip=0.5em,postbreak={},
+basicstyle=\ttfamily,       % the size of the fonts that are used for the code
+keywordstyle=\color{blue}\bfseries\sffamily,
+commentstyle=\color{mygreen}\slshape,
+stringstyle=\color{mypurple},
+}
+
+\setlength{\parindent}{0pt} % Texteinzug bei neuem Absatz
+
+% Zähler für Ausgabe
+\newcounter{ausgabe}[chapter]
+\renewcommand\theausgabe{\thechapter.\arabic{ausgabe}}
+
+% Programmausgabe, grau hinterlegen
+\newcommand{\ausg}[2]{
+	\stepcounter{ausgabe}
+
+	\vspace{2mm}
+	\begin{minipage}{\textwidth}
+	  \colorbox{codegray}{
+			\begin{minipage}{0.97\textwidth}
+				\textbf{\texttt{#2}}
+			\end{minipage}
+		}
+		\begin{center}
+			Ausgabe \theausgabe: #1
+		\end{center}
+	\end{minipage}
+}
+
+% Schreibt 'Code::Blocks'
+\newcommand{\cb}{\mbox{Code::Blocks}\xspace}
+
+% Schreibt 'Visual Studio'
+\newcommand{\vs}{\mbox{Visual Studio}\xspace}
+
+% TODO - Command
+\newcommand{\TODO}[1]{{\color{red}TODO!! #1}}
+
+% Leerseite ohne Seitennummer, nächste Seite rechts
+\newcommand{\blankpage}{
+ \clearpage{\pagestyle{empty}\cleardoublepage}
+}
+
+
+
+\begin{document}
+%----------------------------
+\input{titelpage}
+%----------------------------
+\tableofcontents
+
+\chapter{Einleitung}
+Die praktisch orientierte Aufgabe im dritten Semester war das Projektpraktikum. Die Aufgabenstellen  lautetet, die Hardwaresteuerung eines TivSeg, ähnlich einem Segway, zu programmieren. Hierbei wurde man in zufälligen Dreiergruppen eingeteilt. 
+\section{Arbeitsumfeld}
+Als Arbeitsumfeld wählte man den webbasierten Hosting Dienst Github. Github ermöglicht eine unabhängige Arbeitsweise der Teammitglieder. Durch die Versionskontrolle wird sichergestellt, dass der Code stets konsistent bleibt. Durch die History ist der gesamte Verlauf des Projekts gut zu verfolgen und Backups sind jederzeit verfügbar.
+
+\section{Zielbestimmung}
+Laut Aufgabenstellung sollte bei dem Projektpraktikum gelernt werden, wie  komplexe C++ Codeabschnitte geschrieben werden und wie eine hardwarenahe Programmierung realisiert. Des Weiteren sollte das Arbeiten mit einer integrierten Entwicklungsumgebung geübt werden. Das Herz des TivSegs, mit welchem die Sensorik und Aktorik gesteurt wird, besteht aus dem EI-Mikrocontroller Board, das bereits aus den Workshops der ersten beiden Semester bekannt ist. Darüber hinaus sollte auch das Testen der unabhängigen Module auf dem Board geübt werden.\\ Als Simulation eines Industrieprojekts gehörten die Komponenten Zeitplanung und Teamarbeit genauso zum Praktikum, wie das eigentliche Umsetzen des Quellcodes.  
+
+\section{Einsatz}
+Das TivSeg soll in den Bereichen touristische Stadtführungen, Patrouillenfahrten bei
+Polizeibehörden sowie die Erleichterung für Lehrpersonals auf dem Weg zu Lehrveranstaltungen eingesetzt werden. 
+\section{Zeitplanung}
+Beim ersten Treffen wurden die einzelnen Module auf die Gruppenmitglieder aufgeteilt. Marcel übernahm die Module ADC und ADC Sensor, Nicholas die Module PWM, Motor und GPIO und Selina den Timer sowie die Dokumentation. Das Testen der einzelnen Module auf dem EI-Board wurde von den jeweils Zuständigen übernommen.\\
+Der Gesamttest wurde mit Hilfe der Simulation zusammen durchgeführt. Für die Programmierung der einzelnen Module wurden 4 Wochen eingeplant. Die Woche darauf wurden Probleme der einzelnen Gruppenmitglieder besprochen und mit Hilfe des Tutors besprochen. In dieser Woche wurden auch die Module den Einzeltests unterzogen. In Woche 6 wurde dann der erste Gesamttest gestartet und nach ein paar Anläufen funktionierte die Simulation. Abschließend wurde in Woche 7 die Dokumentation geschrieben und die einzelnen Module wurden von den jeweils Verantwortlichen nochmal den anderen Gruppenmitgliedern erläutert.
+
+\chapter{Konzeption}
+\section{Regelalgorithmus}
+Der Regelalgorithmus wurde den Gruppen bereit gestellt.\\
+Dieser Regelalgorithmus übernimmt die Aufgabe der Auswertung der Sensorwerte zur Berechnung der Motorgeschwindigkeit.
+% \subsection{MATLAB/Simulink Model}
+\section{Benötigte Module und ihre Funktion}
+Die folgenden Module mussten programmiert werden:
+\begin{itemize}
+\item Timer:\\
+Die Aufgabe des Timers besteht darin, periodisch nach einem festen Zeitintervall eine Interrruptroutine auszulösen.\\ Intern zählt dieser bis zu einem bestimmten Grenzwert, bei dem der Interrupt ausgelöst wird. Das feste Zeitintervall ist nötig, da der Regelalgorithmus Messwerte zu bestimmten Zeiten erwartet.\\
+Als Zählmodus wurde eine Sägezahnkurve gewählt, der im Register "Wavesalemode" gesetzt wurde. Das Intervall des Timers wurde auf 10 ms gesetzt mittels variablen RC-Wert , der bei der Initialisierung berechnet wird.
+\item GPIO Sensor\\
+Der GPIO Sensor steuert einzelne Pins des Mikrocontroller Boards an oder liest deren binäre Werte aus.
+\item ADC\\
+Die ADC Klasse ist hauptsächlich dazu da, den ADC des Mikrocontrollers zu initialisieren, die Ausgangspins zu aktivieren, konkret Signale zu konvertieren und aus den Registern auszulesen.\\ 
+Zudem kann hier eingestellt werden, ob ein ausgewählter Pin durch eine Peripheral Function oder durch den GPIO kontrolliert wird.
+\item ADC Sensor\\
+Die ADCSensor Klasse bildet einen Wrapper für einen bestimmten ADC.\\
+Sie initialisiert einen ADC und leitet get -Aufrufe anschließend an den ADC weiter. Bei der Initialisierung werden Slope Factor und Offset des ADC gesetzt.\\
+\item PWM\\
+Das PWM Modul steuert die Geschwindigkeit der Motoren.\\
+PWM ist eine wichtige Steuerungsweise, bei der Leistung über das Verhältnis einer binären Spannung auf einem Zeitintervall geregelt wird.
+Das Verhältnis .
+\item Motor
+In der Motorklasse werden die einzelnen Räder angesteuert, wodurch das Lenken realisiert werden kann. 
+
+\end{itemize}
+
+
+\section{Beschreibung der Schnittstellen}
+
+Fußschalter:
+Gibt die Steuerung des TivSegs frei und schützt den Anwender vor eventuellen Schäden.
+
+Lenkstange:
+Dient zur Richtungssteuerung.
+Das TivSeg fährt in die Richtung, in die die Stange geneigt wird.
+
+\chapter{Realisierung}
+\section{Hardware Abstraction Layer}
+Zu Deutsch Hardwareabstraktionsschicht oder kurz HAL ist eine Schicht des Betriebssystems, die als Einzige auf die Hardware zugreifen kann. Sie bietet abstraktere Befehlsstrukturen und vereinfacht dadurch die Programmierung.\\
+Die restliche Software nutzt die HAL, um Befehle umzusetzen.
+
+\subsection{Implementierung}
+Die Beschreibung der einzelnen Funktionen in den jeweiligen Modulen sind im Anhang dieser Dokumentation zu finden.
+ 
+\subsection{Zusammenfügen der Module}
+Die Stärke von Github liegt in der Versionskontrolle, die wir nutzten um die Module zusammenzufügen. Dabei wurden die unabhängig voneinander bearbeiteten Äste des Projekts zusammengefügt (gemergt) und auftretende Konflikte manuell gelöst.
+
+\chapter{Test}
+
+\subsection{Test der HAL}
+Die beiden Module PWM und Timer konnten auf dem EI-Board getestet werden. Beim PWM wurde die Funktion getestet, indem die LEDs in unterschiedlichen Helligkeitsstufen leuchten sollten. Beim Timer wurde die erfolgreiche Initialisierung durch eine LED angezeigt und das Hochzählen durch eine blinkende LED realisiert.
+Bei den Tests traten hauptsächlich Schreibfehler und Unaufmerksamkeiten auf, die meist bei der Kompilierung festgestellt wurden.
+
+\section{Abschlusstest}
+Da die Simulation nur funktioniert, wenn alle Module funktionsfähig sind, bildet die Simulation gleichzeitig auch den Logiktest.\\
+Nach einigen Versuchen im Simulator funktionierte die abschließende Version des Quellcodes in Woche sechs konform mit der Musterausgabe.
+
+\chapter{Zusammenfassung und Ausblick}
+\section{Zusammenfassung}
+Zusammenfassend kann man sagen, dass das TivSeg nun für den täglichen Gebrauch verwendet werden kann.\\ Nach einer Einarbeitungszeit und guter Zusammenarbeit zwischen den Teammitglieder konnte die Aufgabenstellung gelöst werden. Der Umgang mit dem Datenblatt wurde immer vertrauter und man lernte wie sich die Hexadezimal-Adressen der einzelnen Komponenten zusammensetzen.\\
+Das Konzept der hardwarenahen Programmierung mit Register und Bits wurde erarbeitet und vertieft.\\
+Erfreulich ist die Praxisnähe des Projekts, da man das eigene Resultat auch selbst am entwickelten Produkt ausprobieren darf, was bestimmt mit jeder Menge Spaß verbunden ist :P.    
+
+\section{Ausblick}
+Die Fortbewegung als Grundfunktion des TivSegs funktioniert nun. Für die unterschiedlichen Einsatzgebiete könnten dies weitere Erweiterungsmöglichkeiten sein:
+
+\begin{itemize}
+\item Touristenbranchen:\\
+Bei Stadtführungen sind Fotos schöne Erinnerungen. Damit man nicht immer absteigen muss, wenn ein schönes Motiv festgehalten werden soll, könnte man beispielsweise eine GoPro(TM) (Actionkamera) anbringen und diese mit einem Fernauslöser, angebracht an den Haltegriffen, bestücken. So könnte schnell und ohne absteigen Schnappschüsse geschossen werden und kein Motiv geht mehr verloren.
+\item Polizei: \\
+Für Patrouillenfahrten sollte das TivSeg auch geländetauglich sein. Hierfür müssten Reifen mit tieferen Profilen bereitgestellt werden und eine Assistent zur Unterstützung der Gewichtsausgleichung entwickelt werden.
+\item Unigelände:\\
+Eines der wichtigsten Komponenten im Uni-Alltag ist der Kaffee. Da wäre es doch schade, wenn der Kaffee noch schnell getrunken werden muss, damit man noch pünktlich mit dem TivSeg in der nächsten Vorlesung erscheint. Da wäre eine Kaffeehalterung doch ideal. Mit einem Sensor könnte die Füllhöhe bestimmt werden und somit berechnet werden, in welchem Winkel maximal das TivSeg gebeugt werden kann, damit der Kaffee nicht ausgeschüttet wird. 
+\end{itemize}  
+%----------------------------
+\nocite{*}
+\bibliography{literatur}
+\bibliographystyle{alpha}
+%----------------------------
+\end{document}
