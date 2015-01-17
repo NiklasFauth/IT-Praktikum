@@ -2,7 +2,7 @@
 
 /*! \fn Motor::Motor
  * \brief
- *      Constructor
+ *      Konstruktor
  *      Creates a new PWM object that provides the HAL.
  */
 Motor::Motor() {
@@ -11,7 +11,7 @@ Motor::Motor() {
 
 /*! \fn Motor::~Motor
  * \brief
- *      Desctructor is unused
+ *      Destruktor wird nicht benutzt
  */
 Motor::~Motor() {}
 
@@ -29,10 +29,10 @@ void Motor::initEnablePin() {
 }
 
 /*! \fn Motor::init
- * \param thisMotorConfig_ initial settings
+ * \param thisMotorConfig_ Initialisierungseinstellungen
  * \return true
  * \brief
- *      Applies the given settings.
+ *      Wendet die gegebenen Einstellungen
  */
 bool Motor::init(Configuration::s_MotorConfig* thisMotorConfig_) {
     // init PWM
@@ -45,10 +45,10 @@ bool Motor::init(Configuration::s_MotorConfig* thisMotorConfig_) {
 }
 
 /*! \fn Motor::setSpeed
- * \param the value to be set
- * \return the PWM response
+ * \param Der zu setzende Wert
+ * \return Die PWM Antwort
  * \brief
- *      Forwards the call to the PWM.
+ *      Leitet den Aufruf an den PWM weiter
  */
 bool Motor::setSpeed(unsigned char ratioOn) {
     // forward call to PWM
@@ -56,9 +56,10 @@ bool Motor::setSpeed(unsigned char ratioOn) {
 }
 
 /*! \fn Motor::getSpeed
- * \return the PWM response
+ * \param Der zu setzende Wert
+ * \return Die PWM Antwort
  * \brief
- *      Forwards the call to the PWM.
+ *      Leitet den Aufruf an den PWM weiter
  */
 unsigned char Motor::getSpeed() {
     // forward call to PWM
@@ -66,9 +67,9 @@ unsigned char Motor::getSpeed() {
 }
 
 /*! \fn Motor::setDirection
- * \param forward
+ * \param forward Forwärts
  * \brief
- *      Sets the direction
+ *      Legt die Richtung fest
  */
 void Motor::setDirection(bool forward) {
     // set direction pin value
@@ -79,7 +80,7 @@ void Motor::setDirection(bool forward) {
 /*! \fn Motor::setEnabled
  * \param enabled
  * \brief
- *      Enables/disables the motor
+ *      Schaltet den Motor frei / sperrt den Motor.
  */
 void Motor::setEnabled(bool enabled) {
     // set enable value
@@ -89,7 +90,7 @@ void Motor::setEnabled(bool enabled) {
 }
 
 /*! \fn Motor::getIsEnabled
- * \return whether or net the motor is enabled
+ * \return Ob der Motor freigegeben ist
  */
 bool Motor::getIsEnabled() {
     // read enable value

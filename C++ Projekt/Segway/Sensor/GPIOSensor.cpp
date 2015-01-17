@@ -2,13 +2,13 @@
 
 /*! \fn GPIOSensor::GPIOSensor
  * \brief
- *      Constructor is unused
+ *      Konstruktor wird nicht benutzt
  */
 GPIOSensor::GPIOSensor() {}
 
 /*! \fn GPIOSensor::GPIOSensor
  * \brief
- *      Destructor resets the pull-up resistance and the glitch filter
+ *      Destruktor setzt den Pull-Up Widerstand und den Glitch-Filter zurück
  */
 GPIOSensor::~GPIOSensor() {
     // reset value to zero for PUER register
@@ -18,9 +18,10 @@ GPIOSensor::~GPIOSensor() {
 }
 
 /*! \fn GPIOSensor::init
- * \param thisGPIOSensorConfig_ initial settings
+ * \param thisGPIOSensorConfig_ Initialisierungseinstellungen
  * \brief
- *      Enables the GPIO pin and the glitch filter, optionally also the pull-up resistance.
+ *      Schaltet den GPIO Pin frei und den Glitch Filter an.
+ *      Optional auch den Pull-Up Widerstand.
  */
 void GPIOSensor::init(Configuration::s_GPIOSensorConfig* thisGPIOSensorConfig_) {
     pin = thisGPIOSensorConfig_->pin;
@@ -35,7 +36,7 @@ void GPIOSensor::init(Configuration::s_GPIOSensorConfig* thisGPIOSensorConfig_) 
 }
 
 /*! \fn GPIOSensor::getValue
- * \return the current value of the pin
+ * \return Den aktuellen, binären Wert des Pins.
  */
 bool GPIOSensor::getValue() {
     return BIT_IS_SET(*PVR, pin);

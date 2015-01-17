@@ -178,10 +178,13 @@ Die ADCSensor Klasse bildet einen Wrapper für einen bestimmten ADC.\\
 Sie initialisiert einen ADC und leitet get -Aufrufe anschließend an den ADC weiter. Bei der Initialisierung werden Slope Factor und Offset des ADC gesetzt.\\
 \item PWM\\
 Das PWM Modul steuert die Geschwindigkeit der Motoren.\\
-PWM ist eine wichtige Steuerungsweise, bei der Leistung über das Verhältnis einer binären Spannung auf einem Zeitintervall geregelt wird.
-Das Verhältnis .
+PWM ist eine wichtige Steuerungsweise, bei der Leistung über das Ein/Aus-Verhältnis einer binären Spannung auf einem Zeitintervall geregelt wird.
+Je großer der Ein-Anteil, desto großer die Leistung und damit die Geschwindigkeit.\\
+Die PWM wird mit Hilfe eines Zählers umgesetzt. Liegt der Zähler über dem Duty Cycle so liegt hohe Spannung an, sonst null. Erreicht der Zähler die Period wird er wieder zurück gesetzt.
 \item Motor
-In der Motorklasse werden die einzelnen Räder angesteuert, wodurch das Lenken realisiert werden kann. 
+Die Motor Klasse funktioniert analog zur ADCSensor Klasse als Wrapper für eine PWM.
+Dabei werden Duty Cycle und Period gesetzt.
+Das Verhältnis Duty Cycle zu Period entspricht dem Verhältnis Ein- zu Intervallzeit.
 
 \end{itemize}
 

@@ -1,9 +1,9 @@
 /**
 * @class ADC
-		Die ADC Klasse ist hauptsaechlich dazu da, den ADC des u-controllers zu initialiesieren, die Ausgangspins zu aktivieren und konkret Signale zu konvertieren und konvertierte Werte aus den Registern auszulesen (Methode: getChannelValue). 
-		
-		Zudem kann hier eingestellt werden, ob ein ausgewaehlter Pin durch eine Peripheral Function, oder durch den GPIO kontrolliert 
-		wird (Methode: enableInPinSelector).
+        Die ADC Klasse ist hauptsaechlich dazu da, den ADC des u-controllers zu initialiesieren, die Ausgangspins zu aktivieren und konkret Signale zu konvertieren und konvertierte Werte aus den Registern auszulesen (Methode: getChannelValue).
+
+        Zudem kann hier eingestellt werden, ob ein ausgewaehlter Pin durch eine Peripheral Function, oder durch den GPIO kontrolliert
+        wird (Methode: enableInPinSelector).
 */
 
 #ifndef ADC_H_

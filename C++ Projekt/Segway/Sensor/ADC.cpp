@@ -5,9 +5,9 @@ ADC::ADC() {}
 ADC::~ADC() {}
 
 /*! \brief init resettet den ADC zunaechst und setzt anschliessend die ADC clock
-und die Startup time. Danach werden die 10 bit Konvertierung 
+und die Startup time. Danach werden die 10 bit Konvertierung
 und der sleep Modus eingestellt. Zusaetzlich wird der Hardware Trigger deaktiviert.
-*/                                                                    
+*/
 
 bool ADC::init() {
     //ADC reset
@@ -42,8 +42,8 @@ bool ADC::init() {
 }
 
 /*! \brief
-	Falls enabled = true, wird hier festgelegt, dass eine Peripheral
-    Function den Pin kontrolliert. 
+    Falls enabled = true, wird hier festgelegt, dass eine Peripheral
+    Function den Pin kontrolliert.
     Darueber hinaus werden die Peripheral
     Mux Register ueberprueft und gegebenenfalls gesetzt, oder geloescht.
     Falls enabled = false, kontrolliert der Gpio den Pin.
@@ -71,12 +71,11 @@ bool ADC::enableInPinSelector(unsigned long channelID, bool enabled) {
     } else {
         //GPIO controll einstellen
         SET_BIT(* (VINTP)(GPIO_MODULE + GPIO_GPER_OFFSET + Configuration::ADC_gpioMultiplexData[channelID].port * GPIO_PORT_OFFSET), Configuration::ADC_gpioMultiplexData[channelID].pin);
-      
         return 1;
     }
 }
 /*! \brief
-	Hier wird der aktuelle Wert des ADC im Last Converted Data Register
+    Hier wird der aktuelle Wert des ADC im Last Converted Data Register
     ausgelesen.
     Falls getAverage true ist, wird eine Schleife aufgerufen, die in jedem
     Durchlauf zunaechst eine Konvertierung startet, anschliessend wartet,
