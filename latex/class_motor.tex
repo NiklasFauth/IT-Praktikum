@@ -1,0 +1,183 @@
+\section{Motor Class Reference}
+\label{class_motor}\index{Motor@{Motor}}
+
+
+\doxyref{Motor}{p.}{class_motor} class for A\+V\+R32\+U\+C3\+B offers.  
+
+
+
+
+{\ttfamily \#include $<$Motor.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Motor} ()\label{class_motor_af6106b4c506411265c5face762b6c004}
+
+\begin{DoxyCompactList}\small\item\em Konstruktor Creates a new \doxyref{P\+W\+M}{p.}{class_p_w_m} object that provides the H\+A\+L. \end{DoxyCompactList}\item 
+{\bf $\sim$\+Motor} ()\label{class_motor_a2e57c7b2681efea1d3b7f253ee88ecd4}
+
+\begin{DoxyCompactList}\small\item\em Destruktor wird nicht benutzt. \end{DoxyCompactList}\item 
+bool {\bf init} ({\bf Configuration\+::s\+\_\+\+Motor\+Config} $\ast$this\+Motor\+Config\+\_\+)
+\begin{DoxyCompactList}\small\item\em Wendet die gegebenen Einstellungen. \end{DoxyCompactList}\item 
+bool {\bf set\+Speed} (unsigned char ratio\+On)
+\begin{DoxyCompactList}\small\item\em Leitet den Aufruf an den \doxyref{P\+W\+M}{p.}{class_p_w_m} weiter. \end{DoxyCompactList}\item 
+unsigned char {\bf get\+Speed} ()
+\begin{DoxyCompactList}\small\item\em Leitet den Aufruf an den \doxyref{P\+W\+M}{p.}{class_p_w_m} weiter. \end{DoxyCompactList}\item 
+void {\bf set\+Direction} (bool forward)
+\begin{DoxyCompactList}\small\item\em Legt die Richtung fest. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void {\bf init\+Enable\+Pin} ()\label{class_motor_a0857565e4e2628cb83db76a8385b4121}
+
+\begin{DoxyCompactList}\small\item\em Initialises the pin that is used for enabling/disabling the motor. \end{DoxyCompactList}\item 
+static void {\bf set\+Enabled} (bool enabled)
+\begin{DoxyCompactList}\small\item\em Schaltet den \doxyref{Motor}{p.}{class_motor} frei / sperrt den \doxyref{Motor}{p.}{class_motor}. \end{DoxyCompactList}\item 
+static bool {\bf get\+Is\+Enabled} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\doxyref{Motor}{p.}{class_motor} class for A\+V\+R32\+U\+C3\+B offers. 
+
+This class uses the \doxyref{P\+W\+M}{p.}{class_p_w_m} class and controls some G\+P\+I\+O-\/\+Pins to provide motor control. The motor speed can be set between 0 and 255, but is limited to Configuration\+::\+P\+W\+M\+\_\+max\+P\+W\+M\+Ratio. The motor direction can be set to forward or backward. The motors can be enabled and disabled, which means enabling/disabling the H Bridges of all motors.
+
+In this class \char`\"{}speed\char`\"{} is the same as \char`\"{}\+P\+W\+M\char`\"{}\+: a value from 0 to 255 representing the \doxyref{P\+W\+M}{p.}{class_p_w_m} ratio.
+
+Attention\+: all motors share the same enable pin. Attention\+: when class is destroyed or clean\+Up() is called, the enable pin will be uninititalized. 
+
+Definition at line 20 of file Motor.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\index{Motor@{Motor}!get\+Is\+Enabled@{get\+Is\+Enabled}}
+\index{get\+Is\+Enabled@{get\+Is\+Enabled}!Motor@{Motor}}
+\subsubsection[{get\+Is\+Enabled}]{\setlength{\rightskip}{0pt plus 5cm}bool Motor\+::get\+Is\+Enabled (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_motor_a893ecd0ab71b1840166c9dbf79e44293}
+\begin{DoxyReturn}{Returns}
+Ob der \doxyref{Motor}{p.}{class_motor} freigegeben ist 
+\end{DoxyReturn}
+
+
+Definition at line 95 of file Motor.\+cpp.
+
+\index{Motor@{Motor}!get\+Speed@{get\+Speed}}
+\index{get\+Speed@{get\+Speed}!Motor@{Motor}}
+\subsubsection[{get\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char Motor\+::get\+Speed (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_motor_acf842ff51450a1b33fd4986f6ce329c8}
+
+
+Leitet den Aufruf an den \doxyref{P\+W\+M}{p.}{class_p_w_m} weiter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Der} & zu setzende Wert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Die \doxyref{P\+W\+M}{p.}{class_p_w_m} Antwort 
+\end{DoxyReturn}
+
+
+Definition at line 64 of file Motor.\+cpp.
+
+\index{Motor@{Motor}!init@{init}}
+\index{init@{init}!Motor@{Motor}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}bool Motor\+::init (
+\begin{DoxyParamCaption}
+\item[{{\bf Configuration\+::s\+\_\+\+Motor\+Config} $\ast$}]{this\+Motor\+Config\+\_\+}
+\end{DoxyParamCaption}
+)}\label{class_motor_a53ee3e274164891e2cd50a8fc17dffc3}
+
+
+Wendet die gegebenen Einstellungen. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em this\+Motor\+Config\+\_\+} & Initialisierungseinstellungen \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true 
+\end{DoxyReturn}
+
+
+Definition at line 37 of file Motor.\+cpp.
+
+\index{Motor@{Motor}!set\+Direction@{set\+Direction}}
+\index{set\+Direction@{set\+Direction}!Motor@{Motor}}
+\subsubsection[{set\+Direction}]{\setlength{\rightskip}{0pt plus 5cm}void Motor\+::set\+Direction (
+\begin{DoxyParamCaption}
+\item[{bool}]{forward}
+\end{DoxyParamCaption}
+)}\label{class_motor_a232fd1e010a24b5cb23b86df96d5e77c}
+
+
+Legt die Richtung fest. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em forward} & Forwärts \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 74 of file Motor.\+cpp.
+
+\index{Motor@{Motor}!set\+Enabled@{set\+Enabled}}
+\index{set\+Enabled@{set\+Enabled}!Motor@{Motor}}
+\subsubsection[{set\+Enabled}]{\setlength{\rightskip}{0pt plus 5cm}void Motor\+::set\+Enabled (
+\begin{DoxyParamCaption}
+\item[{bool}]{enabled}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}\label{class_motor_a20d7cb28ab02aaebe9cd5727987c41bb}
+
+
+Schaltet den \doxyref{Motor}{p.}{class_motor} frei / sperrt den \doxyref{Motor}{p.}{class_motor}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em enabled} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 85 of file Motor.\+cpp.
+
+\index{Motor@{Motor}!set\+Speed@{set\+Speed}}
+\index{set\+Speed@{set\+Speed}!Motor@{Motor}}
+\subsubsection[{set\+Speed}]{\setlength{\rightskip}{0pt plus 5cm}bool Motor\+::set\+Speed (
+\begin{DoxyParamCaption}
+\item[{unsigned char}]{ratio\+On}
+\end{DoxyParamCaption}
+)}\label{class_motor_a1cb7214b21102f18dfda618504256810}
+
+
+Leitet den Aufruf an den \doxyref{P\+W\+M}{p.}{class_p_w_m} weiter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Der} & zu setzende Wert \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Die \doxyref{P\+W\+M}{p.}{class_p_w_m} Antwort 
+\end{DoxyReturn}
+
+
+Definition at line 53 of file Motor.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Antrieb/Motor.\+h\item 
+Antrieb/Motor.\+cpp\end{DoxyCompactItemize}

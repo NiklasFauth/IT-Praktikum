@@ -1,0 +1,62 @@
+\section{A\+D\+C\+Sensor Class Reference}
+\label{class_a_d_c_sensor}\index{A\+D\+C\+Sensor@{A\+D\+C\+Sensor}}
+
+
+In der \doxyref{A\+D\+C\+Sensor}{p.}{class_a_d_c_sensor} Klasse sind primaer set und get Methoden implementiert, um fest zu legen, welcher \doxyref{A\+D\+C}{p.}{class_a_d_c} Kanal verwendet wird, ob ein slope factor, oder ein offset verwendet werden und um die entsprechenden Einstellungen aus zu lesen. Darueber hinaus wird in der get\+Integer\+Value die \doxyref{A\+D\+C}{p.}{class_a_d_c} Methode get\+Channel\+Value verwendet, um aus einem Speziellen Kanal einen Wert aus zu lesen und gegebenenfalls einen Offset zu subtrahieren. Mit den Methoden dieser Klasse werden den Variablen in der \doxyref{Segway}{p.}{class_segway} Klasse ihre Werte zugewiesen.  
+
+
+
+
+{\ttfamily \#include $<$A\+D\+C\+Sensor.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bf init} ({\bf Configuration\+::s\+\_\+\+A\+D\+C\+Sensor\+Config} $\ast$this\+A\+D\+C\+Sensor\+Config\+\_\+, {\bf A\+D\+C} $\ast$A\+D\+C\+Controller\+\_\+)\label{class_a_d_c_sensor_aed6ea1673ee8566978a6536dcf2da06b}
+
+\begin{DoxyCompactList}\small\item\em Uebergibt die Werte aus this\+A\+D\+C\+Sensor\+Config\+\_\+ an A\+D\+C\+Controller\+\_\+. \end{DoxyCompactList}\item 
+long {\bf get\+Integer\+Value} (bool average=false, unsigned long number\+Of\+Values\+For\+Average=0)\label{class_a_d_c_sensor_a8c04c1d1598fbbd5d06dca60c5db2567}
+
+\begin{DoxyCompactList}\small\item\em Verwendet die \doxyref{A\+D\+C}{p.}{class_a_d_c} Methode get\+Channel\+Value, um den Wert des A\+D\+C\+Sensors auszulesen. \end{DoxyCompactList}\item 
+void {\bfseries set\+Zero\+Offset} (bool active, signed long offset)\label{class_a_d_c_sensor_a5ca209e9e3e1d8d28573b830442102bf}
+
+\item 
+bool {\bfseries get\+Zero\+Offset\+Is\+Active} ()\label{class_a_d_c_sensor_adc99d7daf23fb87e3ada9e1c73dcc58b}
+
+\item 
+signed long {\bfseries get\+Zero\+Offset} ()\label{class_a_d_c_sensor_a4bb1cecae2c6aa74892baa01fc454ba0}
+
+\item 
+float {\bf get\+Float\+Value} (bool average, unsigned long number\+Of\+Values\+For\+Average)\label{class_a_d_c_sensor_a75e90c10633ae7d55ea01d12e5e71a45}
+
+\begin{DoxyCompactList}\small\item\em Verwendet die \doxyref{A\+D\+C}{p.}{class_a_d_c} Methode get\+Channel\+Value, um den Wert des A\+D\+C\+Sensors auszulesen. Gibt das Ergebnis allerdings als float aus. \end{DoxyCompactList}\item 
+void {\bfseries set\+Slope\+Factor} (bool active, float factor)\label{class_a_d_c_sensor_af16a503fd5e4265afc6d80f940aea64f}
+
+\item 
+bool {\bfseries get\+Slope\+Factor\+Is\+Active} (void)\label{class_a_d_c_sensor_a83aad50bdb927b68553098553cf7e8eb}
+
+\item 
+float {\bfseries get\+Slope\+Factor} (void)\label{class_a_d_c_sensor_a844fda46abdfe798a657605468bf9a39}
+
+\item 
+void {\bfseries set\+Channel\+I\+D} (unsigned long new\+Channel\+I\+D)\label{class_a_d_c_sensor_aedcf4a6cccdd2ce684db7021b6cf0e92}
+
+\item 
+unsigned long {\bfseries get\+Channel\+I\+D} (void)\label{class_a_d_c_sensor_afd585136944657343937a6ee846c3139}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+In der \doxyref{A\+D\+C\+Sensor}{p.}{class_a_d_c_sensor} Klasse sind primaer set und get Methoden implementiert, um fest zu legen, welcher \doxyref{A\+D\+C}{p.}{class_a_d_c} Kanal verwendet wird, ob ein slope factor, oder ein offset verwendet werden und um die entsprechenden Einstellungen aus zu lesen. Darueber hinaus wird in der get\+Integer\+Value die \doxyref{A\+D\+C}{p.}{class_a_d_c} Methode get\+Channel\+Value verwendet, um aus einem Speziellen Kanal einen Wert aus zu lesen und gegebenenfalls einen Offset zu subtrahieren. Mit den Methoden dieser Klasse werden den Variablen in der \doxyref{Segway}{p.}{class_segway} Klasse ihre Werte zugewiesen. 
+
+
+
+Definition at line 16 of file A\+D\+C\+Sensor.\+h.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sensor/A\+D\+C\+Sensor.\+h\item 
+Sensor/A\+D\+C\+Sensor.\+cpp\end{DoxyCompactItemize}
