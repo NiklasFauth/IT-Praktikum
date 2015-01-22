@@ -165,7 +165,7 @@ Dieser Regelalgorithmus übernimmt die Aufgabe der Auswertung der Sensorwerte zu
 \section{Benötigte Module und ihre Funktion}
 Die folgenden Module mussten programmiert werden:
 \begin{itemize}
-\item Timer:\\
+\item Timer\\
 Die Aufgabe des Timers besteht darin, periodisch nach einem festen Zeitintervall eine Interrruptroutine auszulösen.\\ Intern zählt dieser bis zu einem bestimmten Grenzwert, bei dem der Interrupt ausgelöst wird. Das feste Zeitintervall ist nötig, da der Regelalgorithmus Messwerte zu bestimmten Zeiten erwartet.\\
 Als Zählmodus wurde eine Sägezahnkurve gewählt, der im Register "Wavesalemode" gesetzt wurde. Das Intervall des Timers wurde auf 10 ms gesetzt mittels variablen RC-Wert , der bei der Initialisierung berechnet wird.
 \item GPIO Sensor\\
@@ -186,22 +186,24 @@ Das PWM Modul steuert die Geschwindigkeit der Motoren.\\
 PWM ist eine wichtige Steuerungsweise, bei der Leistung über das Ein/Aus-Verhältnis einer binären Spannung auf einem Zeitintervall geregelt wird.
 Je großer der Ein-Anteil, desto großer die Leistung und damit die Geschwindigkeit.\\
 Die PWM wird mit Hilfe eines Zählers umgesetzt. Liegt der Zähler über dem Duty Cycle so liegt hohe Spannung an, sonst null. Erreicht der Zähler die Period wird er wieder zurück gesetzt.
-\item Motor
+\item Motor \\
 Die Motor Klasse funktioniert analog zur ADCSensor Klasse als Wrapper für eine PWM.
 Dabei werden Duty Cycle und Period gesetzt.
 Das Verhältnis Duty Cycle zu Period entspricht dem Verhältnis Ein- zu Intervallzeit.
 
 \end{itemize}
 
-
+\newpage
 \section{Beschreibung der Schnittstellen}
-
-Fußschalter:
+\begin{itemize}
+\item Fußschalter:
 Gibt die Steuerung des TivSegs frei und schützt den Anwender vor eventuellen Schäden.
 
-Lenkstange:
+\item Lenkstange:
 Dient zur Richtungssteuerung.
 Das TivSeg fährt in die Richtung, in die die Stange geneigt wird.
+\end{itemize}
+
 
 \chapter{Realisierung}
 \section{Hardware Abstraction Layer}
@@ -209,14 +211,14 @@ Zu Deutsch Hardwareabstraktionsschicht oder kurz HAL ist eine Schicht des Betrie
 Die restliche Software nutzt die HAL, um Befehle umzusetzen.
 
 \subsection{Implementierung}
-Die Beschreibung der einzelnen Funktionen in den jeweiligen Modulen sind im Anhang dieser Dokumentation zu finden.
+Die Beschreibung der einzelnen Funktionen in den jeweiligen Modulen sind im Anhang "My Project", erzeugt durch Doxygen, in dieser Dokumentation zu finden.
  
 \subsection{Zusammenfügen der Module}
 Die Stärke von Github liegt in der Versionskontrolle, die wir nutzten um die Module zusammenzufügen. Dabei wurden die unabhängig voneinander bearbeiteten Äste des Projekts zusammengefügt (gemergt) und auftretende Konflikte manuell gelöst.
 
 \chapter{Test}
 
-\subsection{Test der HAL}
+\section{Test der HAL}
 Die beiden Module PWM und Timer konnten auf dem EI-Board getestet werden. Beim PWM wurde die Funktion getestet, indem die LEDs in unterschiedlichen Helligkeitsstufen leuchten sollten. Beim Timer wurde die erfolgreiche Initialisierung durch eine LED angezeigt und das Hochzählen durch eine blinkende LED realisiert.
 Bei den Tests traten hauptsächlich Schreibfehler und Unaufmerksamkeiten auf, die meist bei der Kompilierung festgestellt wurden.
 
@@ -234,13 +236,14 @@ Erfreulich ist die Praxisnähe des Projekts, da man das eigene Resultat auch sel
 Die Fortbewegung als Grundfunktion des TivSegs funktioniert nun. Für die unterschiedlichen Einsatzgebiete könnten dies weitere Erweiterungsmöglichkeiten sein:
 
 \begin{itemize}
-\item Touristenbranchen:\\
+\item Touristenbranchen\\
 Bei Stadtführungen sind Fotos schöne Erinnerungen. Damit man nicht immer absteigen muss, wenn ein schönes Motiv festgehalten werden soll, könnte man beispielsweise eine GoPro(TM) (Actionkamera) anbringen und diese mit einem Fernauslöser, angebracht an den Haltegriffen, bestücken. So könnte schnell und ohne absteigen Schnappschüsse geschossen werden und kein Motiv geht mehr verloren.
-\item Polizei: \\
+\item Polizei \\
 Für Patrouillenfahrten sollte das TivSeg auch geländetauglich sein. Hierfür müssten Reifen mit tieferen Profilen bereitgestellt werden und eine Assistent zur Unterstützung der Gewichtsausgleichung entwickelt werden.
-\item Unigelände:\\
+\item Unigelände\\
 Eines der wichtigsten Komponenten im Uni-Alltag ist der Kaffee. Da wäre es doch schade, wenn der Kaffee noch schnell getrunken werden muss, damit man noch pünktlich mit dem TivSeg in der nächsten Vorlesung erscheint. Da wäre eine Kaffeehalterung doch ideal. Mit einem Sensor könnte die Füllhöhe bestimmt werden und somit berechnet werden, in welchem Winkel maximal das TivSeg gebeugt werden kann, damit der Kaffee nicht ausgeschüttet wird. 
 \end{itemize}  
+\chapter{Anhang}
 %----------------------------
 \nocite{*}
 \bibliography{literatur}
