@@ -1,0 +1,71 @@
+\section{Segway Class Reference}
+\label{class_segway}\index{Segway@{Segway}}
+
+
+Contains main segway functionality as there are initialization and the controlling algorithm.  
+
+
+
+
+{\ttfamily \#include $<$Segway.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf Segway} ()\label{class_segway_a4ef7ad236efa10f485b1a37f5adff6eb}
+
+\begin{DoxyCompactList}\small\item\em Constructor. Does minimal initialization. \end{DoxyCompactList}\item 
+void {\bf timer\+Function} ()
+\begin{DoxyCompactList}\small\item\em Function called by the timer. It contains the control algorithm. \end{DoxyCompactList}\item 
+void {\bf main} ()
+\begin{DoxyCompactList}\small\item\em Main loop. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Contains main segway functionality as there are initialization and the controlling algorithm. 
+
+This class creates and initializes helper objects of sensor, motor and communication classes. Then, it uses these objects to execute the segway controlling algorithm. Debug data is provided via bluetooth using the \doxyref{U\+A\+R\+T}{p.}{class_u_a_r_t} class. 
+
+Definition at line 20 of file Segway.\+h.
+
+
+
+\subsection{Member Function Documentation}
+\index{Segway@{Segway}!main@{main}}
+\index{main@{main}!Segway@{Segway}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}void Segway\+::main (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_segway_a1791fdddef7bc89d381309d8063d7b00}
+
+
+Main loop. 
+
+Initializes helper objects, then starts the timer containing the controlling algorithm. Before starting the timer, it is made sure that the foot switch is not pressed.
+
+While running, this function sends debug data via the bluetooth interface. Different debug values can be enabled by uncommenting them here and in \doxyref{timer\+Function()}{p.}{class_segway_a30588f98b49298b6e490fc9e543cf083}. 
+
+Definition at line 341 of file Segway.\+cpp.
+
+\index{Segway@{Segway}!timer\+Function@{timer\+Function}}
+\index{timer\+Function@{timer\+Function}!Segway@{Segway}}
+\subsubsection[{timer\+Function}]{\setlength{\rightskip}{0pt plus 5cm}void Segway\+::timer\+Function (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_segway_a30588f98b49298b6e490fc9e543cf083}
+
+
+Function called by the timer. It contains the control algorithm. 
+
+The function first receives the sensor values and then calculates and sets the motor\textquotesingle{}s \doxyref{P\+W\+M}{p.}{class_p_w_m} according to the controlling algorithm. 
+
+Definition at line 25 of file Segway.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Segway/Segway.\+h\item 
+Segway/Segway.\+cpp\end{DoxyCompactItemize}

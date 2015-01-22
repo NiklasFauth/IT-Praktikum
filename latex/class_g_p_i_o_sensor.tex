@@ -1,0 +1,88 @@
+\section{G\+P\+I\+O\+Sensor Class Reference}
+\label{class_g_p_i_o_sensor}\index{G\+P\+I\+O\+Sensor@{G\+P\+I\+O\+Sensor}}
+
+
+Diese Klasse wird benutzt um allgemein Pins zu steuern bzw. abzufragen, z.\+B. den Fußschalter.  
+
+
+
+
+{\ttfamily \#include $<$G\+P\+I\+O\+Sensor.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+{\bf G\+P\+I\+O\+Sensor} ()
+\begin{DoxyCompactList}\small\item\em Konstruktor wird nicht benutzt. \end{DoxyCompactList}\item 
+void {\bf init} ({\bf Configuration\+::s\+\_\+\+G\+P\+I\+O\+Sensor\+Config} $\ast$this\+G\+P\+I\+O\+Sensor\+Config\+\_\+)
+\begin{DoxyCompactList}\small\item\em Schaltet den G\+P\+I\+O Pin frei und den Glitch Filter an. Optional auch den Pull-\/\+Up Widerstand. \end{DoxyCompactList}\item 
+bool {\bf get\+Value} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Diese Klasse wird benutzt um allgemein Pins zu steuern bzw. abzufragen, z.\+B. den Fußschalter. 
+
+Definition at line 64 of file G\+P\+I\+O\+Sensor.\+h.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\index{G\+P\+I\+O\+Sensor@{G\+P\+I\+O\+Sensor}!G\+P\+I\+O\+Sensor@{G\+P\+I\+O\+Sensor}}
+\index{G\+P\+I\+O\+Sensor@{G\+P\+I\+O\+Sensor}!G\+P\+I\+O\+Sensor@{G\+P\+I\+O\+Sensor}}
+\subsubsection[{G\+P\+I\+O\+Sensor}]{\setlength{\rightskip}{0pt plus 5cm}G\+P\+I\+O\+Sensor\+::\+G\+P\+I\+O\+Sensor (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_g_p_i_o_sensor_a5b953d49464aa9562a369c1639f5219a}
+
+
+Konstruktor wird nicht benutzt. 
+
+Destruktor setzt den Pull-\/\+Up Widerstand und den Glitch-\/\+Filter zurück. 
+
+Definition at line 7 of file G\+P\+I\+O\+Sensor.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\index{G\+P\+I\+O\+Sensor@{G\+P\+I\+O\+Sensor}!get\+Value@{get\+Value}}
+\index{get\+Value@{get\+Value}!G\+P\+I\+O\+Sensor@{G\+P\+I\+O\+Sensor}}
+\subsubsection[{get\+Value}]{\setlength{\rightskip}{0pt plus 5cm}bool G\+P\+I\+O\+Sensor\+::get\+Value (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\label{class_g_p_i_o_sensor_a5078e0d542e1753ef63da00e29f3b7c1}
+\begin{DoxyReturn}{Returns}
+Den aktuellen, binären Wert des Pins. 
+\end{DoxyReturn}
+
+
+Definition at line 41 of file G\+P\+I\+O\+Sensor.\+cpp.
+
+\index{G\+P\+I\+O\+Sensor@{G\+P\+I\+O\+Sensor}!init@{init}}
+\index{init@{init}!G\+P\+I\+O\+Sensor@{G\+P\+I\+O\+Sensor}}
+\subsubsection[{init}]{\setlength{\rightskip}{0pt plus 5cm}void G\+P\+I\+O\+Sensor\+::init (
+\begin{DoxyParamCaption}
+\item[{{\bf Configuration\+::s\+\_\+\+G\+P\+I\+O\+Sensor\+Config} $\ast$}]{this\+G\+P\+I\+O\+Sensor\+Config\+\_\+}
+\end{DoxyParamCaption}
+)}\label{class_g_p_i_o_sensor_a473b62bbc4372c97b63d2855a3387d57}
+
+
+Schaltet den G\+P\+I\+O Pin frei und den Glitch Filter an. Optional auch den Pull-\/\+Up Widerstand. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em this\+G\+P\+I\+O\+Sensor\+Config\+\_\+} & Initialisierungseinstellungen \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 26 of file G\+P\+I\+O\+Sensor.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sensor/G\+P\+I\+O\+Sensor.\+h\item 
+Sensor/G\+P\+I\+O\+Sensor.\+cpp\end{DoxyCompactItemize}
