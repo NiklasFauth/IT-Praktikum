@@ -171,8 +171,13 @@ Als Zählmodus wurde eine Sägezahnkurve gewählt, der im Register "Wavesalemode
 \item GPIO Sensor\\
 Der GPIO Sensor steuert einzelne Pins des Mikrocontroller Boards an oder liest deren binäre Werte aus.
 \item ADC\\
-Die ADC Klasse ist hauptsächlich dazu da, den ADC des Mikrocontrollers zu initialisieren, die Ausgangspins zu aktivieren, konkret Signale zu konvertieren und aus den Registern auszulesen.\\ 
-Zudem kann hier eingestellt werden, ob ein ausgewählter Pin durch eine Peripheral Function oder durch den GPIO kontrolliert wird.
+Die ADC Klasse ist hauptsächlich dazu da, den ADC des Mikrokontrollers zu initialisieren, die Ausgangspins
+zu aktivieren, konkret Signale zu konvertieren und auszulesen.\\
+Durch setzten des ersten Bits im Status Register des ADC kann eine solche Konvertierung gestartet werden. 
+Dies geschieht an einem Kanal, der zuvor über das Enable Register aktiviert wurde. 
+Nach der Konvertierung kann der konvertierte Wert im Last Converted Data Register ausgelesen werden.\\
+Des weiteren kann in diesem Modul eingestellt werden, ob ein Pin durch den GPIO oder durch
+eine Peripheral Function kontrolliert wird.
 \item ADC Sensor\\
 Die ADCSensor Klasse bildet einen Wrapper für einen bestimmten ADC.\\
 Sie initialisiert einen ADC und leitet get -Aufrufe anschließend an den ADC weiter. Bei der Initialisierung werden Slope Factor und Offset des ADC gesetzt.\\
