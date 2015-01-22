@@ -5,7 +5,7 @@ ADCSensor::ADCSensor() {}
 ADCSensor::~ADCSensor() {}
 
 /*! \brief
-	Uebergibt die Werte aus thisADCSensorConfig_ an ADCController_ 
+    Uebergibt die Werte aus thisADCSensorConfig_ an ADCController_
 */
 bool ADCSensor::init(Configuration::s_ADCSensorConfig* thisADCSensorConfig_, ADC* ADCController_) {
     ADCController_->ID = thisADCSensorConfig_->ADCChannelID;
@@ -20,8 +20,8 @@ bool ADCSensor::init(Configuration::s_ADCSensorConfig* thisADCSensorConfig_, ADC
 }
 
 /*! \brief
-	Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
-    auszulesen.                                                                    
+    Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
+    auszulesen.
 */
 signed long ADCSensor::getIntegerValue(bool average, unsigned long numberOfValuesForAverage) {
     //Verwendet die ADC Methode
@@ -48,7 +48,7 @@ signed long ADCSensor::getZeroOffset() {
 
 
 /*! \brief
-	Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
+    Verwendet die ADC Methode getChannelValue, um den Wert des ADCSensors
     auszulesen. Gibt das Ergebnis allerdings als float aus.
 */
 float ADCSensor::getFloatValue(bool average, unsigned long numberOfValuesForAverage) {

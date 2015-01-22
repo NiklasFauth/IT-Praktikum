@@ -2,13 +2,13 @@
 
 /*! \fn PWM::PWM
  * \brief
- *      Constructor is unused
+ *      Konstruktor wird nicht benutzt.
  */
 PWM::PWM() {}
 
 /*! \fn PWM::~PWM
  * \brief
- *      Destructor is unused
+ *      Destruktor wird nicht benutzt.
  */
 PWM::~PWM() {
     *DIS = 1;
@@ -19,11 +19,10 @@ PWM::~PWM() {
 
 /*!
  * \fn PWM::init
- * \param thisPWMConfig_ initial settings
+ * \param thisPWMConfig_ Initialisierungseinstellungen
  * \brief
- *      Sets the multiplex value to PWM.
- *      Sets the duty cycle period according to the actual frequency.
- *      Applies settings given via the thisPWMConfig_ argument.
+ *      Setzt den Multiplex Wert auf PWM.
+ *      Setzt die Duty Cycle Period nach der gegebenen Frequenz.
  */
 bool PWM::init(Configuration::s_PWMConfig* thisPWMConfig_) {
     pin = thisPWMConfig_->GPIO_pin;
@@ -58,10 +57,10 @@ bool PWM::init(Configuration::s_PWMConfig* thisPWMConfig_) {
 }
 
 /*! \fn PWM::setChannelPWMRatio
- * \param ratioOn the value to be setChannelPWMRatio
- * \param capRatioOn if true the value will be truncated to a maximum of maxPWMRatio
+ * \param ratioOn Der zu setztende Wert
+ * \param capRatioOn Ob der ratioOn Wert auf ein Maximum maxPWMRatio beschränkt werden soll
  * \brief
- *      Sets the PWM ration value for a certain duty cycle (respectively a motor speed) by writing the channel update register.
+ *      Setzt den Duty Cycle Wert im gegebenen Verhältnis zur Periode durch das Schreiben in das Channel Update Register.
  */
 bool PWM::setChannelPWMRatio(unsigned char ratioOn, bool capRatioOn) {
     if (capRatioOn) {
@@ -79,7 +78,7 @@ bool PWM::setChannelPWMRatio(unsigned char ratioOn, bool capRatioOn) {
 }
 
 /*! \fn PWM::getChannelPWMRatio
- * \return the current duty cycle ratio in a range of [0,255].
+ * \return Den aktuellen Duty Cycle Wert im Bereich [0, 255].
  */
 unsigned char PWM::getChannelPWMRatio() {
     // return current ratio
@@ -87,7 +86,7 @@ unsigned char PWM::getChannelPWMRatio() {
 }
 
 /*! \fn PWM::isChannelEnabled
- * \return whether or not the channel is enabled
+ * \return Ob der Kanal freigegeben ist
  */
 bool PWM::isChannelEnabled() {
     // check if bit is set
@@ -97,7 +96,7 @@ bool PWM::isChannelEnabled() {
 /*! \fn PWM::setChannelEnabled
  * \param enabled
  * \brief
- *      Enables/disables the channel.
+ *      Schaltet den Kanal frei / sperrt den Kanal.
  */
 bool PWM::setChannelEnabled(bool enabled) {
     // set ena/dis bit

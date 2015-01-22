@@ -1,11 +1,11 @@
 /*! \brief
-		In der ADCSensor Klasse sind primaer set und get Methoden implementiert, um fest zu legen, welcher ADC Kanal verwendet
-		wird, ob ein slope factor, oder ein offset verwendet werden und um die entsprechenden Einstellungen aus zu lesen.
-		Darueber hinaus wird in der getIntegerValue die ADC Methode getChannelValue verwendet, um aus einem Speziellen Kanal einen
-		Wert aus zu lesen und gegebenenfalls einen Offset zu subtrahieren.
-		Mit den Methoden dieser Klasse werden den Variablen in der Segway Klasse ihre Werte zugewiesen.
-		
-    
+        In der ADCSensor Klasse sind primaer set und get Methoden implementiert, um fest zu legen, welcher ADC Kanal verwendet
+        wird, ob ein slope factor, oder ein offset verwendet werden und um die entsprechenden Einstellungen aus zu lesen.
+        Darueber hinaus wird in der getIntegerValue die ADC Methode getChannelValue verwendet, um aus einem Speziellen Kanal einen
+        Wert aus zu lesen und gegebenenfalls einen Offset zu subtrahieren.
+        Mit den Methoden dieser Klasse werden den Variablen in der Segway Klasse ihre Werte zugewiesen.
+
+
 */
 
 #ifndef ADCSENSOR_H_

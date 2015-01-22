@@ -58,8 +58,7 @@
 /*! \class PWM
  * \brief Pulse Width Modulation
  *
- * This class provides functionallities for controlling the motors on hardware level.
- * Part of the HAL.
+ * Diese Klasse bietet Funktionen um die Motoren auf Hardwareebene anzusteuern.
  * */
 class PWM {
   private:

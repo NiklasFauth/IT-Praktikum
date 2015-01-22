@@ -59,7 +59,7 @@
 #include "../Configuration/Configuration.h"
 
 /*! \brief
- * The class that is used to check the foot switch sensor
+ * Diese Klasse wird benutzt um allgemein Pins zu steuern bzw. abzufragen, z.B. den Fußschalter.
  * */
 class GPIOSensor {
   private:
