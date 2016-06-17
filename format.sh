@@ -1,1 +1,0 @@
-astyle/build/gcc/bin/astyle --style=google -xc -xn -xk -H -xe -k1 -W0 -xj -c -xL -xy -p -U --mode=c -n -r "C++ Projekt/Segway/*.cpp" "C++ Projekt/Segway/*.h"
